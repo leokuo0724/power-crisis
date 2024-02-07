@@ -1,7 +1,7 @@
 {
   "name": "solidjs-phaser",
   "version": "0.0.0",
-  "description": "",
+  "description": "Simple example of using Phaser with SolidJS",
   "scripts": {
     "start": "vite",
     "dev": "vite",

@@ -1,3 +1,7 @@
+## Description
+
+The project is a simple template of using Phaser with SolidJS. The concept is using signal for state management.
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.

@@ -1,5 +1,4 @@
 import { createEffect, type Component } from "solid-js";
-import { counter, setCounter } from "./states/counter";
 import { resizeCounter } from "./states/screen";
 
 export const App: Component = () => {
@@ -20,9 +19,9 @@ export const App: Component = () => {
   });
 
   return (
-    <div ref={ref}>
-      <span>{counter()}</span>
-      <button onclick={() => setCounter((prev) => prev + 1)}>Click</button>
+    <div class="absolute" ref={ref}>
+      <span class="absolute top-0 left-0"></span>
+      <div class="absolute bottom-0 right-0"></div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import { Scene } from "phaser";
 import { createEffect } from "solid-js";
 import { counter, setCounter } from "../states/counter";
+import { ResizableScene } from "./resizable";
 
 const TEXT_STYLE = {
   fontFamily: "Arial Black",
@@ -9,7 +9,7 @@ const TEXT_STYLE = {
   align: "center",
 };
 
-export class Main extends Scene {
+export class Main extends ResizableScene {
   constructor() {
     super("Game");
   }

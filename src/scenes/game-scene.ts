@@ -34,11 +34,11 @@ export class GameScene extends ResizableScene {
 
     new DiceSet(this, centerX + 750, centerY + 360);
 
-    createEffect(() => {
+    createEffect(async () => {
       const bounds = this.board.getTileBoundsByIndex(
         gameManager.currentTileIndex
       );
-      this.marker.moveTo(
+      await this.marker.moveTo(
         bounds.centerX - this.markerOffsetX,
         bounds.centerY - this.markerOffsetY
       );

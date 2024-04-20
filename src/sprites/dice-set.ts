@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { DICE_KEYS, ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { RollDiceButton } from "./ui/roll-dice-button";
+import { setGameManager } from "~/states/game-manager";
 
 const DICE_NUM_TEXTURE_MAP: Record<number, string> = {
   1: DICE_KEYS.DICE_1,
@@ -27,6 +28,13 @@ export class DiceSet extends Phaser.GameObjects.Container {
     this.button.onClick = async () => {
       this.button.setDisabled(true);
       const diceResult = await this.rollDice();
+      setGameManager("currentTileIndex", (prev) => {
+        const next = prev + diceResult;
+        if (prev < 5) return Math.min(5, next);
+        if (prev < 10) return Math.min(10, next);
+        if (prev < 15) return Math.min(15, next);
+        return next > 19 ? 0 : next;
+      });
     };
 
     this.add([this.dice, this.button]);

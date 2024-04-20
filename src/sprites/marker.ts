@@ -27,7 +27,7 @@ export class Marker extends Phaser.GameObjects.Sprite {
         targets: this,
         x,
         y,
-        duration: 500,
+        duration: 1000,
         repeat: 0,
         onComplete: () => {
           this.upAndDownTween = this._resetUpAndDownTween();

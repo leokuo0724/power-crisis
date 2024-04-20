@@ -3,6 +3,7 @@ import { counter, setCounter } from "../states/counter";
 import { ResizableScene } from "../lib/resizable-scene";
 import { SCENE_KEYS } from "~/constants/scene-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
+import { Board } from "~/sprites/board/board";
 
 const TEXT_STYLE = {
   fontFamily: FONT_KEYS.PASSION_ONE,
@@ -26,21 +27,10 @@ export class GameScene extends ResizableScene {
       )
       .setOrigin(0.5);
 
-    const button = this.add
-      .text(
-        this.cameras.main.width / 2,
-        this.cameras.main.height / 2 + 64,
-        `Click`,
-        TEXT_STYLE
-      )
-      .setOrigin(0.5)
-      .setInteractive();
-    button.on("pointerdown", () => {
-      setCounter((prev) => prev + 1);
-    });
-
     createEffect(() => {
       text.setText(`Hello World ${counter()}`);
     });
+
+    new Board(this, this.cameras.main.width / 2, this.cameras.main.height / 2);
   }
 }

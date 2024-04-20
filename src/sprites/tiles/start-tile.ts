@@ -1,14 +1,9 @@
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
-import { TileBasic, TileType } from "./common";
+import { TileBasic } from "./common";
 
-export class StartTile extends Phaser.GameObjects.Sprite implements TileBasic {
-  readonly index: number;
-  readonly tileType: TileType = "start";
-
+export class StartTile extends TileBasic {
   constructor(scene: Phaser.Scene, x: number, y: number, index: number) {
-    super(scene, x, y, TEXTURE_KEYS.BLUE_5_TILE);
+    super(scene, x, y, TEXTURE_KEYS.BLUE_5_TILE, index, "start");
     scene.add.existing(this);
-
-    this.index = index;
   }
 }

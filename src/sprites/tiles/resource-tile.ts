@@ -1,20 +1,15 @@
 import { Scene } from "phaser";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { CONSUMABLE_RESOURCES, ConsumableResource } from "~/types/resource";
-import { TileBasic, TileType } from "./common";
+import { TileBasic } from "./common";
 
-type ResourceMetadata = {
+export type ResourceMetadata = {
   type: ConsumableResource;
   maxAmount: number;
   currentAmount: number;
 };
 
-export class ResourceTileSprite
-  extends Phaser.GameObjects.Sprite
-  implements TileBasic
-{
-  readonly index: number;
-  readonly tileType: TileType = "resource";
+export class ResourceTileSprite extends TileBasic {
   resource: ResourceMetadata;
 
   constructor(
@@ -25,10 +20,9 @@ export class ResourceTileSprite
     resource: ResourceMetadata
   ) {
     const texture = getTextureByResourceType(resource.type);
-    super(scene, x, y, texture);
+    super(scene, x, y, texture, index, "resource");
     scene.add.existing(this);
 
-    this.index = index;
     this.resource = resource;
   }
 }

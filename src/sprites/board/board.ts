@@ -21,14 +21,10 @@ export class Board extends Phaser.GameObjects.Container {
     super(scene, x, y);
     scene.add.existing(this);
 
-    this._initializeBoard();
+    this._initTiles();
   }
 
-  private _initializeBoard() {
-    this._setupTiles();
-  }
-
-  private _setupTiles() {
+  private _initTiles() {
     for (const tile of boardData) {
       let tileInstance;
       switch (tile.tileType) {
@@ -77,5 +73,13 @@ export class Board extends Phaser.GameObjects.Container {
     this.list.forEach((obj) => {
       if (obj instanceof TileBasic) obj.y += 2 * this.gridMargin;
     });
+  }
+
+  public getTileBoundsByIndex(index: number) {
+    const tile = this.list.find(
+      (obj) => obj instanceof TileBasic && obj.index === index
+    ) as TileBasic;
+    if (!tile) throw new Error(`Tile with index ${index} not found`);
+    return tile.getBounds();
   }
 }

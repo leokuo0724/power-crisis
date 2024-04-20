@@ -1,6 +1,6 @@
 import { SCENE_KEYS } from "~/constants/scene-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
-import { ResizableScene } from "~/lib/resizable-scene";
+
 import PassionOneFont from "~/assets/fonts/PassionOne-Regular.ttf";
 import NotoSansSemiBoldFont from "~/assets/fonts/NotoSans-SemiBold.ttf";
 import { hexToDecimal } from "~/lib/utils";
@@ -16,8 +16,9 @@ import CardPng from "~/assets/images/card.png";
 import CardJson from "~/assets/images/card.json";
 import PowerPlantPng from "~/assets/images/power-plant.png";
 import PowerPlantJson from "~/assets/images/power-plant.json";
+import { Scene } from "phaser";
 
-export class PreloadScene extends ResizableScene {
+export class PreloadScene extends Scene {
   private isFontsLoaded = false;
   private isAssetsLoaded = false;
 

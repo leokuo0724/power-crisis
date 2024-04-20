@@ -1,11 +1,11 @@
-import { batch, createEffect } from "solid-js";
 import { Button } from "./shared/button";
 import { Dialog } from "./shared/dialog";
-import { gameManager, setGameManager } from "~/states/game-manager";
+import { EVENTS, GameManager } from "~/states/game-manager";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 import { ConsumableResource, RESOURCE_TEXTURE_MAP } from "~/types/resource";
+import { Game } from "phaser";
 
 const COLLECT_RESOURCE_DIALOG_TITLE = "Do you want to collect resource?";
 
@@ -57,30 +57,33 @@ export class CollectRecourseDialog extends Dialog {
       this.gainText,
     ]);
 
-    createEffect(() => {
-      if (gameManager.currentTileResourceMetadata) {
-        if (gameManager.currentTileResourceMetadata.currentAmount > 0) {
-          this._resetDialog();
-          const resourceType = gameManager.currentTileResourceMetadata.type;
-          this.costText.setText(`-${gameManager.costUnit[resourceType]}`);
-          this.resourceIcon.setTexture(
-            IMAGE_KEYS.ICONS,
-            RESOURCE_TEXTURE_MAP[resourceType]
-          );
-          this.gainText.setText(`+${gameManager.collectUnit[resourceType]}`);
+    GameManager.getInstance().emitter.on(
+      EVENTS.CURRENT_TILE_RESOURCE_METADATA_UPDATED,
+      () => {
+        const gm = GameManager.getInstance();
+        if (gm.currentTileResourceMetadata) {
+          if (gm.currentTileResourceMetadata.currentAmount > 0) {
+            const resourceType = gm.currentTileResourceMetadata.type;
+            this.costText.setText(`-${gm.costUnit[resourceType]}`);
+            this.resourceIcon.setTexture(
+              IMAGE_KEYS.ICONS,
+              RESOURCE_TEXTURE_MAP[resourceType]
+            );
+            this.gainText.setText(`+${gm.collectUnit[resourceType]}`);
+          } else {
+            this.titleText.setText("There is no resource to collect. :(");
+            this.collectButton.setDisabled(true);
+            this.lightningIcon.setVisible(false);
+            this.costText.setVisible(false);
+            this.resourceIcon.setVisible(false);
+            this.gainText.setVisible(false);
+          }
+          this.show();
         } else {
-          this.titleText.setText("There is no resource to collect. :(");
-          this.collectButton.setDisabled(true);
-          this.lightningIcon.setVisible(false);
-          this.costText.setVisible(false);
-          this.resourceIcon.setVisible(false);
-          this.gainText.setVisible(false);
+          this.hide();
         }
-        this.show();
-      } else {
-        this.hide();
       }
-    });
+    );
   }
 
   private _resetDialog() {
@@ -100,10 +103,9 @@ class SkipButton extends Button {
   }
 
   public onClick(): void {
-    batch(() => {
-      setGameManager("currentTileResourceMetadata", null);
-      setGameManager("isNextRollEnabled", true);
-    });
+    const gm = GameManager.getInstance();
+    gm.updateCurrentTileResourceMetadata(null);
+    gm.setNextRollEnabled(true);
   }
 }
 

@@ -1,17 +1,16 @@
-import { ResizableScene } from "../lib/resizable-scene";
 import { SCENE_KEYS } from "~/constants/scene-keys";
 import { Board } from "~/sprites/board/board";
 import { PowerDisplay } from "~/sprites/power-display";
 import { Marker } from "~/sprites/marker";
-import { createEffect } from "solid-js";
-import { gameManager, setGameManager } from "~/states/game-manager";
 import { DiceSet } from "~/sprites/dice-set";
 import { ResourceTileSprite } from "~/sprites/tiles/resource-tile";
 import { CollectRecourseDialog } from "~/sprites/ui/collect-resource-dialog";
 import { GameInfoBoard } from "~/sprites/ui/game-info-board";
 import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
+import { EVENTS, GameManager } from "~/states/game-manager";
+import { Scene } from "phaser";
 
-export class GameScene extends ResizableScene {
+export class GameScene extends Scene {
   marker!: Marker;
   board!: Board;
   powerDisplay!: PowerDisplay;
@@ -49,24 +48,34 @@ export class GameScene extends ResizableScene {
       },
     });
 
-    createEffect(async () => {
-      // Move marker based on current tile index
-      const bounds = this.board.getTileBoundsByIndex(
-        gameManager.currentTileIndex
-      );
-      await this.marker.moveTo(
-        bounds.centerX - this.markerOffsetX,
-        bounds.centerY - this.markerOffsetY
-      );
-
-      if (gameManager.currentTileIndex === 0 && gameManager.round === 1) return;
-      const tile = this.board.getTargetTile(gameManager.currentTileIndex);
-      switch (tile.tileType) {
-        case "resource":
-          const resourceTile = tile as ResourceTileSprite;
-          setGameManager("currentTileResourceMetadata", resourceTile.resource);
-          break;
+    GameManager.getInstance().emitter.on(
+      EVENTS.CURRENT_TILE_INDEX_UPDATED,
+      async () => {
+        // Move marker based on current tile index
+        const bounds = this.board.getTileBoundsByIndex(
+          GameManager.getInstance().currentTileIndex
+        );
+        await this.marker.moveTo(
+          bounds.centerX - this.markerOffsetX,
+          bounds.centerY - this.markerOffsetY
+        );
+        if (
+          GameManager.getInstance().currentTileIndex === 0 &&
+          GameManager.getInstance().round === 1
+        )
+          return;
+        const tile = this.board.getTargetTile(
+          GameManager.getInstance().currentTileIndex
+        );
+        switch (tile.tileType) {
+          case "resource":
+            const resourceTile = tile as ResourceTileSprite;
+            GameManager.getInstance().updateCurrentTileResourceMetadata(
+              resourceTile.resource
+            );
+            break;
+        }
       }
-    });
+    );
   }
 }

@@ -3,6 +3,7 @@ import { counter, setCounter } from "../states/counter";
 import { ResizableScene } from "../lib/resizable-scene";
 import { SCENE_KEYS } from "~/constants/scene-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
+import { TileSprite } from "~/sprites/tile";
 
 const TEXT_STYLE = {
   fontFamily: FONT_KEYS.PASSION_ONE,
@@ -42,5 +43,7 @@ export class GameScene extends ResizableScene {
     createEffect(() => {
       text.setText(`Hello World ${counter()}`);
     });
+
+    new TileSprite(this, 100, 100);
   }
 }

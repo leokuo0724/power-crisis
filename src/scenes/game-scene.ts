@@ -43,7 +43,5 @@ export class GameScene extends ResizableScene {
     createEffect(() => {
       text.setText(`Hello World ${counter()}`);
     });
-
-    new TileSprite(this, 100, 100);
   }
 }

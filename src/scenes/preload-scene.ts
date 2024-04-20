@@ -32,6 +32,11 @@ export class PreloadScene extends ResizableScene {
     this._drawTile(graphics, COLORS.GREEN_5, TEXTURE_KEYS.GREEN_5_TILE);
     this._drawButtonBg(graphics, COLORS.BLUE_5, TEXTURE_KEYS.BLUE_5_BUTTON_BG);
     this._drawButtonBg(graphics, COLORS.DARK_5, TEXTURE_KEYS.DARK_5_BUTTON_BG);
+    this._drawButtonBg(
+      graphics,
+      COLORS.WHITE_7,
+      TEXTURE_KEYS.WHITE_7_BUTTON_BG
+    );
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);

@@ -5,8 +5,9 @@ import { TEXTURE_KEYS } from "~/constants/texture-keys";
 export abstract class CustomButton extends Phaser.GameObjects.Container {
   private buttonBg: Phaser.GameObjects.Image;
   private text: Phaser.GameObjects.Text;
+  protected isDisabled = false;
 
-  protected abstract onClick(): void;
+  public abstract onClick(): void;
 
   constructor(scene: Phaser.Scene, x: number, y: number, text: string) {
     super(scene, x, y);
@@ -27,13 +28,25 @@ export abstract class CustomButton extends Phaser.GameObjects.Container {
     this.setSize(this.buttonBg.width, this.buttonBg.height);
     this.setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+        if (this.isDisabled) return;
         this.buttonBg.setTexture(TEXTURE_KEYS.DARK_5_BUTTON_BG);
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+        if (this.isDisabled) return;
         this.buttonBg.setTexture(TEXTURE_KEYS.BLUE_5_BUTTON_BG);
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        if (this.isDisabled) return;
         this.onClick();
       });
+  }
+
+  setDisabled(isDisabled: boolean) {
+    this.isDisabled = isDisabled;
+    this.buttonBg.setTexture(
+      isDisabled
+        ? TEXTURE_KEYS.WHITE_7_BUTTON_BG
+        : TEXTURE_KEYS.BLUE_5_BUTTON_BG
+    );
   }
 }

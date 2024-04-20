@@ -1,6 +1,12 @@
 import { Scene } from "phaser";
-import { DICE_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
+import { DICE_KEYS, ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { RollDiceButton } from "./ui/roll-dice-button";
+
+const DICE_NUM_TEXTURE_MAP: Record<number, string> = {
+  1: DICE_KEYS.DICE_1,
+  2: DICE_KEYS.DICE_2,
+  3: DICE_KEYS.DICE_3,
+};
 
 export class DiceSet extends Phaser.GameObjects.Container {
   private dice: Phaser.GameObjects.Sprite;
@@ -18,8 +24,30 @@ export class DiceSet extends Phaser.GameObjects.Container {
       DICE_KEYS.DICE_1
     );
     this.button = new RollDiceButton(scene, 0, 48);
+    this.button.onClick = async () => {
+      this.button.setDisabled(true);
+      const diceResult = await this.rollDice();
+    };
 
-    // TODO: roll button
     this.add([this.dice, this.button]);
+  }
+
+  private rollDice() {
+    return new Promise<number>((resolve) => {
+      let counter = 0;
+      const timer = setInterval(() => {
+        this.dice.setTexture(
+          IMAGE_KEYS.DICE,
+          DICE_NUM_TEXTURE_MAP[(counter % 3) + 1]
+        );
+        counter++;
+        if (counter === 10) {
+          const num = Phaser.Math.RND.pick([1, 2, 3]);
+          this.dice.setTexture(IMAGE_KEYS.DICE, DICE_NUM_TEXTURE_MAP[num]);
+          clearInterval(timer);
+          resolve(num);
+        }
+      }, 50);
+    });
   }
 }

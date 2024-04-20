@@ -1,17 +1,19 @@
 import { createEffect } from "solid-js";
 import { counter, setCounter } from "../states/counter";
-import { ResizableScene } from "./resizable";
+import { ResizableScene } from "../lib/resizable-scene";
+import { SCENE_KEYS } from "~/constants/scene-keys";
+import { FONT_KEYS } from "~/constants/font-keys";
 
 const TEXT_STYLE = {
-  fontFamily: "Arial Black",
+  fontFamily: FONT_KEYS.PASSION_ONE,
   fontSize: 48,
   color: "#ffffff",
   align: "center",
 };
 
-export class Main extends ResizableScene {
+export class GameScene extends ResizableScene {
   constructor() {
-    super("Game");
+    super(SCENE_KEYS.GAME);
   }
 
   create() {

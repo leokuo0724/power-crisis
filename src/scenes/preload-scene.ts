@@ -65,7 +65,35 @@ export class PreloadScene extends ResizableScene {
       COLORS.WHITE_7,
       TEXTURE_KEYS.WHITE_7_BUTTON_BG
     );
-    this._drawBg(graphics, 575, 272, COLORS.BLUE_5, TEXTURE_KEYS.BLUE_5_BG);
+    this._drawBg(
+      graphics,
+      575,
+      272,
+      COLORS.BLUE_5,
+      TEXTURE_KEYS.BLUE_5_DIALOG_BG
+    );
+    this._drawBg(
+      graphics,
+      320,
+      104,
+      COLORS.BLUE_6,
+      TEXTURE_KEYS.BLUE_6_BOARD_BG
+    );
+    this._drawBg(
+      graphics,
+      320,
+      92,
+      COLORS.BLUE_5,
+      TEXTURE_KEYS.BLUE_5_BOARD_BG
+    );
+    this._drawBg(
+      graphics,
+      320,
+      120,
+      COLORS.BLUE_4,
+      TEXTURE_KEYS.BLUE_4_BOARD_BG
+    );
+    this._drawBg(graphics, 6, 16, COLORS.WHITE_5, TEXTURE_KEYS.WHITE_5_BAR);
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);
@@ -122,10 +150,13 @@ export class PreloadScene extends ResizableScene {
     width: number,
     height: number,
     color: ColorCode,
-    textureKey: string
+    textureKey: string,
+    opacity: number = 1
   ) {
     graphics.clear();
-    graphics.fillStyle(hexToDecimal(color)).fillRect(0, 0, width, height);
+    graphics
+      .fillStyle(hexToDecimal(color), opacity)
+      .fillRect(0, 0, width, height);
     graphics.generateTexture(textureKey, width, height);
   }
 }

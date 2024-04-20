@@ -15,7 +15,7 @@ export abstract class Dialog extends Phaser.GameObjects.Container {
       scene,
       0,
       0,
-      TEXTURE_KEYS.BLUE_5_BG
+      TEXTURE_KEYS.BLUE_5_DIALOG_BG
     ).setOrigin(0.5);
     this.titleText = new Phaser.GameObjects.Text(scene, 0, -88, title, {
       fontFamily: FONT_KEYS.PASSION_ONE,

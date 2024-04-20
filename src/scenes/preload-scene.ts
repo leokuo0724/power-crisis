@@ -6,8 +6,14 @@ import NotoSansSemiBoldFont from "~/assets/fonts/NotoSans-SemiBold.ttf";
 import { hexToDecimal } from "~/lib/utils";
 import { COLORS, ColorCode } from "~/constants/colors";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { ATLAS_KEYS } from "~/constants/atlas-keys";
+import IconsPng from "~/assets/images/icons.png";
+import IconsJson from "~/assets/images/icons.json";
 
 export class PreloadScene extends ResizableScene {
+  private isFontsLoaded = false;
+  private isAssetsLoaded = false;
+
   constructor() {
     super(SCENE_KEYS.PRELOAD);
   }
@@ -15,6 +21,12 @@ export class PreloadScene extends ResizableScene {
   preload() {
     const graphics = new Phaser.GameObjects.Graphics(this);
     this._drawTiles(graphics);
+
+    this.load.atlas(ATLAS_KEYS.ICONS, IconsPng, IconsJson);
+
+    this.load.on("complete", () => {
+      this.isAssetsLoaded = true;
+    });
 
     const loadPassionOneFont = this._loadFont(
       FONT_KEYS.PASSION_ONE,
@@ -27,8 +39,17 @@ export class PreloadScene extends ResizableScene {
     Promise.allSettled([loadPassionOneFont, loadNotoSansFont])
       .catch((error) => console.log(error))
       .finally(() => {
-        this.scene.start(SCENE_KEYS.GAME);
+        this.isFontsLoaded = true;
       });
+  }
+
+  create() {
+    const timer = setInterval(() => {
+      if (this.isFontsLoaded && this.isAssetsLoaded) {
+        clearInterval(timer);
+        this.scene.start(SCENE_KEYS.GAME);
+      }
+    }, 100);
   }
 
   private _loadFont(key: string, path: string) {

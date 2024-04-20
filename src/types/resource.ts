@@ -14,3 +14,8 @@ const RENEWABLE_RESOURCES = {
   WIND: "wind",
   HYDRO: "hydro",
 } as const;
+
+type RenewableResource =
+  (typeof RENEWABLE_RESOURCES)[keyof typeof RENEWABLE_RESOURCES];
+
+export type ResourceType = ConsumableResource | RenewableResource;

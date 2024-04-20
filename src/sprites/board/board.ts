@@ -15,8 +15,6 @@ const MAX_RESOURCE_AMOUNT: Record<ConsumableResource, number> = {
 };
 
 export class Board extends Phaser.GameObjects.Container {
-  public power: number = 20;
-
   private gridMargin: number = 8;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {

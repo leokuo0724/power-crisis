@@ -4,13 +4,6 @@ import { FONT_KEYS } from "~/constants/font-keys";
 import { Board } from "~/sprites/board/board";
 import { PowerDisplay } from "~/sprites/power-display";
 
-const TEXT_STYLE = {
-  fontFamily: FONT_KEYS.PASSION_ONE,
-  fontSize: 48,
-  color: "#ffffff",
-  align: "center",
-};
-
 export class GameScene extends ResizableScene {
   constructor() {
     super(SCENE_KEYS.GAME);

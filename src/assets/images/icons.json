@@ -1,0 +1,209 @@
+{
+	"textures": [
+		{
+			"image": "icons.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 380,
+				"h": 61
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "biomass.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 3,
+						"w": 38,
+						"h": 59
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 38,
+						"h": 59
+					}
+				},
+				{
+					"filename": "lightning.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 4,
+						"w": 44,
+						"h": 56
+					},
+					"frame": {
+						"x": 41,
+						"y": 1,
+						"w": 44,
+						"h": 56
+					}
+				},
+				{
+					"filename": "pickaxe.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 5,
+						"w": 50,
+						"h": 54
+					},
+					"frame": {
+						"x": 87,
+						"y": 1,
+						"w": 50,
+						"h": 54
+					}
+				},
+				{
+					"filename": "natural-gas.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 5,
+						"w": 40,
+						"h": 54
+					},
+					"frame": {
+						"x": 139,
+						"y": 1,
+						"w": 40,
+						"h": 54
+					}
+				},
+				{
+					"filename": "oil.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 5,
+						"w": 40,
+						"h": 53
+					},
+					"frame": {
+						"x": 181,
+						"y": 1,
+						"w": 40,
+						"h": 53
+					}
+				},
+				{
+					"filename": "uranium.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 6,
+						"w": 52,
+						"h": 52
+					},
+					"frame": {
+						"x": 223,
+						"y": 1,
+						"w": 52,
+						"h": 52
+					}
+				},
+				{
+					"filename": "coal.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 7,
+						"w": 48,
+						"h": 50
+					},
+					"frame": {
+						"x": 277,
+						"y": 1,
+						"w": 48,
+						"h": 50
+					}
+				},
+				{
+					"filename": "surprise.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 6,
+						"w": 24,
+						"h": 50
+					},
+					"frame": {
+						"x": 327,
+						"y": 1,
+						"w": 24,
+						"h": 50
+					}
+				},
+				{
+					"filename": "up-arrow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 1,
+						"w": 26,
+						"h": 30
+					},
+					"frame": {
+						"x": 353,
+						"y": 1,
+						"w": 26,
+						"h": 30
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:757a9f82365c447e0075d516a381ea9b:231a2973315eaba5b7ba503adc04c17d:b5c5bd7252d2048fecbb1bda1760f9ef$"
+	}
+}

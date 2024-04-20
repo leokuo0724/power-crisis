@@ -34,8 +34,22 @@ export class PreloadScene extends ResizableScene {
       graphics,
       250,
       80,
+      COLORS.BLUE_4,
+      TEXTURE_KEYS.BLUE_4_BUTTON_BG
+    );
+    this._drawBg(
+      graphics,
+      250,
+      80,
       COLORS.BLUE_5,
       TEXTURE_KEYS.BLUE_5_BUTTON_BG
+    );
+    this._drawBg(
+      graphics,
+      250,
+      80,
+      COLORS.BLUE_6,
+      TEXTURE_KEYS.BLUE_6_BUTTON_BG
     );
     this._drawBg(
       graphics,

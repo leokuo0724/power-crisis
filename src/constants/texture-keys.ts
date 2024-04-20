@@ -8,7 +8,9 @@ export const TEXTURE_KEYS = {
   ORANGE_6_TILE: "orange-6-tile",
   GREEN_5_TILE: "green-5-tile",
   // ui
+  BLUE_4_BUTTON_BG: "blue-4-button-bg",
   BLUE_5_BUTTON_BG: "blue-5-button-bg",
+  BLUE_6_BUTTON_BG: "blue-6-button-bg",
   DARK_5_BUTTON_BG: "dark-5-button-bg",
   WHITE_7_BUTTON_BG: "white-7-button-bg",
   BLUE_5_BG: "blue-5-bg",

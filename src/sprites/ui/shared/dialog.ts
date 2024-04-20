@@ -1,10 +1,8 @@
-import { createEffect } from "solid-js";
 import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
-import { gameManager } from "~/states/game-manager";
 
-export class Dialog extends Phaser.GameObjects.Container {
+export abstract class Dialog extends Phaser.GameObjects.Container {
   protected dialogBg: Phaser.GameObjects.Image;
   protected titleText: Phaser.GameObjects.Text;
   private hiddenX: number;
@@ -24,15 +22,10 @@ export class Dialog extends Phaser.GameObjects.Container {
       fontSize: 36,
       color: COLORS.WHITE_5,
     }).setOrigin(0.5);
+
     this.add([this.dialogBg, this.titleText]);
 
     this.setSize(this.dialogBg.width, this.dialogBg.height);
-
-    createEffect(() => {
-      if (gameManager.currentTileResourceMetadata) {
-        this.show();
-      }
-    });
   }
 
   show() {

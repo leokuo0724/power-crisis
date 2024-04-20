@@ -8,6 +8,7 @@ type GameManager = {
   currentTileResourceMetadata: ResourceMetadata | null;
   costUnit: Record<ConsumableResource, number>;
   collectUnit: Record<ConsumableResource, number>;
+  isNextRollEnabled: boolean;
 };
 
 export const [gameManager, setGameManager] = createStore<GameManager>({
@@ -28,4 +29,5 @@ export const [gameManager, setGameManager] = createStore<GameManager>({
     uranium: 1,
     biomass: Infinity,
   },
+  isNextRollEnabled: true,
 });

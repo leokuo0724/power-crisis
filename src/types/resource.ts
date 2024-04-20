@@ -1,3 +1,5 @@
+import { ICON_KEYS } from "~/constants/image-keys";
+
 export const CONSUMABLE_RESOURCES = {
   COAL: "coal",
   NATURAL_GAS: "natural_gas",
@@ -19,3 +21,11 @@ type RenewableResource =
   (typeof RENEWABLE_RESOURCES)[keyof typeof RENEWABLE_RESOURCES];
 
 export type ResourceType = ConsumableResource | RenewableResource;
+
+export const RESOURCE_TEXTURE_MAP: Record<ConsumableResource, string> = {
+  [CONSUMABLE_RESOURCES.COAL]: ICON_KEYS.COAL,
+  [CONSUMABLE_RESOURCES.NATURAL_GAS]: ICON_KEYS.NATURAL_GAS,
+  [CONSUMABLE_RESOURCES.OIL]: ICON_KEYS.OIL,
+  [CONSUMABLE_RESOURCES.URANIUM]: ICON_KEYS.URANIUM,
+  [CONSUMABLE_RESOURCES.BIOMASS]: ICON_KEYS.BIOMASS,
+};

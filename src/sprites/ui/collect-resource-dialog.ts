@@ -1,19 +1,13 @@
-import { createEffect } from "solid-js";
+import { batch, createEffect } from "solid-js";
 import { Button } from "./shared/button";
 import { Dialog } from "./shared/dialog";
-import { gameManager } from "~/states/game-manager";
+import { gameManager, setGameManager } from "~/states/game-manager";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
-import { ConsumableResource } from "~/types/resource";
+import { ConsumableResource, RESOURCE_TEXTURE_MAP } from "~/types/resource";
 
-const RESOURCE_TYPE_MAP: Record<ConsumableResource, string> = {
-  coal: ICON_KEYS.COAL,
-  natural_gas: ICON_KEYS.NATURAL_GAS,
-  oil: ICON_KEYS.OIL,
-  uranium: ICON_KEYS.URANIUM,
-  biomass: ICON_KEYS.BIOMASS,
-};
+const COLLECT_RESOURCE_DIALOG_TITLE = "Do you want to collect resource?";
 
 export class CollectRecourseDialog extends Dialog {
   private skipButton: SkipButton;
@@ -24,7 +18,7 @@ export class CollectRecourseDialog extends Dialog {
   private gainText: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, "Do you want to collect resource?");
+    super(scene, x, y, COLLECT_RESOURCE_DIALOG_TITLE);
     this.scene.add.existing(this);
 
     this.skipButton = new SkipButton(scene, -100, 84);
@@ -66,17 +60,36 @@ export class CollectRecourseDialog extends Dialog {
     createEffect(() => {
       if (gameManager.currentTileResourceMetadata) {
         if (gameManager.currentTileResourceMetadata.currentAmount > 0) {
+          this._resetDialog();
           const resourceType = gameManager.currentTileResourceMetadata.type;
           this.costText.setText(`-${gameManager.costUnit[resourceType]}`);
           this.resourceIcon.setTexture(
             IMAGE_KEYS.ICONS,
-            RESOURCE_TYPE_MAP[resourceType]
+            RESOURCE_TEXTURE_MAP[resourceType]
           );
           this.gainText.setText(`+${gameManager.collectUnit[resourceType]}`);
+        } else {
+          this.titleText.setText("There is no resource to collect. :(");
+          this.collectButton.setDisabled(true);
+          this.lightningIcon.setVisible(false);
+          this.costText.setVisible(false);
+          this.resourceIcon.setVisible(false);
+          this.gainText.setVisible(false);
         }
         this.show();
+      } else {
+        this.hide();
       }
     });
+  }
+
+  private _resetDialog() {
+    this.titleText.setText(COLLECT_RESOURCE_DIALOG_TITLE);
+    this.collectButton.setDisabled(false);
+    this.lightningIcon.setVisible(true);
+    this.costText.setVisible(true);
+    this.resourceIcon.setVisible(true);
+    this.gainText.setVisible(true);
   }
 }
 
@@ -86,7 +99,12 @@ class SkipButton extends Button {
     this.setScale(0.7);
   }
 
-  public onClick(): void {}
+  public onClick(): void {
+    batch(() => {
+      setGameManager("currentTileResourceMetadata", null);
+      setGameManager("isNextRollEnabled", true);
+    });
+  }
 }
 
 class CollectButton extends Button {

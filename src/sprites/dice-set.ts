@@ -1,7 +1,8 @@
 import { Scene } from "phaser";
 import { DICE_KEYS, ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { RollDiceButton } from "./ui/roll-dice-button";
-import { setGameManager } from "~/states/game-manager";
+import { gameManager, setGameManager } from "~/states/game-manager";
+import { createEffect } from "solid-js";
 
 const DICE_NUM_TEXTURE_MAP: Record<number, string> = {
   1: DICE_KEYS.DICE_1,
@@ -26,7 +27,7 @@ export class DiceSet extends Phaser.GameObjects.Container {
     );
     this.button = new RollDiceButton(scene, 0, 48);
     this.button.onClick = async () => {
-      this.button.setDisabled(true);
+      setGameManager("isNextRollEnabled", false);
       const diceResult = await this.rollDice();
       setGameManager("currentTileIndex", (prev) => {
         const next = prev + diceResult;
@@ -38,6 +39,14 @@ export class DiceSet extends Phaser.GameObjects.Container {
     };
 
     this.add([this.dice, this.button]);
+
+    createEffect(() => {
+      if (gameManager.isNextRollEnabled) {
+        this.button.setDisabled(false);
+      } else {
+        this.button.setDisabled(true);
+      }
+    });
   }
 
   private rollDice() {

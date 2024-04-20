@@ -1,6 +1,10 @@
 import { Scene } from "phaser";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
-import { CONSUMABLE_RESOURCES, ConsumableResource } from "~/types/resource";
+import {
+  CONSUMABLE_RESOURCES,
+  ConsumableResource,
+  RESOURCE_TEXTURE_MAP,
+} from "~/types/resource";
 import { TileBasic } from "./common";
 import { IMAGE_KEYS, ICON_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
@@ -18,14 +22,6 @@ const RESOURCE_GRID_TEXTURE_MAP: Record<ConsumableResource, string> = {
   [CONSUMABLE_RESOURCES.OIL]: TEXTURE_KEYS.BROWN_4_TILE,
   [CONSUMABLE_RESOURCES.URANIUM]: TEXTURE_KEYS.ORANGE_6_TILE,
   [CONSUMABLE_RESOURCES.BIOMASS]: TEXTURE_KEYS.GREEN_5_TILE,
-};
-
-const RESOURCE_TEXTURE_MAP: Record<ConsumableResource, string> = {
-  [CONSUMABLE_RESOURCES.COAL]: ICON_KEYS.COAL,
-  [CONSUMABLE_RESOURCES.NATURAL_GAS]: ICON_KEYS.NATURAL_GAS,
-  [CONSUMABLE_RESOURCES.OIL]: ICON_KEYS.OIL,
-  [CONSUMABLE_RESOURCES.URANIUM]: ICON_KEYS.URANIUM,
-  [CONSUMABLE_RESOURCES.BIOMASS]: ICON_KEYS.BIOMASS,
 };
 
 export class ResourceTileSprite extends TileBasic {

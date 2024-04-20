@@ -64,6 +64,7 @@
 
 @layer base {
   * {
+    font-family: "Passion One", sans-serif;
     font-size: 2vw;
   }
   body {

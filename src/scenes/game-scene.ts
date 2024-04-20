@@ -3,9 +3,11 @@ import { SCENE_KEYS } from "~/constants/scene-keys";
 import { Board } from "~/sprites/board/board";
 import { PowerDisplay } from "~/sprites/power-display";
 import { Marker } from "~/sprites/marker";
-import { createEffect } from "solid-js";
-import { gameManager } from "~/states/game-manager";
+import { Resource, createEffect } from "solid-js";
+import { gameManager, setGameManager } from "~/states/game-manager";
 import { DiceSet } from "~/sprites/dice-set";
+import { ResourceTileSprite } from "~/sprites/tiles/resource-tile";
+import { CollectRecourseDialog } from "~/sprites/ui/collect-resource-dialog";
 
 export class GameScene extends ResizableScene {
   marker!: Marker;
@@ -33,8 +35,10 @@ export class GameScene extends ResizableScene {
     );
 
     new DiceSet(this, centerX + 750, centerY + 360);
+    new CollectRecourseDialog(this, 2 * centerX + 288, centerY + 340);
 
     createEffect(async () => {
+      // Move marker based on current tile index
       const bounds = this.board.getTileBoundsByIndex(
         gameManager.currentTileIndex
       );
@@ -42,6 +46,15 @@ export class GameScene extends ResizableScene {
         bounds.centerX - this.markerOffsetX,
         bounds.centerY - this.markerOffsetY
       );
+
+      if (gameManager.currentTileIndex === 0 && gameManager.round === 1) return;
+      const tile = this.board.getTargetTile(gameManager.currentTileIndex);
+      switch (tile.tileType) {
+        case "resource":
+          const resourceTile = tile as ResourceTileSprite;
+          setGameManager("currentTileResourceMetadata", resourceTile.resource);
+          break;
+      }
     });
   }
 }

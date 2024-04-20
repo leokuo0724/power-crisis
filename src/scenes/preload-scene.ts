@@ -30,13 +30,28 @@ export class PreloadScene extends ResizableScene {
     this._drawTile(graphics, COLORS.DARK_5, TEXTURE_KEYS.DARK_5_TILE);
     this._drawTile(graphics, COLORS.ORANGE_6, TEXTURE_KEYS.ORANGE_6_TILE);
     this._drawTile(graphics, COLORS.GREEN_5, TEXTURE_KEYS.GREEN_5_TILE);
-    this._drawButtonBg(graphics, COLORS.BLUE_5, TEXTURE_KEYS.BLUE_5_BUTTON_BG);
-    this._drawButtonBg(graphics, COLORS.DARK_5, TEXTURE_KEYS.DARK_5_BUTTON_BG);
-    this._drawButtonBg(
+    this._drawBg(
       graphics,
+      250,
+      80,
+      COLORS.BLUE_5,
+      TEXTURE_KEYS.BLUE_5_BUTTON_BG
+    );
+    this._drawBg(
+      graphics,
+      250,
+      80,
+      COLORS.DARK_5,
+      TEXTURE_KEYS.DARK_5_BUTTON_BG
+    );
+    this._drawBg(
+      graphics,
+      250,
+      80,
       COLORS.WHITE_7,
       TEXTURE_KEYS.WHITE_7_BUTTON_BG
     );
+    this._drawBg(graphics, 575, 272, COLORS.BLUE_5, TEXTURE_KEYS.BLUE_5_BG);
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);
@@ -88,14 +103,14 @@ export class PreloadScene extends ResizableScene {
     graphics.generateTexture(textureKey, width, height);
   }
 
-  private _drawButtonBg(
+  private _drawBg(
     graphics: Phaser.GameObjects.Graphics,
+    width: number,
+    height: number,
     color: ColorCode,
     textureKey: string
   ) {
     graphics.clear();
-    const width = 250;
-    const height = 80;
     graphics.fillStyle(hexToDecimal(color)).fillRect(0, 0, width, height);
     graphics.generateTexture(textureKey, width, height);
   }

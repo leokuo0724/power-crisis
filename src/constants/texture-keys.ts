@@ -11,4 +11,5 @@ export const TEXTURE_KEYS = {
   BLUE_5_BUTTON_BG: "blue-5-button-bg",
   DARK_5_BUTTON_BG: "dark-5-button-bg",
   WHITE_7_BUTTON_BG: "white-7-button-bg",
+  BLUE_5_BG: "blue-5-bg",
 } as const;

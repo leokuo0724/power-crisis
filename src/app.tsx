@@ -22,7 +22,7 @@ export const App: Component = () => {
   return (
     <>
       <div ref={topLeftRef} class="absolute top-0 left-0"></div>
-      <div ref={bottomRightRef} class="absolute bottom-0 right-0 "></div>
+      <div ref={bottomRightRef} class="absolute bottom-0 right-0"></div>
     </>
   );
 };

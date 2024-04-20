@@ -8,11 +8,7 @@ export class Marker extends Phaser.GameObjects.Sprite {
     super(scene, x, y, IMAGE_KEYS.MARKER);
     scene.add.existing(this);
 
-    this.upAndDownTween = this._resetUpAndDownTween();
-  }
-
-  private _resetUpAndDownTween() {
-    return this.scene.tweens.add({
+    this.upAndDownTween = this.scene.tweens.add({
       targets: this,
       y: "-=10",
       duration: 700,
@@ -30,7 +26,14 @@ export class Marker extends Phaser.GameObjects.Sprite {
         duration: 1000,
         repeat: 0,
         onComplete: () => {
-          this.upAndDownTween = this._resetUpAndDownTween();
+          this.upAndDownTween.destroy();
+          this.upAndDownTween = this.scene.tweens.add({
+            targets: this,
+            y: "-=10",
+            duration: 700,
+            yoyo: true,
+            repeat: -1,
+          });
           resolve();
         },
       });

@@ -2,7 +2,7 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 
-export abstract class CustomButton extends Phaser.GameObjects.Container {
+export abstract class Button extends Phaser.GameObjects.Container {
   private buttonBg: Phaser.GameObjects.Image;
   private text: Phaser.GameObjects.Text;
   protected isDisabled = false;

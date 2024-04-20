@@ -82,4 +82,10 @@ export class Board extends Phaser.GameObjects.Container {
     if (!tile) throw new Error(`Tile with index ${index} not found`);
     return tile.getBounds();
   }
+
+  public getTargetTile(index: number) {
+    return this.list.find(
+      (obj) => obj instanceof TileBasic && obj.index === index
+    ) as TileBasic;
+  }
 }

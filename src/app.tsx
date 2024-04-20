@@ -2,16 +2,17 @@ import { createEffect, type Component } from "solid-js";
 import { resizeCounter } from "./states/screen";
 
 export const App: Component = () => {
-  let ref: HTMLDivElement | undefined;
+  let topLeftRef: HTMLDivElement | undefined;
+  let bottomRightRef: HTMLDivElement | undefined;
 
   const resizeApp = () => {
     const style = document.querySelector("canvas")?.style;
-    if (!ref || !style) return;
+    if (!topLeftRef || !bottomRightRef || !style) return;
 
-    ref.style.width = style.width;
-    ref.style.height = style.height;
-    ref.style.marginLeft = style.marginLeft;
-    ref.style.marginTop = style.marginTop;
+    topLeftRef.style.marginLeft = style.marginLeft;
+    topLeftRef.style.marginTop = style.marginTop;
+    bottomRightRef.style.marginBottom = style.marginTop;
+    bottomRightRef.style.marginRight = style.marginLeft;
   };
 
   createEffect(() => {
@@ -19,9 +20,9 @@ export const App: Component = () => {
   });
 
   return (
-    <div class="absolute" ref={ref}>
-      <span class="absolute top-0 left-0"></span>
-      <div class="absolute bottom-0 right-0"></div>
-    </div>
+    <>
+      <div ref={topLeftRef} class="absolute top-0 left-0"></div>
+      <div ref={bottomRightRef} class="absolute bottom-0 right-0 "></div>
+    </>
   );
 };

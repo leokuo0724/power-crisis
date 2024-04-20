@@ -3,6 +3,7 @@ export const COLORS = {
   WHITE_6: "#d5d6db",
   BLUE_5: "#6C81A1",
   BLUE_6: "#405273",
+  BLUE_7: "#14233A",
   BROWN_4: "#7A5859",
   BROWN_6: "#593E47",
   YELLOW_7: "#A57855",

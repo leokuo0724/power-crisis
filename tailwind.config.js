@@ -16,6 +16,7 @@ module.exports = {
         "white-6": "var(--white-6)",
         "blue-5": "var(--blue-5)",
         "blue-6": "var(--blue-6)",
+        "blue-7": "var(--blue-7)",
         "brown-4": "var(--brown-4)",
         "brown-6": "var(--brown-6)",
         "yellow-7": "var(--yellow-7)",

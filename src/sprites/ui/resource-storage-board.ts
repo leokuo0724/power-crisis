@@ -3,6 +3,7 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { IMAGE_KEYS } from "~/constants/image-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { gameManager } from "~/states/game-manager";
 import {
   CONSUMABLE_RESOURCES,
   ConsumableResource,
@@ -48,13 +49,13 @@ export class ResourceStorageBoard extends Phaser.GameObjects.Container {
     this.uraniumSet = new ResourceSet(
       scene,
       -108,
-      36,
+      32,
       CONSUMABLE_RESOURCES.URANIUM
     );
     this.biomassSet = new ResourceSet(
       scene,
       -24,
-      36,
+      32,
       CONSUMABLE_RESOURCES.BIOMASS
     );
 
@@ -67,6 +68,29 @@ export class ResourceStorageBoard extends Phaser.GameObjects.Container {
       this.uraniumSet,
       this.biomassSet,
     ]);
+
+    createEffect(() => {
+      this.coalSet.updateAmount(
+        gameManager.resourceStorage.coal.current,
+        gameManager.resourceStorage.coal.max
+      );
+      this.oilSet.updateAmount(
+        gameManager.resourceStorage.oil.current,
+        gameManager.resourceStorage.oil.max
+      );
+      this.naturalGasSet.updateAmount(
+        gameManager.resourceStorage.natural_gas.current,
+        gameManager.resourceStorage.natural_gas.max
+      );
+      this.uraniumSet.updateAmount(
+        gameManager.resourceStorage.uranium.current,
+        gameManager.resourceStorage.uranium.max
+      );
+      this.biomassSet.updateAmount(
+        gameManager.resourceStorage.biomass.current,
+        gameManager.resourceStorage.biomass.max
+      );
+    });
   }
 }
 
@@ -88,12 +112,16 @@ class ResourceSet extends Phaser.GameObjects.Container {
       IMAGE_KEYS.ICONS,
       RESOURCE_TEXTURE_MAP[resourceType]
     ).setScale(0.4);
-    this.amountText = new Phaser.GameObjects.Text(scene, 32, 0, "0/0", {
+    this.amountText = new Phaser.GameObjects.Text(scene, 18, 0, "0/0", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 24,
       color: COLORS.WHITE_5,
-    }).setOrigin(0.5);
+    }).setOrigin(0, 0.5);
 
     this.add([icon, this.amountText]);
+  }
+
+  updateAmount(current: number, max: number) {
+    this.amountText.setText(`${current}/${max}`);
   }
 }

@@ -1,6 +1,6 @@
 import { ResourceType } from "./resource";
 
-const POWER_PLANT_TYPES = {
+export const POWER_PLANT_TYPES = {
   THERMAL: "thermal",
   NUCLEAR: "nuclear",
   SOLAR: "solar",
@@ -9,7 +9,7 @@ const POWER_PLANT_TYPES = {
   BIOMASS: "biomass",
 } as const;
 
-type PowerPlantType =
+export type PowerPlantType =
   (typeof POWER_PLANT_TYPES)[keyof typeof POWER_PLANT_TYPES];
 
 export type PowerPlantInfo = {

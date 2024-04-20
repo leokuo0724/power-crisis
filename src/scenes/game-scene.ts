@@ -9,6 +9,7 @@ import { DiceSet } from "~/sprites/dice-set";
 import { ResourceTileSprite } from "~/sprites/tiles/resource-tile";
 import { CollectRecourseDialog } from "~/sprites/ui/collect-resource-dialog";
 import { GameInfoBoard } from "~/sprites/ui/game-info-board";
+import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
 
 export class GameScene extends ResizableScene {
   marker!: Marker;
@@ -38,6 +39,15 @@ export class GameScene extends ResizableScene {
     new DiceSet(this, centerX + 750, centerY + 360);
     new CollectRecourseDialog(this, 2 * centerX + 288, centerY + 340);
     new GameInfoBoard(this, 146, 100);
+    new PowerPlantCard(this, centerX, centerY, {
+      type: "thermal",
+      buildCost: 1,
+      powerGain: {
+        resourceType: "coal",
+        cost: 1,
+        gain: 1,
+      },
+    });
 
     createEffect(async () => {
       // Move marker based on current tile index

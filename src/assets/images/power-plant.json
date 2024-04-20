@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "power-plant.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 130,
+				"h": 124
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "power-plant-thermal.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 14,
+						"w": 128,
+						"h": 122
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 128,
+						"h": 122
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ba6cc44025694c699dd98ea0109ca203:2311a52276562fc74f5c1b503b6dfe57:f1d33477c17b404e1034dff0fd3cf254$"
+	}
+}

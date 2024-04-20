@@ -12,6 +12,10 @@ import IconsJson from "~/assets/images/icons.json";
 import MarkerPng from "~/assets/images/marker.png";
 import DicePng from "~/assets/images/dice.png";
 import DiceJson from "~/assets/images/dice.json";
+import CardPng from "~/assets/images/card.png";
+import CardJson from "~/assets/images/card.json";
+import PowerPlantPng from "~/assets/images/power-plant.png";
+import PowerPlantJson from "~/assets/images/power-plant.json";
 
 export class PreloadScene extends ResizableScene {
   private isFontsLoaded = false;
@@ -97,6 +101,8 @@ export class PreloadScene extends ResizableScene {
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);
+    this.load.atlas(IMAGE_KEYS.CARD, CardPng, CardJson);
+    this.load.atlas(IMAGE_KEYS.POWER_PLANT, PowerPlantPng, PowerPlantJson);
     this.load.image(IMAGE_KEYS.MARKER, MarkerPng);
 
     this.load.on("complete", () => {

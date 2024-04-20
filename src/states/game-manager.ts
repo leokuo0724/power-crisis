@@ -9,6 +9,7 @@ type GameManager = {
   costUnit: Record<ConsumableResource, number>;
   collectUnit: Record<ConsumableResource, number>;
   resourceStorage: Record<ConsumableResource, { current: number; max: number }>;
+  currentPower: number;
   isNextRollEnabled: boolean;
 };
 
@@ -37,5 +38,6 @@ export const [gameManager, setGameManager] = createStore<GameManager>({
     uranium: { current: 0, max: 3 },
     biomass: { current: 0, max: 3 },
   },
+  currentPower: 20,
   isNextRollEnabled: true,
 });

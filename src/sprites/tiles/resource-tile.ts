@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { CONSUMABLE_RESOURCES, ConsumableResource } from "~/types/resource";
 import { TileBasic } from "./common";
-import { ATLAS_KEYS, ICON_KEYS } from "~/constants/atlas-keys";
+import { IMAGE_KEYS, ICON_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 
@@ -48,7 +48,7 @@ export class ResourceTileSprite extends TileBasic {
       this.scene,
       0,
       0,
-      ATLAS_KEYS.ICONS,
+      IMAGE_KEYS.ICONS,
       RESOURCE_TEXTURE_MAP[resource.type]
     );
     this.amountText = new Phaser.GameObjects.Text(

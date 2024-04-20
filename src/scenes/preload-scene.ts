@@ -6,9 +6,10 @@ import NotoSansSemiBoldFont from "~/assets/fonts/NotoSans-SemiBold.ttf";
 import { hexToDecimal } from "~/lib/utils";
 import { COLORS, ColorCode } from "~/constants/colors";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
-import { ATLAS_KEYS } from "~/constants/atlas-keys";
+import { IMAGE_KEYS } from "~/constants/image-keys";
 import IconsPng from "~/assets/images/icons.png";
 import IconsJson from "~/assets/images/icons.json";
+import MarkerPng from "~/assets/images/marker.png";
 
 export class PreloadScene extends ResizableScene {
   private isFontsLoaded = false;
@@ -22,7 +23,8 @@ export class PreloadScene extends ResizableScene {
     const graphics = new Phaser.GameObjects.Graphics(this);
     this._drawTiles(graphics);
 
-    this.load.atlas(ATLAS_KEYS.ICONS, IconsPng, IconsJson);
+    this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
+    this.load.image(IMAGE_KEYS.MARKER, MarkerPng);
 
     this.load.on("complete", () => {
       this.isAssetsLoaded = true;

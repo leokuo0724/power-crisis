@@ -1,5 +1,6 @@
-export const ATLAS_KEYS = {
+export const IMAGE_KEYS = {
   ICONS: "icons",
+  MARKER: "marker",
 };
 
 export const ICON_KEYS = {

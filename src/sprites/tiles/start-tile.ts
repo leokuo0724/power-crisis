@@ -1,6 +1,6 @@
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { TileBasic } from "./common";
-import { ATLAS_KEYS, ICON_KEYS } from "~/constants/atlas-keys";
+import { IMAGE_KEYS, ICON_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 
@@ -13,7 +13,7 @@ export class StartTile extends TileBasic {
       this.scene,
       0,
       -12,
-      ATLAS_KEYS.ICONS,
+      IMAGE_KEYS.ICONS,
       ICON_KEYS.UP_ARROW
     );
 

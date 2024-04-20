@@ -1,6 +1,6 @@
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { TileBasic } from "./common";
-import { ATLAS_KEYS, ICON_KEYS } from "~/constants/atlas-keys";
+import { IMAGE_KEYS, ICON_KEYS } from "~/constants/image-keys";
 
 export class SurpriseTile extends TileBasic {
   constructor(scene: Phaser.Scene, x: number, y: number, index: number) {
@@ -11,7 +11,7 @@ export class SurpriseTile extends TileBasic {
       this.scene,
       0,
       0,
-      ATLAS_KEYS.ICONS,
+      IMAGE_KEYS.ICONS,
       ICON_KEYS.SURPRISE
     );
     this.add(image);

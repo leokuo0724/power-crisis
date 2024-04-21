@@ -62,7 +62,13 @@ export class CollectRecourseDialog extends Dialog {
       () => {
         const gm = GameManager.getInstance();
         if (gm.currentTileResourceMetadata) {
-          if (gm.currentTileResourceMetadata.currentAmount > 0) {
+          const isFullStorage =
+            gm.resourceStorage[gm.currentTileResourceMetadata.type].current >=
+            gm.resourceStorage[gm.currentTileResourceMetadata.type].max;
+          if (
+            gm.currentTileResourceMetadata.currentAmount > 0 &&
+            !isFullStorage
+          ) {
             const resourceType = gm.currentTileResourceMetadata.type;
             this.costText.setText(`-${gm.costUnit[resourceType]}`);
             this.resourceIcon.setTexture(
@@ -75,7 +81,7 @@ export class CollectRecourseDialog extends Dialog {
             );
             this.gainText.setText(`+${collectableAmount}`);
           } else {
-            this.titleText.setText("There is no resource to collect. :(");
+            this.titleText.setText("Unable to collect. :(");
             this.collectButton.setDisabled(true);
             this.lightningIcon.setVisible(false);
             this.costText.setVisible(false);

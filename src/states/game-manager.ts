@@ -78,14 +78,19 @@ export class GameManager {
     const metadata = this.currentTileResourceMetadata;
     if (!metadata) throw new Error("No resource to collect");
 
+    // cost by power
     this.currentPower -= this.costUnit[metadata.type];
     this.emitter.emit(EVENTS.POWER_UPDATED);
 
+    // add resource to storage
     const collectedAmount = Math.min(
       metadata.currentAmount,
       this.collectUnit[metadata.type]
     );
-    this.resourceStorage[metadata.type].current += collectedAmount;
+    this.resourceStorage[metadata.type].current = Math.min(
+      this.resourceStorage[metadata.type].current + collectedAmount,
+      this.resourceStorage[metadata.type].max
+    );
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
 
     metadata.currentAmount =

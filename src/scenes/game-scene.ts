@@ -13,11 +13,13 @@ import { CardSelectScreen } from "~/sprites/ui/card-select-screen";
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { EmptyPowerPlantDialog } from "~/sprites/ui/empty-power-plant-dialog";
 import { BuildModeDialog } from "~/sprites/ui/build-mode-dialog";
+import { Overlay } from "~/sprites/ui/overlay";
 
 export class GameScene extends Scene {
   marker!: Marker;
   board!: Board;
   powerDisplay!: PowerDisplay;
+  overlay!: Overlay;
 
   private markerOffsetX = 24;
   private markerOffsetY = 36;
@@ -48,6 +50,7 @@ export class GameScene extends Scene {
     new CardSelectScreen(this, centerX, centerY);
 
     new EmptyPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
+    new Overlay(this, centerX, centerY);
     new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
 
     const gm = GameManager.getInstance();

@@ -1,4 +1,5 @@
 import { COLORS } from "~/constants/colors";
+import { DEPTH } from "~/constants/depth";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { CARD_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { EVENTS, GameManager } from "~/states/game-manager";
@@ -100,7 +101,9 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       badge,
       name,
     ]);
-    this.setSize(this.bg.width, this.bg.height).setInteractive();
+    this.setDepth(DEPTH.CARD)
+      .setSize(this.bg.width, this.bg.height)
+      .setInteractive();
 
     if (
       info.powerGain.resourceType === CONSUMABLE_RESOURCES.COAL ||
@@ -140,9 +143,23 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
-      if (this.stage !== "table") return;
-      this.switchMode(gm.isBuildMode ? "build" : "table");
+      if (gm.isBuildMode) {
+        this.switchMode("build");
+      } else {
+        this.switchMode("table");
+        this.setAlpha(1);
+      }
     });
+    gm.emitter.on(
+      EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
+      (id: string) => {
+        if (id === this.info.id && this.stage === "build") {
+          this.setAlpha(1);
+        } else {
+          this.setAlpha(0.5);
+        }
+      }
+    );
   }
 
   onPointerOver() {

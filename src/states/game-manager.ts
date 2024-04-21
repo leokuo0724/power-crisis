@@ -117,12 +117,13 @@ export class GameManager {
     this.currentTilePowerPlantTile = tile;
     this.emitter.emit(EVENTS.CURRENT_TILE_POWER_PLANT_TILE_UPDATED);
   }
-  updateBuildMode(isBuildMode: boolean) {
+  updateBuildMode(isBuildMode: boolean, id?: string) {
     this.isBuildMode = isBuildMode;
     this.emitter.emit(EVENTS.BUILD_MODE_UPDATED);
+    if (id) this.updateSelectedPowerPlantToBuildId(id);
   }
-  updateSelectedPowerPlantToBuildId(id: string | null) {
+  updateSelectedPowerPlantToBuildId(id: string) {
     this.selectedPowerPlantToBuildId = id;
-    this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED);
+    this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED, id);
   }
 }

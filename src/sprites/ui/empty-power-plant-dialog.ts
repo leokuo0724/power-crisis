@@ -7,7 +7,7 @@ export class EmptyPowerPlantDialog extends Dialog {
   private passButton: PassButton;
   private buildButton: BuildButton;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y, "Do you want to build a power plant?");
     this.scene.add.existing(this);
 
@@ -42,7 +42,7 @@ export class EmptyPowerPlantDialog extends Dialog {
 }
 
 class PassButton extends Button {
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y, "PASS", "secondary");
     this.setScale(0.7);
     return this;
@@ -54,13 +54,15 @@ class PassButton extends Button {
   }
 }
 class BuildButton extends Button {
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y, "BUILD", "primary");
     this.setScale(0.7);
     return this;
   }
   public onClick(): void {
     const gm = GameManager.getInstance();
-    gm.updateBuildMode(true);
+    const firstCard = (this.scene as GameScene).tablePowerPlantCards[0];
+    if (!firstCard) throw new Error("No card on the table");
+    gm.updateBuildMode(true, firstCard.info.id);
   }
 }

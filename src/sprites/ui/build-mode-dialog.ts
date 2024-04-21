@@ -29,7 +29,10 @@ class CancelButton extends Button {
     this.setScale(0.7);
     return this;
   }
-  public onClick(): void {}
+  public onClick(): void {
+    const gm = GameManager.getInstance();
+    gm.updateBuildMode(false);
+  }
 }
 class ConfirmButton extends Button {
   constructor(scene: Phaser.Scene, x: number, y: number) {

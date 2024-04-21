@@ -32,7 +32,7 @@ export class EmptyPowerPlantDialog extends Dialog {
     gm.emitter.on(EVENTS.NEXT_ROLL_ENABLED, this._reset.bind(this));
     gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
       this.passButton.setDisabled(gm.isBuildMode);
-      this.buildButton.setDisabled(!gm.isBuildMode);
+      this.buildButton.setDisabled(gm.isBuildMode);
     });
   }
 

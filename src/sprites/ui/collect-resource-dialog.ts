@@ -4,8 +4,7 @@ import { EVENTS, GameManager } from "~/states/game-manager";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
-import { ConsumableResource, RESOURCE_TEXTURE_MAP } from "~/types/resource";
-import { Game } from "phaser";
+import { RESOURCE_TEXTURE_MAP } from "~/types/resource";
 
 const COLLECT_RESOURCE_DIALOG_TITLE = "Do you want to collect resource?";
 
@@ -79,7 +78,9 @@ export class CollectRecourseDialog extends Dialog {
               gm.currentTileResourceMetadata.currentAmount,
               gm.collectUnit[resourceType]
             );
-            this.gainText.setText(`+${collectableAmount}`);
+            this.gainText.setText(
+              collectableAmount === Infinity ? "ALL" : `+${collectableAmount}`
+            );
           } else {
             this.titleText.setText("Unable to collect. :(");
             this.collectButton.setDisabled(true);

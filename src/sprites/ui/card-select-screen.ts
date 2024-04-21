@@ -6,6 +6,7 @@ import { PowerPlantCard } from "../cards/power-plant-card";
 import { POWER_PLANT_TYPES } from "~/types/power-plant";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "./shared/button";
+import { GameScene } from "~/scenes/game-scene";
 
 const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
@@ -16,8 +17,9 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
   private picked = new Set<number>();
   private checkedMarkers: Phaser.GameObjects.Image[] = [];
   private startButton: Button;
+  private cards: PowerPlantCard[] = [];
 
-  constructor(scene: Scene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y);
     scene.add.existing(this);
 
@@ -85,6 +87,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     }
 
     this.startButton = new StartButton(scene, 0, 340).setVisible(false);
+    this.startButton.onClick = this._handleStart.bind(this);
 
     this.add([
       bg,
@@ -96,16 +99,23 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
       this.startButton,
     ]);
 
-    this.generateCards();
+    this._generateCards();
   }
 
-  generateCards() {
+  private _generateCards() {
+    const centerX = this.scene.cameras.main.width / 2;
+    const centerY = this.scene.cameras.main.height / 2;
     for (let i = 0; i < 5; i++) {
-      const card = new PowerPlantCard(this.scene, -520 + i * 260, -24, {
-        type: POWER_PLANT_TYPES.THERMAL,
-        buildCost: 1,
-        powerGain: { gain: 1, cost: 1, resourceType: "coal" },
-      });
+      const card = new PowerPlantCard(
+        this.scene,
+        centerX - 520 + i * 260,
+        centerY - 24,
+        {
+          type: POWER_PLANT_TYPES.THERMAL,
+          buildCost: 1,
+          powerGain: { gain: 1, cost: 1, resourceType: "coal" },
+        }
+      );
       card.on("pointerdown", () => {
         if (this.picked.has(i)) {
           this.picked.delete(i);
@@ -116,7 +126,8 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         }
         this._checkButtonValid();
       });
-      this.add(card);
+      this.scene.add.existing(card);
+      this.cards.push(card);
     }
   }
 
@@ -126,6 +137,25 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     } else {
       this.startButton.setVisible(false);
     }
+  }
+
+  private _handleStart() {
+    for (let i = 0; i < 5; i++) {
+      if (!this.picked.has(i)) {
+        this.cards[i].destroy();
+      } else {
+        (this.scene as GameScene).appendTablePowerPlantCards(this.cards[i]);
+      }
+    }
+    this.setVisible(false);
+    this._reset();
+  }
+
+  private _reset() {
+    this.picked.clear();
+    this.cards = [];
+    this.checkedMarkers.forEach((marker) => marker.setVisible(false));
+    this.startButton.setVisible(false);
   }
 }
 

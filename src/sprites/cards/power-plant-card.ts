@@ -18,12 +18,15 @@ const POWER_PLANT_BG_TEXTURE_MAP: Record<PowerPlantType, string> = {
   [POWER_PLANT_TYPES.BIOMASS]: CARD_KEYS.BIOMASS,
 };
 
+type PowerPlantCardStage = "select" | "table" | "built" | "discard";
+
 export class PowerPlantCard extends Phaser.GameObjects.Container {
   info: PowerPlantInfo;
   private bg: Phaser.GameObjects.Image;
   private gainPowerText: Phaser.GameObjects.Text;
   private costResourceText?: Phaser.GameObjects.Text;
   private buildCostText: Phaser.GameObjects.Text;
+  public stage!: PowerPlantCardStage;
 
   constructor(scene: Phaser.Scene, x: number, y: number, info: PowerPlantInfo) {
     super(scene, x, y);
@@ -94,14 +97,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       badge,
       name,
     ]);
-    this.setSize(this.bg.width, this.bg.height)
-      .setInteractive()
-      .on("pointerover", () => {
-        this.setScale(1.05);
-      })
-      .on("pointerout", () => {
-        this.setScale(1);
-      });
+    this.setSize(this.bg.width, this.bg.height).setInteractive();
 
     if (
       info.powerGain.resourceType === CONSUMABLE_RESOURCES.COAL ||
@@ -133,5 +129,36 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       ).setOrigin(0.5);
       this.add([costResourceIcon, this.costResourceText]);
     }
+
+    this.switchMode("select");
+  }
+
+  switchMode(
+    stage: PowerPlantCardStage,
+    config?: { hiddenX: number; hiddenY: number }
+  ) {
+    this.stage = stage;
+
+    this.on("pointerover", () => {
+      if (stage === "select") {
+        this.setScale(1.05);
+      } else if (stage === "table" && config?.hiddenY) {
+        this.scene.tweens.add({
+          targets: this,
+          y: config.hiddenY - 172,
+          duration: 100,
+        });
+      }
+    }).on("pointerout", () => {
+      if (stage === "select") {
+        this.setScale(1);
+      } else if (stage === "table" && config?.hiddenY) {
+        this.scene.tweens.add({
+          targets: this,
+          y: config.hiddenY,
+          duration: 100,
+        });
+      }
+    });
   }
 }

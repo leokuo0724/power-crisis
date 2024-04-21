@@ -19,6 +19,8 @@ export class GameScene extends Scene {
   private markerOffsetX = 24;
   private markerOffsetY = 36;
 
+  tablePowerPlantCards: PowerPlantCard[] = [];
+
   constructor() {
     super(SCENE_KEYS.GAME);
   }
@@ -27,8 +29,8 @@ export class GameScene extends Scene {
     const centerX = this.cameras.main.width / 2;
     const centerY = this.cameras.main.height / 2;
 
-    this.board = new Board(this, centerX, centerY);
-    this.powerDisplay = new PowerDisplay(this, centerX, centerY);
+    this.board = new Board(this, centerX, centerY - 48);
+    this.powerDisplay = new PowerDisplay(this, centerX, centerY - 48);
     const startTileBounds = this.board.getTileBoundsByIndex(0);
     this.marker = new Marker(
       this,
@@ -39,15 +41,6 @@ export class GameScene extends Scene {
     new DiceSet(this, centerX + 750, centerY + 360);
     new CollectRecourseDialog(this, 2 * centerX + 288, centerY + 340);
     new GameInfoBoard(this, 146, 100);
-    new PowerPlantCard(this, centerX, centerY, {
-      type: "thermal",
-      buildCost: 1,
-      powerGain: {
-        resourceType: "coal",
-        cost: 1,
-        gain: 1,
-      },
-    });
 
     new CardSelectScreen(this, centerX, centerY);
 
@@ -80,5 +73,22 @@ export class GameScene extends Scene {
         }
       }
     );
+  }
+
+  appendTablePowerPlantCards(card: PowerPlantCard) {
+    this.tablePowerPlantCards.push(card);
+    const x = 128 + (this.tablePowerPlantCards.length - 1) * 252;
+    const y = 1040;
+    this.tweens.add({
+      targets: card,
+      x,
+      y,
+      duration: 500,
+      delay: (this.tablePowerPlantCards.length - 1) * 50,
+      ease: Phaser.Math.Easing.Quadratic.Out,
+      onComplete: () => {
+        card.switchMode("table", { hiddenX: x, hiddenY: y });
+      },
+    });
   }
 }

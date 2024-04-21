@@ -9,6 +9,7 @@ import { GameInfoBoard } from "~/sprites/ui/game-info-board";
 import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Scene } from "phaser";
+import { CardSelectScreen } from "~/sprites/ui/card-select-screen";
 
 export class GameScene extends Scene {
   marker!: Marker;
@@ -47,6 +48,8 @@ export class GameScene extends Scene {
         gain: 1,
       },
     });
+
+    new CardSelectScreen(this, centerX, centerY);
 
     GameManager.getInstance().emitter.on(
       EVENTS.CURRENT_TILE_INDEX_UPDATED,

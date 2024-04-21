@@ -12,10 +12,12 @@ export const TEXTURE_KEYS = {
   BLUE_5_BUTTON_BG: "blue-5-button-bg",
   BLUE_6_BUTTON_BG: "blue-6-button-bg",
   DARK_5_BUTTON_BG: "dark-5-button-bg",
+  WHITE_5_BUTTON_BG: "white-5-button-bg",
   WHITE_7_BUTTON_BG: "white-7-button-bg",
   BLUE_5_DIALOG_BG: "blue-5-bg",
   BLUE_6_BOARD_BG: "blue-6-board-bg",
   BLUE_5_BOARD_BG: "blue-5-board-bg",
   BLUE_4_BOARD_BG: "blue-4-board-bg",
-  WHITE_5_BAR: "white-5-bar",
+  BLUE_7_SCREEN_BG: "blue-7-screen-bg",
+  WHITE_5_BOTTOM_LINE: "white-5-bottom-line",
 } as const;

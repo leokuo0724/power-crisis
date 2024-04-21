@@ -67,6 +67,13 @@ export class PreloadScene extends Scene {
       graphics,
       250,
       80,
+      COLORS.WHITE_5,
+      TEXTURE_KEYS.WHITE_5_BUTTON_BG
+    );
+    this._drawBg(
+      graphics,
+      250,
+      80,
       COLORS.WHITE_7,
       TEXTURE_KEYS.WHITE_7_BUTTON_BG
     );
@@ -98,7 +105,21 @@ export class PreloadScene extends Scene {
       COLORS.BLUE_4,
       TEXTURE_KEYS.BLUE_4_BOARD_BG
     );
-    this._drawBg(graphics, 6, 16, COLORS.WHITE_5, TEXTURE_KEYS.WHITE_5_BAR);
+    this._drawBg(
+      graphics,
+      1920,
+      1080,
+      COLORS.BLUE_7,
+      TEXTURE_KEYS.BLUE_7_SCREEN_BG,
+      0.9
+    );
+    this._drawBg(
+      graphics,
+      1264,
+      8,
+      COLORS.WHITE_5,
+      TEXTURE_KEYS.WHITE_5_BOTTOM_LINE
+    );
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);

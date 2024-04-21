@@ -43,9 +43,7 @@ export class GameManager {
   emitter: Phaser.Events.EventEmitter = new Phaser.Events.EventEmitter();
 
   private static instance: GameManager;
-
   private constructor() {}
-
   static getInstance(): GameManager {
     if (!GameManager.instance) {
       GameManager.instance = new GameManager();

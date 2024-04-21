@@ -18,6 +18,7 @@ export const ICON_KEYS = {
   OIL: "oil.png",
   URANIUM: "uranium.png",
   BIOMASS: "biomass.png",
+  CHECKED: "checked.png",
 };
 
 export const DICE_KEYS = {

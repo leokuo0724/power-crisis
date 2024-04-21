@@ -2,7 +2,7 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 
-type ButtonType = "primary" | "secondary";
+type ButtonType = "primary" | "secondary" | "white";
 type ButtonStates = "normal" | "hover" | "disabled";
 
 const BUTTON_TYPE_TEXTURE_MAP: Record<
@@ -19,6 +19,11 @@ const BUTTON_TYPE_TEXTURE_MAP: Record<
     hover: TEXTURE_KEYS.WHITE_7_BUTTON_BG,
     disabled: TEXTURE_KEYS.WHITE_7_BUTTON_BG,
   },
+  white: {
+    normal: TEXTURE_KEYS.WHITE_5_BUTTON_BG,
+    hover: TEXTURE_KEYS.BLUE_4_BUTTON_BG,
+    disabled: TEXTURE_KEYS.DARK_5_BUTTON_BG,
+  },
 };
 
 export abstract class Button extends Phaser.GameObjects.Container {
@@ -34,7 +39,7 @@ export abstract class Button extends Phaser.GameObjects.Container {
     x: number,
     y: number,
     text: string,
-    type: "primary" | "secondary"
+    type: "primary" | "secondary" | "white"
   ) {
     super(scene, x, y);
 
@@ -46,7 +51,7 @@ export abstract class Button extends Phaser.GameObjects.Container {
       BUTTON_TYPE_TEXTURE_MAP[type].normal
     ).setOrigin(0.5);
     this.text = new Phaser.GameObjects.Text(scene, 0, 0, text, {
-      color: COLORS.WHITE_5,
+      color: type === "white" ? COLORS.BLUE_7 : COLORS.WHITE_5,
       fontSize: 60,
       fontFamily: FONT_KEYS.PASSION_ONE,
     }).setOrigin(0.5);

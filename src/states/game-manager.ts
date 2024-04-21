@@ -8,6 +8,7 @@ export const EVENTS = {
     "current-tile-resource-metadata-updated",
   RESOURCE_STORAGE_UPDATED: "resource-storage-updated",
   POWER_UPDATED: "power-updated",
+  RESOURCE_COLLECTED: "resource-collected",
 };
 
 export class GameManager {
@@ -80,9 +81,19 @@ export class GameManager {
     this.currentPower -= this.costUnit[metadata.type];
     this.emitter.emit(EVENTS.POWER_UPDATED);
 
-    this.resourceStorage[metadata.type].current +=
-      this.collectUnit[metadata.type];
+    const collectedAmount = Math.min(
+      metadata.currentAmount,
+      this.collectUnit[metadata.type]
+    );
+    this.resourceStorage[metadata.type].current += collectedAmount;
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
+
+    metadata.currentAmount =
+      this.collectUnit[metadata.type] >= metadata.currentAmount
+        ? 0
+        : metadata.currentAmount - this.collectUnit[metadata.type];
+    // pass the tile index and collected amount to the event
+    this.emitter.emit(EVENTS.RESOURCE_COLLECTED, metadata.tileIndex);
 
     this.updateCurrentTileResourceMetadata(null);
     this.setNextRollEnabled(true);

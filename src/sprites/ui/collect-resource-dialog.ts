@@ -69,7 +69,11 @@ export class CollectRecourseDialog extends Dialog {
               IMAGE_KEYS.ICONS,
               RESOURCE_TEXTURE_MAP[resourceType]
             );
-            this.gainText.setText(`+${gm.collectUnit[resourceType]}`);
+            const collectableAmount = Math.min(
+              gm.currentTileResourceMetadata.currentAmount,
+              gm.collectUnit[resourceType]
+            );
+            this.gainText.setText(`+${collectableAmount}`);
           } else {
             this.titleText.setText("There is no resource to collect. :(");
             this.collectButton.setDisabled(true);

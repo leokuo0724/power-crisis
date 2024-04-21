@@ -11,6 +11,7 @@ import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 
 export type ResourceMetadata = {
+  tileIndex: number;
   type: ConsumableResource;
   maxAmount: number;
   currentAmount: number;
@@ -64,5 +65,13 @@ export class ResourceTileSprite extends TileBasic {
       .setPosition(36, 36);
 
     this.add([icon, this.amountText]);
+  }
+
+  updateAmountText() {
+    this.amountText.setText(
+      this.resource.currentAmount === Infinity
+        ? "∞"
+        : this.resource.currentAmount.toString()
+    );
   }
 }

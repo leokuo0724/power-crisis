@@ -1,6 +1,5 @@
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { ResourceMetadata } from "~/sprites/tiles/resource-tile";
-import { PowerPlantInfo } from "~/types/power-plant";
 import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
@@ -8,18 +7,21 @@ export const EVENTS = {
   CURRENT_TILE_INDEX_UPDATED: "current-tile-index-updated",
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
     "current-tile-resource-metadata-updated",
-  CURRENT_TILE_POWER_PLANT_INFO_UPDATED:
-    "current-tile-power-plant-info-updated",
+  CURRENT_TILE_POWER_PLANT_TILE_UPDATED:
+    "current-tile-power-plant-tile-updated",
   RESOURCE_STORAGE_UPDATED: "resource-storage-updated",
   POWER_UPDATED: "power-updated",
   RESOURCE_COLLECTED: "resource-collected",
+  BUILD_MODE_UPDATED: "build-mode-updated",
+  SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
+    "selected-power-plant-to-build-id-updated",
 };
 
 export class GameManager {
   round: number = 1;
   currentTileIndex: number = 0;
   currentTileResourceMetadata: ResourceMetadata | null = null;
-  currentTilePowerPlantInfo: PowerPlantInfo | null = null;
+  currentTilePowerPlantTile: PowerPlantTile | null = null;
   costUnit: Record<ConsumableResource, number> = {
     coal: 1,
     natural_gas: 1,
@@ -46,6 +48,9 @@ export class GameManager {
   };
   currentPower: number = 20;
   isNextRollEnabled: boolean = false;
+
+  isBuildMode: boolean = false;
+  selectedPowerPlantToBuildId: string | null = null;
 
   emitter: Phaser.Events.EventEmitter = new Phaser.Events.EventEmitter();
 
@@ -108,8 +113,16 @@ export class GameManager {
     this.updateCurrentTileResourceMetadata(null);
     this.setNextRollEnabled(true);
   }
-  updateCurrentTilePowerPlantInfo(info: PowerPlantInfo | null) {
-    this.currentTilePowerPlantInfo = info;
-    this.emitter.emit(EVENTS.CURRENT_TILE_POWER_PLANT_INFO_UPDATED);
+  updateCurrentTilePowerPlantTile(tile: PowerPlantTile | null) {
+    this.currentTilePowerPlantTile = tile;
+    this.emitter.emit(EVENTS.CURRENT_TILE_POWER_PLANT_TILE_UPDATED);
+  }
+  updateBuildMode(isBuildMode: boolean) {
+    this.isBuildMode = isBuildMode;
+    this.emitter.emit(EVENTS.BUILD_MODE_UPDATED);
+  }
+  updateSelectedPowerPlantToBuildId(id: string | null) {
+    this.selectedPowerPlantToBuildId = id;
+    this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED);
   }
 }

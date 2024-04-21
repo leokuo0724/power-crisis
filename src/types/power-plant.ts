@@ -14,6 +14,7 @@ export type PowerPlantType =
   (typeof POWER_PLANT_TYPES)[keyof typeof POWER_PLANT_TYPES];
 
 export type PowerPlantInfo = {
+  id: string;
   type: PowerPlantType;
   buildCost: number;
   powerGain: {

@@ -1,6 +1,7 @@
 import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { CARD_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
+import { EVENTS, GameManager } from "~/states/game-manager";
 import {
   POWER_PLANT_TEXTURE_MAP,
   POWER_PLANT_TYPES,
@@ -18,7 +19,7 @@ const POWER_PLANT_BG_TEXTURE_MAP: Record<PowerPlantType, string> = {
   [POWER_PLANT_TYPES.BIOMASS]: CARD_KEYS.BIOMASS,
 };
 
-type PowerPlantCardStage = "select" | "table" | "built" | "discard";
+type PowerPlantCardStage = "select" | "table" | "build" | "built" | "discard";
 
 export class PowerPlantCard extends Phaser.GameObjects.Container {
   info: PowerPlantInfo;
@@ -27,6 +28,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
   private costResourceText?: Phaser.GameObjects.Text;
   private buildCostText: Phaser.GameObjects.Text;
   public stage!: PowerPlantCardStage;
+  private tableHiddenX?: number;
+  private tableHiddenY?: number;
 
   constructor(scene: Phaser.Scene, x: number, y: number, info: PowerPlantInfo) {
     super(scene, x, y);
@@ -131,6 +134,44 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     }
 
     this.switchMode("select");
+    this.on("pointerover", this.onPointerOver, this);
+    this.on("pointerout", this.onPointerOut, this);
+    this.on("pointerdown", this.onPointerDown, this);
+
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
+      if (this.stage !== "table") return;
+      this.switchMode(gm.isBuildMode ? "build" : "table");
+    });
+  }
+
+  onPointerOver() {
+    if (this.stage === "select") {
+      this.setScale(1.05);
+    } else if (this.stage === "table" && this.tableHiddenY) {
+      this.scene.tweens.add({
+        targets: this,
+        y: this.tableHiddenY - 172,
+        duration: 100,
+      });
+    }
+  }
+  onPointerOut() {
+    if (this.stage === "select") {
+      this.setScale(1);
+    } else if (this.stage === "table" && this.tableHiddenY) {
+      this.scene.tweens.add({
+        targets: this,
+        y: this.tableHiddenY,
+        duration: 100,
+      });
+    }
+  }
+  onPointerDown() {
+    const gm = GameManager.getInstance();
+    if (this.stage === "build") {
+      gm.updateSelectedPowerPlantToBuildId(this.info.id);
+    }
   }
 
   switchMode(
@@ -139,26 +180,14 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
   ) {
     this.stage = stage;
 
-    this.on("pointerover", () => {
-      if (stage === "select") {
-        this.setScale(1.05);
-      } else if (stage === "table" && config?.hiddenY) {
-        this.scene.tweens.add({
-          targets: this,
-          y: config.hiddenY - 172,
-          duration: 100,
-        });
-      }
-    }).on("pointerout", () => {
-      if (stage === "select") {
-        this.setScale(1);
-      } else if (stage === "table" && config?.hiddenY) {
-        this.scene.tweens.add({
-          targets: this,
-          y: config.hiddenY,
-          duration: 100,
-        });
-      }
-    });
+    if (config?.hiddenX) this.tableHiddenX = config.hiddenX;
+    if (config?.hiddenY) this.tableHiddenY = config.hiddenY;
+
+    if (this.stage === "table" && this.tableHiddenY) {
+      this.y = this.tableHiddenY;
+    }
+    if (this.stage === "build" && this.tableHiddenY) {
+      this.y = this.tableHiddenY - 172;
+    }
   }
 }

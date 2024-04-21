@@ -1,5 +1,5 @@
 import { ConsumableResource } from "~/types/resource";
-import { ResourceTileSprite } from "../tiles/resource-tile";
+import { ResourceTile } from "../tiles/resource-tile";
 import { StartTile } from "../tiles/start-tile";
 import { boardData } from "./board-data";
 import { PowerPlantTile } from "../tiles/power-plant-tile";
@@ -27,7 +27,7 @@ export class Board extends Phaser.GameObjects.Container {
       EVENTS.RESOURCE_COLLECTED,
       (index: number) => {
         const tile = this.getTargetTile(index);
-        if (tile instanceof ResourceTileSprite) tile.updateAmountText();
+        if (tile instanceof ResourceTile) tile.updateAmountText();
       }
     );
   }
@@ -40,7 +40,7 @@ export class Board extends Phaser.GameObjects.Container {
           tileInstance = new StartTile(this.scene, 0, 0, tile.index);
           break;
         case "resource":
-          tileInstance = new ResourceTileSprite(this.scene, 0, 0, tile.index, {
+          tileInstance = new ResourceTile(this.scene, 0, 0, tile.index, {
             tileIndex: tile.index,
             type: tile.resourceType!,
             maxAmount: MAX_RESOURCE_AMOUNT[tile.resourceType!],

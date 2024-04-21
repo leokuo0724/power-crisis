@@ -11,6 +11,8 @@ import { EVENTS, GameManager } from "~/states/game-manager";
 import { Scene } from "phaser";
 import { CardSelectScreen } from "~/sprites/ui/card-select-screen";
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
+import { EmptyPowerPlantDialog } from "~/sprites/ui/empty-power-plant-dialog";
+import { BuildModeDialog } from "~/sprites/ui/build-mode-dialog";
 
 export class GameScene extends Scene {
   marker!: Marker;
@@ -45,6 +47,9 @@ export class GameScene extends Scene {
 
     new CardSelectScreen(this, centerX, centerY);
 
+    new EmptyPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
+    new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
+
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {
       // Move marker based on current tile index
@@ -62,7 +67,7 @@ export class GameScene extends Scene {
           break;
         case "power_plant":
           const powerPlantTile = tile as PowerPlantTile;
-          gm.updateCurrentTilePowerPlantInfo(powerPlantTile.powerPlantInfo);
+          gm.updateCurrentTilePowerPlantTile(powerPlantTile);
           break;
       }
     });

@@ -8,6 +8,7 @@ import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "./shared/button";
 import { GameScene } from "~/scenes/game-scene";
 import { GameManager } from "~/states/game-manager";
+import { v4 as uuidv4 } from "uuid";
 
 const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
@@ -112,6 +113,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         centerX - 520 + i * 260,
         centerY - 24,
         {
+          id: uuidv4(),
           type: POWER_PLANT_TYPES.THERMAL,
           buildCost: 1,
           powerGain: { gain: 1, cost: 1, resourceType: "coal" },

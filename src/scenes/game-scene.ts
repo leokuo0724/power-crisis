@@ -3,13 +3,14 @@ import { Board } from "~/sprites/board/board";
 import { PowerDisplay } from "~/sprites/power-display";
 import { Marker } from "~/sprites/marker";
 import { DiceSet } from "~/sprites/dice-set";
-import { ResourceTileSprite } from "~/sprites/tiles/resource-tile";
+import { ResourceTile } from "~/sprites/tiles/resource-tile";
 import { CollectRecourseDialog } from "~/sprites/ui/collect-resource-dialog";
 import { GameInfoBoard } from "~/sprites/ui/game-info-board";
 import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Scene } from "phaser";
 import { CardSelectScreen } from "~/sprites/ui/card-select-screen";
+import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 
 export class GameScene extends Scene {
   marker!: Marker;
@@ -44,35 +45,27 @@ export class GameScene extends Scene {
 
     new CardSelectScreen(this, centerX, centerY);
 
-    GameManager.getInstance().emitter.on(
-      EVENTS.CURRENT_TILE_INDEX_UPDATED,
-      async () => {
-        // Move marker based on current tile index
-        const bounds = this.board.getTileBoundsByIndex(
-          GameManager.getInstance().currentTileIndex
-        );
-        await this.marker.moveTo(
-          bounds.centerX - this.markerOffsetX,
-          bounds.centerY - this.markerOffsetY
-        );
-        if (
-          GameManager.getInstance().currentTileIndex === 0 &&
-          GameManager.getInstance().round === 1
-        )
-          return;
-        const tile = this.board.getTargetTile(
-          GameManager.getInstance().currentTileIndex
-        );
-        switch (tile.tileType) {
-          case "resource":
-            const resourceTile = tile as ResourceTileSprite;
-            GameManager.getInstance().updateCurrentTileResourceMetadata(
-              resourceTile.resource
-            );
-            break;
-        }
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {
+      // Move marker based on current tile index
+      const bounds = this.board.getTileBoundsByIndex(gm.currentTileIndex);
+      await this.marker.moveTo(
+        bounds.centerX - this.markerOffsetX,
+        bounds.centerY - this.markerOffsetY
+      );
+      if (gm.currentTileIndex === 0 && gm.round === 1) return;
+      const tile = this.board.getTargetTile(gm.currentTileIndex);
+      switch (tile.tileType) {
+        case "resource":
+          const resourceTile = tile as ResourceTile;
+          gm.updateCurrentTileResourceMetadata(resourceTile.resource);
+          break;
+        case "power_plant":
+          const powerPlantTile = tile as PowerPlantTile;
+          gm.updateCurrentTilePowerPlantInfo(powerPlantTile.powerPlantInfo);
+          break;
       }
-    );
+    });
   }
 
   appendTablePowerPlantCards(card: PowerPlantCard) {

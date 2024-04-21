@@ -25,7 +25,7 @@ const RESOURCE_GRID_TEXTURE_MAP: Record<ConsumableResource, string> = {
   [CONSUMABLE_RESOURCES.BIOMASS]: TEXTURE_KEYS.GREEN_5_TILE,
 };
 
-export class ResourceTileSprite extends TileBasic {
+export class ResourceTile extends TileBasic {
   resource: ResourceMetadata;
   amountText: Phaser.GameObjects.Text;
 

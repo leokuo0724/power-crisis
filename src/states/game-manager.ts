@@ -1,4 +1,6 @@
+import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { ResourceMetadata } from "~/sprites/tiles/resource-tile";
+import { PowerPlantInfo } from "~/types/power-plant";
 import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
@@ -6,6 +8,8 @@ export const EVENTS = {
   CURRENT_TILE_INDEX_UPDATED: "current-tile-index-updated",
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
     "current-tile-resource-metadata-updated",
+  CURRENT_TILE_POWER_PLANT_INFO_UPDATED:
+    "current-tile-power-plant-info-updated",
   RESOURCE_STORAGE_UPDATED: "resource-storage-updated",
   POWER_UPDATED: "power-updated",
   RESOURCE_COLLECTED: "resource-collected",
@@ -15,6 +19,7 @@ export class GameManager {
   round: number = 1;
   currentTileIndex: number = 0;
   currentTileResourceMetadata: ResourceMetadata | null = null;
+  currentTilePowerPlantInfo: PowerPlantInfo | null = null;
   costUnit: Record<ConsumableResource, number> = {
     coal: 1,
     natural_gas: 1,
@@ -102,5 +107,9 @@ export class GameManager {
 
     this.updateCurrentTileResourceMetadata(null);
     this.setNextRollEnabled(true);
+  }
+  updateCurrentTilePowerPlantInfo(info: PowerPlantInfo | null) {
+    this.currentTilePowerPlantInfo = info;
+    this.emitter.emit(EVENTS.CURRENT_TILE_POWER_PLANT_INFO_UPDATED);
   }
 }

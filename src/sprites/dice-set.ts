@@ -17,6 +17,7 @@ export class DiceSet extends Phaser.GameObjects.Container {
     super(scene, x, y);
     scene.add.existing(this);
 
+    const gm = GameManager.getInstance();
     this.dice = new Phaser.GameObjects.Sprite(
       scene,
       0,
@@ -25,8 +26,8 @@ export class DiceSet extends Phaser.GameObjects.Container {
       DICE_KEYS.DICE_1
     );
     this.button = new RollDiceButton(scene, 0, 48);
+    this.button.setDisabled(!gm.isNextRollEnabled);
 
-    const gm = GameManager.getInstance();
     this.button.onClick = async () => {
       gm.setNextRollEnabled(false);
       const diceResult = await this.rollDice();

@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
-import { GameManager } from "~/states/game-manager";
+import { EVENTS, GameManager } from "~/states/game-manager";
 
 export class PowerDisplay extends Phaser.GameObjects.Container {
   private powerNumText: Phaser.GameObjects.Text;
@@ -34,5 +34,9 @@ export class PowerDisplay extends Phaser.GameObjects.Container {
     this.powerNumText.y -= 36;
 
     this.add([powerText, this.powerNumText]);
+
+    gm.emitter.on(EVENTS.POWER_UPDATED, () => {
+      this.powerNumText.setText(gm.currentPower.toString());
+    });
   }
 }

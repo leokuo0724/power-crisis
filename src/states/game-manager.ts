@@ -7,6 +7,7 @@ export const EVENTS = {
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
     "current-tile-resource-metadata-updated",
   RESOURCE_STORAGE_UPDATED: "resource-storage-updated",
+  POWER_UPDATED: "power-updated",
 };
 
 export class GameManager {
@@ -38,7 +39,7 @@ export class GameManager {
     biomass: { current: 0, max: 3 },
   };
   currentPower: number = 20;
-  isNextRollEnabled: boolean = true;
+  isNextRollEnabled: boolean = false;
 
   emitter: Phaser.Events.EventEmitter = new Phaser.Events.EventEmitter();
 
@@ -71,5 +72,19 @@ export class GameManager {
     this.resourceStorage[resourceType].current = amount;
     if (max !== undefined) this.resourceStorage[resourceType].max = max;
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
+  }
+  collectResource() {
+    const metadata = this.currentTileResourceMetadata;
+    if (!metadata) throw new Error("No resource to collect");
+
+    this.currentPower -= this.costUnit[metadata.type];
+    this.emitter.emit(EVENTS.POWER_UPDATED);
+
+    this.resourceStorage[metadata.type].current +=
+      this.collectUnit[metadata.type];
+    this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
+
+    this.updateCurrentTileResourceMetadata(null);
+    this.setNextRollEnabled(true);
   }
 }

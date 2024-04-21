@@ -7,6 +7,7 @@ import { POWER_PLANT_TYPES } from "~/types/power-plant";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "./shared/button";
 import { GameScene } from "~/scenes/game-scene";
+import { GameManager } from "~/states/game-manager";
 
 const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
@@ -149,6 +150,9 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     }
     this.setVisible(false);
     this._reset();
+
+    // TODO: first round: tutorial
+    GameManager.getInstance().setNextRollEnabled(true);
   }
 
   private _reset() {

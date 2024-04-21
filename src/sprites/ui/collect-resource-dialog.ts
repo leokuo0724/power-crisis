@@ -80,6 +80,7 @@ export class CollectRecourseDialog extends Dialog {
           }
           this.show();
         } else {
+          this._resetDialog();
           this.hide();
         }
       }
@@ -115,5 +116,8 @@ class CollectButton extends Button {
     this.setScale(0.7);
   }
 
-  public onClick(): void {}
+  public onClick(): void {
+    const gm = GameManager.getInstance();
+    gm.collectResource();
+  }
 }

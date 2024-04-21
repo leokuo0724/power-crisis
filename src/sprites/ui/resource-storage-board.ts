@@ -77,7 +77,7 @@ export class ResourceStorageBoard extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     gm.emitter.on(
       EVENTS.RESOURCE_STORAGE_UPDATED,
-      this._updateResourceStorageText
+      this._updateResourceStorageText.bind(this)
     );
   }
 

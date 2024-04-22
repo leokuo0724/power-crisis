@@ -1,6 +1,5 @@
 import { Scene } from "phaser";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
-import { Button } from "../shared/button";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 import { DEPTH } from "~/constants/depth";
@@ -57,6 +56,7 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.TOGGLE_POLICY_SCREEN, (visible: boolean) => {
       this.setVisible(visible);
+      // TODO: Toggle pick card screen
     });
   }
 }

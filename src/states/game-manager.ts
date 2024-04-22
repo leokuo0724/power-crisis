@@ -181,17 +181,25 @@ export class GameManager {
     if (props.length === 1) {
       operator === "+" // @ts-ignore
         ? (this[props[0]] += bnt.value) // @ts-ignore
-        : (this[props[0]] -= bnt.value);
+        : (this[props[0]] = Math.max(this[props[0]] - bnt.value, 0));
     } else if (props.length === 2) {
       // @ts-ignore
       operator === "+" // @ts-ignore
         ? (this[props[0]][props[1]] += bnt.value) // @ts-ignore
-        : (this[props[0]][props[1]] -= bnt.value);
+        : (this[props[0]][props[1]] = Math.max(
+            // @ts-ignore
+            this[props[0]][props[1]] - bnt.value,
+            0
+          ));
     } else if (props.length === 3) {
       // @ts-ignore
       operator === "+" // @ts-ignore
         ? (this[props[0]][props[1]][props[2]] += bnt.value) // @ts-ignore
-        : (this[props[0]][props[1]][props[2]] -= bnt.value);
+        : (this[props[0]][props[1]][props[2]] = Math.max(
+            // @ts-ignore
+            this[props[0]][props[1]][props[2]] - bnt.value,
+            0
+          ));
     }
   }
 }

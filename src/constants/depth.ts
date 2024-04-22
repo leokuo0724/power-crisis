@@ -1,4 +1,5 @@
 export const DEPTH = {
+  RESULT_SCREEN: 400,
   DIALOG: 300,
   CARD: 200,
   OVERLAY: 100,

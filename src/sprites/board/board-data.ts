@@ -17,7 +17,8 @@ export const boardData: BoardData = [
   { index: 5, tileType: "power_plant" },
   { index: 6, tileType: "resource", resourceType: "oil" },
   { index: 7, tileType: "resource", resourceType: "coal" },
-  { index: 8, tileType: "surprise" },
+  // { index: 8, tileType: "surprise" },
+  { index: 8, tileType: "resource", resourceType: "coal" },
   { index: 9, tileType: "resource", resourceType: "uranium" },
   { index: 10, tileType: "power_plant" },
   { index: 11, tileType: "resource", resourceType: "natural_gas" },
@@ -27,6 +28,7 @@ export const boardData: BoardData = [
   { index: 15, tileType: "power_plant" },
   { index: 16, tileType: "resource", resourceType: "coal" },
   { index: 17, tileType: "resource", resourceType: "natural_gas" },
-  { index: 18, tileType: "surprise" },
+  // { index: 18, tileType: "surprise" },
+  { index: 18, tileType: "resource", resourceType: "natural_gas" },
   { index: 19, tileType: "resource", resourceType: "uranium" },
 ];

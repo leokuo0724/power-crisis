@@ -114,9 +114,9 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         centerY - 24,
         {
           id: uuidv4(),
-          type: POWER_PLANT_TYPES.THERMAL,
+          type: POWER_PLANT_TYPES.HYDRO,
           buildCost: 3,
-          powerGain: { gain: 1, cost: 1, resourceType: "coal" },
+          powerGain: { gain: 1, cost: 0, resourceType: "hydro" },
         }
       );
       card.on("pointerdown", () => {

@@ -30,8 +30,12 @@ export class StartTile extends TileBasic {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, () => {
       if (gm.currentTileIndex !== 0) return;
-      gm.updatePower(gm.currentPower - gm.targetPower);
-      // TODO: check result
+      const nextPower = gm.currentPower - gm.targetPower;
+      gm.updatePower(nextPower);
+      setTimeout(() => {
+        // Check result
+        gm.setNextRound(nextPower >= 0);
+      }, 1500);
     });
   }
 }

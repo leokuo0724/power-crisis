@@ -66,7 +66,7 @@ export class DiceSet extends Phaser.GameObjects.Container {
           clearInterval(timer);
           resolve(num);
         }
-      }, 50);
+      }, 80);
     });
   }
 }

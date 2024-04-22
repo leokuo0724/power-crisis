@@ -16,6 +16,8 @@ export const EVENTS = {
   SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
     "selected-power-plant-to-build-id-updated",
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
+  NEXT_ROUND_UPDATED: "next-round-updated",
+  TARGET_POWER_UPDATED: "target-power-updated",
 };
 
 export class GameManager {
@@ -140,5 +142,13 @@ export class GameManager {
     );
     this.updateBuildMode(false);
     this.updateCurrentTilePowerPlantTile(null);
+  }
+  setNextRound(enabled: boolean) {
+    if (enabled) {
+      this.round++;
+      this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
+      this.targetPower += 5;
+      this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
+    }
   }
 }

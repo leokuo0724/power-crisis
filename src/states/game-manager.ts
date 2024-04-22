@@ -18,6 +18,7 @@ export const EVENTS = {
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
   NEXT_ROUND_UPDATED: "next-round-updated",
   TARGET_POWER_UPDATED: "target-power-updated",
+  ON_GAME_OVER: "on-game-over",
 };
 
 export class GameManager {
@@ -149,6 +150,8 @@ export class GameManager {
       this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
       this.targetPower += 5;
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
+    } else {
+      this.emitter.emit(EVENTS.ON_GAME_OVER);
     }
   }
 }

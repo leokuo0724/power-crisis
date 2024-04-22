@@ -15,6 +15,7 @@ import { EmptyPowerPlantDialog } from "~/sprites/ui/empty-power-plant-dialog";
 import { BuildModeDialog } from "~/sprites/ui/build-mode-dialog";
 import { Overlay } from "~/sprites/ui/overlay";
 import { NextRoundScreen } from "~/sprites/ui/next-round-screen";
+import { GameOverScreen } from "~/sprites/ui/game-over-screen";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -60,6 +61,7 @@ export class GameScene extends Scene {
     new Overlay(this, centerX, centerY);
     new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
     new NextRoundScreen(this, centerX, centerY);
+    new GameOverScreen(this, centerX, centerY);
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {

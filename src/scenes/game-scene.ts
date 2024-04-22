@@ -106,6 +106,11 @@ export class GameScene extends Scene {
             gm.setNextRollEnabled(true);
           },
         });
+        // update tile
+        const tile = this.board.getTargetTile(
+          gm.currentTileIndex
+        ) as PowerPlantTile;
+        tile.powerPlantInfo = card.info;
 
         // remove this card index from tablePowerPlantCards
         this.tablePowerPlantCards.splice(cardIndex, 1);

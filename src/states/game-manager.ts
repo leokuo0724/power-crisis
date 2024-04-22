@@ -24,10 +24,15 @@ export const EVENTS = {
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
   NEXT_ROUND_UPDATED: "next-round-updated",
   ON_GAME_OVER: "on-game-over",
+
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
+  TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
 };
 
 export class GameManager {
+  readonly INIT_POWER: number = 20;
+  readonly MAX_POWER_PLANT_CARD: number = 4;
+
   round: number = 1;
   targetPower: number = 5; // power to reach to the next round
   currentTileIndex: number = 0;
@@ -57,8 +62,7 @@ export class GameManager {
     uranium: { current: 0, max: 3 },
     biomass: { current: 0, max: 3 },
   };
-  readonly initPower: number = 20;
-  currentPower: number = this.initPower;
+  currentPower: number = this.INIT_POWER;
   isNextRollEnabled: boolean = false;
 
   isBuildMode: boolean = false;
@@ -201,5 +205,8 @@ export class GameManager {
             0
           ));
     }
+  }
+  toggleCardSelectScreen(visible: boolean) {
+    this.emitter.emit(EVENTS.TOGGLE_CARD_SELECT_SCREEN, visible);
   }
 }

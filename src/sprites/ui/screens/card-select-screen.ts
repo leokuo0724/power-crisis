@@ -7,8 +7,9 @@ import { POWER_PLANT_TYPES } from "~/types/power-plant";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "../shared/button";
 import { GameScene } from "~/scenes/game-scene";
-import { GameManager } from "~/states/game-manager";
+import { EVENTS, GameManager } from "~/states/game-manager";
 import { v4 as uuidv4 } from "uuid";
+import { DEPTH } from "~/constants/depth";
 
 const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
@@ -25,6 +26,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     super(scene, x, y);
     scene.add.existing(this);
 
+    const gm = GameManager.getInstance();
     const bg = new Phaser.GameObjects.Sprite(
       scene,
       0,
@@ -35,7 +37,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
       scene,
       0,
       -320,
-      "PICK 4 POWER PLANT CARDS",
+      `PICK ${gm.MAX_POWER_PLANT_CARD} POWER PLANT CARDS`,
       {
         fontFamily: FONT_KEYS.PASSION_ONE,
         fontSize: 60,
@@ -99,9 +101,24 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
       line,
       ...this.checkedMarkers,
       this.startButton,
-    ]);
+    ]).setDepth(DEPTH.OVERLAY);
 
     this._generateCards();
+
+    gm.emitter.on(EVENTS.TOGGLE_CARD_SELECT_SCREEN, (visible: boolean) => {
+      if (visible) {
+        this.setVisible(true);
+        const validNum =
+          gm.MAX_POWER_PLANT_CARD -
+          (this.scene as GameScene).tablePowerPlantCards.length;
+        titleText.setText(`PICK ${validNum} POWER PLANT CARDS`);
+        this._checkButtonValid();
+        this._generateCards();
+      } else {
+        this.setVisible(false);
+        this._reset();
+      }
+    });
   }
 
   private _generateCards() {
@@ -135,7 +152,11 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
   }
 
   private _checkButtonValid() {
-    if (this.picked.size === 4) {
+    const gm = GameManager.getInstance();
+    const validNum =
+      gm.MAX_POWER_PLANT_CARD -
+      (this.scene as GameScene).tablePowerPlantCards.length;
+    if (this.picked.size === validNum) {
       this.startButton.setVisible(true);
     } else {
       this.startButton.setVisible(false);
@@ -150,11 +171,11 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         (this.scene as GameScene).appendTablePowerPlantCards(this.cards[i]);
       }
     }
-    this.setVisible(false);
-    this._reset();
+    const gm = GameManager.getInstance();
+    gm.toggleCardSelectScreen(false);
 
     // TODO: first round: tutorial
-    GameManager.getInstance().setNextRollEnabled(true);
+    gm.setNextRollEnabled(true);
   }
 
   private _reset() {

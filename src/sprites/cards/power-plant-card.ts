@@ -101,7 +101,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       badge,
       name,
     ]);
-    this.setDepth(DEPTH.CARD)
+    this.setDepth(DEPTH.SELECTING_CARD)
       .setSize(this.bg.width, this.bg.height)
       .setInteractive();
 
@@ -204,6 +204,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
 
     if (this.stage === "table" && this.tableHiddenY) {
       this.y = this.tableHiddenY;
+      this.setDepth(DEPTH.TABLE_CARD);
     }
     if (this.stage === "build" && this.tableHiddenY) {
       this.y = this.tableHiddenY - 172;

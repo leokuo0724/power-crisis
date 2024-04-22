@@ -20,7 +20,7 @@ export class PowerDisplay extends Phaser.GameObjects.Container {
     powerText.y += 72;
 
     const gm = GameManager.getInstance();
-    this.cachedPower = gm.initPower;
+    this.cachedPower = gm.INIT_POWER;
     this.powerNumText = new Phaser.GameObjects.Text(
       scene,
       0,

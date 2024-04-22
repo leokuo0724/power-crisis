@@ -56,9 +56,13 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
       .setVisible(false);
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.TOGGLE_POLICY_SCREEN, (visible: boolean) => {
-      this.setVisible(visible);
-      if (visible) this._updatePolicies();
-      // TODO: Toggle pick card screen
+      if (visible) {
+        this.setVisible(true);
+        this._updatePolicies();
+      } else {
+        this.setVisible(false);
+        gm.toggleCardSelectScreen(true);
+      }
     });
   }
 

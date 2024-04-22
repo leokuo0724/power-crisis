@@ -3,6 +3,7 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { EVENTS, GameManager } from "~/states/game-manager";
 
 const ICON_SCALE = 0.4;
 
@@ -16,6 +17,7 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
   constructor(scene: Scene, x: number, y: number) {
     super(scene, x, y);
 
+    const gm = GameManager.getInstance();
     const bg = new Phaser.GameObjects.Sprite(
       scene,
       0,
@@ -40,7 +42,7 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
       IMAGE_KEYS.ICONS,
       ICON_KEYS.COAL
     ).setScale(ICON_SCALE);
-    this.coalAmountText = new Phaser.GameObjects.Text(scene, -84, 18, "1", {
+    this.coalAmountText = new Phaser.GameObjects.Text(scene, -84, 18, "", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 24,
       color: COLORS.WHITE_5,
@@ -52,7 +54,7 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
       IMAGE_KEYS.ICONS,
       ICON_KEYS.OIL
     ).setScale(ICON_SCALE);
-    this.oilAmountText = new Phaser.GameObjects.Text(scene, -32, 18, "1", {
+    this.oilAmountText = new Phaser.GameObjects.Text(scene, -32, 18, "", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 24,
       color: COLORS.WHITE_5,
@@ -82,7 +84,7 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
       IMAGE_KEYS.ICONS,
       ICON_KEYS.URANIUM
     ).setScale(ICON_SCALE);
-    this.uraniumAmountText = new Phaser.GameObjects.Text(scene, 78, 18, "1", {
+    this.uraniumAmountText = new Phaser.GameObjects.Text(scene, 78, 18, "", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 24,
       color: COLORS.WHITE_5,
@@ -94,17 +96,12 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
       IMAGE_KEYS.ICONS,
       ICON_KEYS.BIOMASS
     ).setScale(ICON_SCALE);
-    this.biomassAmountText = new Phaser.GameObjects.Text(
-      scene,
-      132,
-      18,
-      "ALL",
-      {
-        fontFamily: FONT_KEYS.PASSION_ONE,
-        fontSize: 24,
-        color: COLORS.WHITE_5,
-      }
-    ).setOrigin(0.5);
+    this.biomassAmountText = new Phaser.GameObjects.Text(scene, 132, 18, "", {
+      fontFamily: FONT_KEYS.PASSION_ONE,
+      fontSize: 24,
+      color: COLORS.WHITE_5,
+    }).setOrigin(0.5);
+    this._updateCollectUnitText();
 
     this.add([
       bg,
@@ -121,5 +118,20 @@ export class CollectUnitBoard extends Phaser.GameObjects.Container {
       this.biomassAmountText,
     ]);
     this.setSize(bg.width, bg.height);
+
+    gm.emitter.on(EVENTS.COLLECT_UNIT_UPDATED, () => {
+      this._updateCollectUnitText();
+    });
+  }
+
+  private _updateCollectUnitText() {
+    const gm = GameManager.getInstance();
+    this.coalAmountText.setText(`${gm.collectUnit.coal}`);
+    this.oilAmountText.setText(`${gm.collectUnit.oil}`);
+    this.naturalGasAmountText.setText(`${gm.collectUnit.natural_gas}`);
+    this.uraniumAmountText.setText(`${gm.collectUnit.uranium}`);
+    this.biomassAmountText.setText(
+      `${gm.collectUnit.biomass === Infinity ? "ALL" : gm.collectUnit.biomass}`
+    );
   }
 }

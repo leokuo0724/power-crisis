@@ -1,12 +1,12 @@
 import { Scene } from "phaser";
 import { COLORS } from "~/constants/colors";
-import { DEPTH } from "~/constants/depth";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { Button } from "../shared/button";
 import { EVENTS, GameManager } from "~/states/game-manager";
-import { Button } from "./shared/button";
+import { DEPTH } from "~/constants/depth";
 
-export class GameOverScreen extends Phaser.GameObjects.Container {
+export class NextRoundScreen extends Phaser.GameObjects.Container {
   constructor(scene: Scene, x: number, y: number) {
     super(scene, x, y);
     scene.add.existing(this);
@@ -18,7 +18,7 @@ export class GameOverScreen extends Phaser.GameObjects.Container {
       0,
       TEXTURE_KEYS.BLUE_7_SCREEN_BG
     );
-    const titleText = new Phaser.GameObjects.Text(scene, 0, -240, "GAME OVER", {
+    const titleText = new Phaser.GameObjects.Text(scene, 0, -240, "CONGRATS", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 60,
       color: COLORS.WHITE_5,
@@ -27,7 +27,7 @@ export class GameOverScreen extends Phaser.GameObjects.Container {
       scene,
       0,
       0,
-      `You have successfully navigated the world of\n energy resources and survived for ${gm.round} rounds.`,
+      `You have reached the target power\nand moved to round ${gm.round}\n\nNext round target: ${gm.targetPower}`,
       {
         fontFamily: FONT_KEYS.PASSION_ONE,
         fontSize: 60,
@@ -35,22 +35,25 @@ export class GameOverScreen extends Phaser.GameObjects.Container {
         align: "center",
       }
     ).setOrigin(0.5);
-    const restartButton = new RestartButton(scene, 0, 320);
-    this.add([bg, titleText, descriptionText, restartButton])
+
+    const nextButton = new NextButton(scene, 0, 320);
+    nextButton.onClick = () => {
+      this.setVisible(false);
+      gm.togglePolicyScreen(true);
+    };
+
+    this.add([bg, titleText, descriptionText, nextButton])
       .setDepth(DEPTH.RESULT_SCREEN)
       .setVisible(false);
-
-    gm.emitter.on(EVENTS.ON_GAME_OVER, () => {
+    gm.emitter.on(EVENTS.NEXT_ROUND_UPDATED, () => {
       this.setVisible(true);
     });
   }
 }
 
-class RestartButton extends Button {
+class NextButton extends Button {
   constructor(scene: Scene, x: number, y: number) {
-    super(scene, x, y, "RESTART", "white");
+    super(scene, x, y, "NEXT", "white");
   }
-  public onClick(): void {
-    window.location.reload();
-  }
+  public onClick(): void {}
 }

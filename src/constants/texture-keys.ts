@@ -20,4 +20,5 @@ export const TEXTURE_KEYS = {
   BLUE_4_BOARD_BG: "blue-4-board-bg",
   BLUE_7_SCREEN_BG: "blue-7-screen-bg",
   WHITE_5_BOTTOM_LINE: "white-5-bottom-line",
+  BLUE_5_CONTAINER: "blue-5-container",
 } as const;

@@ -1,5 +1,6 @@
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { ResourceMetadata } from "~/sprites/tiles/resource-tile";
+import { BuffNerfType } from "~/types/effects";
 import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
@@ -9,16 +10,21 @@ export const EVENTS = {
     "current-tile-resource-metadata-updated",
   CURRENT_TILE_POWER_PLANT_TILE_UPDATED:
     "current-tile-power-plant-tile-updated",
+
   RESOURCE_STORAGE_UPDATED: "resource-storage-updated",
+  COLLECT_UNIT_UPDATED: "collect-unit-updated",
+  COST_UNIT_UPDATED: "cost-unit-updated",
   POWER_UPDATED: "power-updated",
+  TARGET_POWER_UPDATED: "target-power-updated",
+
   RESOURCE_COLLECTED: "resource-collected",
   BUILD_MODE_UPDATED: "build-mode-updated",
   SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
     "selected-power-plant-to-build-id-updated",
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
   NEXT_ROUND_UPDATED: "next-round-updated",
-  TARGET_POWER_UPDATED: "target-power-updated",
   ON_GAME_OVER: "on-game-over",
+  TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
 };
 
 export class GameManager {
@@ -152,6 +158,40 @@ export class GameManager {
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
     } else {
       this.emitter.emit(EVENTS.ON_GAME_OVER);
+    }
+  }
+  togglePolicyScreen(visible: boolean) {
+    this.emitter.emit(EVENTS.TOGGLE_POLICY_SCREEN, visible);
+  }
+  selectPolicy(buff: BuffNerfType, nerf: BuffNerfType) {
+    // effects
+    this._doEffect(buff);
+    this._doEffect(nerf);
+    this.emitter.emit(EVENTS.POWER_UPDATED);
+    this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
+    this.emitter.emit(EVENTS.COLLECT_UNIT_UPDATED);
+    this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
+
+    // close the policy screen
+    this.togglePolicyScreen(false);
+  }
+  private _doEffect(bnt: BuffNerfType) {
+    const { type, operator, value } = bnt;
+    const props: string[] = type.split(".");
+    if (props.length === 1) {
+      operator === "+" // @ts-ignore
+        ? (this[props[0]] += bnt.value) // @ts-ignore
+        : (this[props[0]] -= bnt.value);
+    } else if (props.length === 2) {
+      // @ts-ignore
+      operator === "+" // @ts-ignore
+        ? (this[props[0]][props[1]] += bnt.value) // @ts-ignore
+        : (this[props[0]][props[1]] -= bnt.value);
+    } else if (props.length === 3) {
+      // @ts-ignore
+      operator === "+" // @ts-ignore
+        ? (this[props[0]][props[1]][props[2]] += bnt.value) // @ts-ignore
+        : (this[props[0]][props[1]][props[2]] -= bnt.value);
     }
   }
 }

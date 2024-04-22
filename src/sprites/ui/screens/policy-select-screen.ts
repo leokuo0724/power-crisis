@@ -39,16 +39,17 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
       scene,
       -320,
       48,
-      PERMANENT_BUFFS[7],
-      PERMANENT_NERFS[1]
+      PERMANENT_BUFFS[0],
+      PERMANENT_NERFS[0]
     );
     this.policy2 = new PolicyContainer(
       scene,
       320,
       48,
       PERMANENT_BUFFS[0],
-      PERMANENT_NERFS[3]
+      PERMANENT_NERFS[0]
     );
+    this._updatePolicies();
 
     this.add([bg, titleText, this.policy1, this.policy2])
       .setDepth(DEPTH.RESULT_SCREEN)
@@ -56,8 +57,26 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.TOGGLE_POLICY_SCREEN, (visible: boolean) => {
       this.setVisible(visible);
+      if (visible) this._updatePolicies();
       // TODO: Toggle pick card screen
     });
+  }
+
+  private _updatePolicies() {
+    const { buff, nerf } = this._pickPolicySet();
+    this.policy1.updatePolicy(buff, nerf);
+    const { buff: buff2, nerf: nerf2 } = this._pickPolicySet();
+    this.policy2.updatePolicy(buff2, nerf2);
+  }
+
+  private _pickPolicySet() {
+    let buff = Phaser.Math.RND.pick(PERMANENT_BUFFS);
+    let nerf;
+    while (true) {
+      nerf = Phaser.Math.RND.pick(PERMANENT_NERFS);
+      if (buff.type !== nerf.type) break;
+    }
+    return { buff, nerf };
   }
 }
 

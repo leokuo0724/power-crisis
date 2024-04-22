@@ -1,3 +1,6 @@
 export const DEPTH = {
-  CARD: 100,
+  DIALOG: 300,
+  CARD: 200,
+  OVERLAY: 100,
+  NORMAL: 0,
 };

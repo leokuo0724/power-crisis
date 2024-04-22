@@ -15,6 +15,12 @@ import { EmptyPowerPlantDialog } from "~/sprites/ui/empty-power-plant-dialog";
 import { BuildModeDialog } from "~/sprites/ui/build-mode-dialog";
 import { Overlay } from "~/sprites/ui/overlay";
 
+const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
+  5: { x: 480, y: 200 },
+  10: { x: 1440, y: 200 },
+  15: { x: 1440, y: 660 },
+};
+
 export class GameScene extends Scene {
   marker!: Marker;
   board!: Board;
@@ -74,6 +80,32 @@ export class GameScene extends Scene {
           break;
       }
     });
+    gm.emitter.on(
+      EVENTS.ON_BUILD_POWER_PLANT,
+      (cardId: string, tileIndex: number) => {
+        const cardIndex = this.tablePowerPlantCards.findIndex(
+          (card) => card.info.id === cardId
+        );
+        const card = this.tablePowerPlantCards[cardIndex];
+        // put this card on the board
+        card.switchMode("built");
+        const pos = POWER_PLANT_TILE_POS_MAP[tileIndex];
+        this.tweens.add({
+          targets: card,
+          x: pos.x,
+          y: pos.y,
+          duration: 500,
+          ease: Phaser.Math.Easing.Quadratic.Out,
+          onComplete: () => {
+            gm.setNextRollEnabled(true);
+          },
+        });
+
+        // remove this card index from tablePowerPlantCards
+        this.tablePowerPlantCards.splice(cardIndex, 1);
+        this._animateTablePowerPlantCards();
+      }
+    );
   }
 
   appendTablePowerPlantCards(card: PowerPlantCard) {
@@ -91,5 +123,19 @@ export class GameScene extends Scene {
         card.switchMode("table", { hiddenX: x, hiddenY: y });
       },
     });
+  }
+
+  private _animateTablePowerPlantCards() {
+    const y = 1040;
+    for (let i = 0; i < this.tablePowerPlantCards.length; i++) {
+      const x = 128 + i * 252;
+      this.tweens.add({
+        targets: this.tablePowerPlantCards[i],
+        x,
+        y,
+        duration: 500,
+        ease: Phaser.Math.Easing.Quadratic.Out,
+      });
+    }
   }
 }

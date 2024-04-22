@@ -143,6 +143,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
+      if (this.stage === "built") return;
       if (gm.isBuildMode) {
         this.switchMode("build");
       } else {
@@ -153,6 +154,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     gm.emitter.on(
       EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
       (id: string) => {
+        if (this.stage === "built") return;
         if (id === this.info.id && this.stage === "build") {
           this.setAlpha(1);
         } else {
@@ -205,6 +207,9 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     }
     if (this.stage === "build" && this.tableHiddenY) {
       this.y = this.tableHiddenY - 172;
+    }
+    if (this.stage === "built") {
+      this.setDepth(DEPTH.NORMAL);
     }
   }
 }

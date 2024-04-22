@@ -15,6 +15,7 @@ export const EVENTS = {
   BUILD_MODE_UPDATED: "build-mode-updated",
   SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
     "selected-power-plant-to-build-id-updated",
+  ON_BUILD_POWER_PLANT: "on-build-power-plant",
 };
 
 export class GameManager {
@@ -125,5 +126,14 @@ export class GameManager {
   updateSelectedPowerPlantToBuildId(id: string) {
     this.selectedPowerPlantToBuildId = id;
     this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED, id);
+  }
+  onBuildPowerPlant() {
+    this.emitter.emit(
+      EVENTS.ON_BUILD_POWER_PLANT,
+      this.selectedPowerPlantToBuildId,
+      this.currentTileIndex
+    );
+    this.updateBuildMode(false);
+    this.updateCurrentTilePowerPlantTile(null);
   }
 }

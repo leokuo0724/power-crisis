@@ -1,4 +1,5 @@
 import { COLORS } from "~/constants/colors";
+import { DEPTH } from "~/constants/depth";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 
@@ -25,7 +26,9 @@ export abstract class Dialog extends Phaser.GameObjects.Container {
 
     this.add([this.dialogBg, this.titleText]);
 
-    this.setSize(this.dialogBg.width, this.dialogBg.height);
+    this.setSize(this.dialogBg.width, this.dialogBg.height).setDepth(
+      DEPTH.DIALOG
+    );
   }
 
   show() {

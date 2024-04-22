@@ -20,6 +20,7 @@ export const EVENTS = {
 
 export class GameManager {
   round: number = 1;
+  targetPower: number = 5; // power to reach to the next round
   currentTileIndex: number = 0;
   currentTileResourceMetadata: ResourceMetadata | null = null;
   currentTilePowerPlantTile: PowerPlantTile | null = null;
@@ -47,7 +48,8 @@ export class GameManager {
     uranium: { current: 0, max: 3 },
     biomass: { current: 0, max: 3 },
   };
-  currentPower: number = 20;
+  readonly initPower: number = 20;
+  currentPower: number = this.initPower;
   isNextRollEnabled: boolean = false;
 
   isBuildMode: boolean = false;
@@ -85,13 +87,16 @@ export class GameManager {
     if (max !== undefined) this.resourceStorage[resourceType].max = max;
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
   }
+  updatePower(value: number) {
+    this.currentPower = value;
+    this.emitter.emit(EVENTS.POWER_UPDATED);
+  }
   collectResource() {
     const metadata = this.currentTileResourceMetadata;
     if (!metadata) throw new Error("No resource to collect");
 
     // cost by power
-    this.currentPower -= this.costUnit[metadata.type];
-    this.emitter.emit(EVENTS.POWER_UPDATED);
+    this.updatePower(this.currentPower - this.costUnit[metadata.type]);
 
     // add resource to storage
     const collectedAmount = Math.min(

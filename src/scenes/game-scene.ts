@@ -104,6 +104,9 @@ export class GameScene extends Scene {
         // remove this card index from tablePowerPlantCards
         this.tablePowerPlantCards.splice(cardIndex, 1);
         this._animateTablePowerPlantCards();
+
+        // update cost
+        gm.updatePower(gm.currentPower - card.info.buildCost);
       }
     );
   }

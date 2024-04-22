@@ -3,6 +3,7 @@ import { TileBasic } from "./common";
 import { IMAGE_KEYS, ICON_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
+import { EVENTS, GameManager } from "~/states/game-manager";
 
 export class StartTile extends TileBasic {
   constructor(scene: Phaser.Scene, x: number, y: number, index: number) {
@@ -25,5 +26,12 @@ export class StartTile extends TileBasic {
     }).setOrigin(0.5);
 
     this.add([image, text]);
+
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, () => {
+      if (gm.currentTileIndex !== 0) return;
+      gm.updatePower(gm.currentPower - gm.targetPower);
+      // TODO: check result
+    });
   }
 }

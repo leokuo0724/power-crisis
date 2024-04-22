@@ -115,7 +115,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         {
           id: uuidv4(),
           type: POWER_PLANT_TYPES.THERMAL,
-          buildCost: 1,
+          buildCost: 3,
           powerGain: { gain: 1, cost: 1, resourceType: "coal" },
         }
       );

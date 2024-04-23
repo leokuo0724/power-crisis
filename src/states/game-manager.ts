@@ -153,6 +153,13 @@ export class GameManager {
     this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED, id);
   }
   onBuildPowerPlant() {
+    // Remove card instance and effects
+    const currentCard = this.currentTilePowerPlantTile?.powerPlantCard;
+    if (currentCard) {
+      currentCard.destroy();
+      // TODO: remove effects if needed
+    }
+
     this.emitter.emit(
       EVENTS.ON_BUILD_POWER_PLANT,
       this.selectedPowerPlantToBuildId,
@@ -222,10 +229,10 @@ export class GameManager {
   }
   onGeneratePower() {
     const ppTile = this.currentTilePowerPlantTile;
-    if (!ppTile?.powerPlantInfo)
+    if (!ppTile?.powerPlantCard)
       throw new Error("No power plant tile to generate power");
     // cost by resource
-    const resourceType = ppTile.powerPlantInfo.powerGain.resourceType;
+    const resourceType = ppTile.powerPlantCard.info.powerGain.resourceType;
     if (
       resourceType === "coal" ||
       resourceType === "natural_gas" ||
@@ -236,11 +243,13 @@ export class GameManager {
       this.updateResourceStorage(
         resourceType,
         this.resourceStorage[resourceType].current -
-          ppTile.powerPlantInfo.powerGain.cost
+          ppTile.powerPlantCard.info.powerGain.cost
       );
     }
     // gain power
-    this.updatePower(this.currentPower + ppTile.powerPlantInfo.powerGain.gain);
+    this.updatePower(
+      this.currentPower + ppTile.powerPlantCard.info.powerGain.gain
+    );
     this.toggleGeneratePowerDialog(false);
     this.setNextRollEnabled(true);
     this.updateCurrentTilePowerPlantTile(null);

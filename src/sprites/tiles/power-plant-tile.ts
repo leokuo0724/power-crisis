@@ -1,11 +1,11 @@
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { TileBasic } from "./common";
-import { PowerPlantInfo } from "~/types/power-plant";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
+import { PowerPlantCard } from "../cards/power-plant-card";
 
 export class PowerPlantTile extends TileBasic {
-  powerPlantInfo: PowerPlantInfo | null = null;
+  powerPlantCard: PowerPlantCard | null = null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, index: number) {
     super(scene, x, y, TEXTURE_KEYS.BLUE_5_TILE, index, "power_plant");

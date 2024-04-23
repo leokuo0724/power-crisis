@@ -72,8 +72,8 @@ export class GeneratePowerDialog extends Dialog {
   private _updateInfo() {
     const gm = GameManager.getInstance();
     const ppTile = gm.currentTilePowerPlantTile;
-    if (!ppTile?.powerPlantInfo) return;
-    const resourceType = ppTile.powerPlantInfo.powerGain.resourceType;
+    if (!ppTile?.powerPlantCard) return;
+    const resourceType = ppTile.powerPlantCard.info.powerGain.resourceType;
     if (
       resourceType === "coal" ||
       resourceType === "natural_gas" ||
@@ -93,8 +93,8 @@ export class GeneratePowerDialog extends Dialog {
       this.lightningIcon.setPosition(-24, 0);
       this.gainText.setPosition(24, 0);
     }
-    this.costText.setText(`-${ppTile.powerPlantInfo.powerGain.cost}`);
-    this.gainText.setText(`+${ppTile.powerPlantInfo.powerGain.gain}`);
+    this.costText.setText(`-${ppTile.powerPlantCard.info.powerGain.cost}`);
+    this.gainText.setText(`+${ppTile.powerPlantCard.info.powerGain.gain}`);
   }
 }
 

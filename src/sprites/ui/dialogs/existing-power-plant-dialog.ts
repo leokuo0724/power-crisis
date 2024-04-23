@@ -1,6 +1,7 @@
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Button } from "../shared/button";
 import { Dialog } from "../shared/dialog";
+import { GameScene } from "~/scenes/game-scene";
 
 export class ExistingPowerPlantDialog extends Dialog {
   private passButton: PassButton;
@@ -19,11 +20,14 @@ export class ExistingPowerPlantDialog extends Dialog {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_POWER_PLANT_TILE_UPDATED, () => {
       const ppTile = gm.currentTilePowerPlantTile;
-      if (ppTile && ppTile.powerPlantInfo) {
-        this.show();
+      if (ppTile && ppTile.powerPlantCard) {
         this.generateButton.setDisabled(
-          ppTile.powerPlantInfo.buildCost > gm.currentPower
+          ppTile.powerPlantCard.info.buildCost > gm.currentPower
         );
+        this.replaceButton.setDisabled(
+          (this.scene as GameScene).tablePowerPlantCards.length === 0
+        );
+        this.show();
       }
       if (!ppTile) this.hide();
     });
@@ -48,7 +52,12 @@ class ReplaceButton extends Button {
     this.setScale(0.6);
     return this;
   }
-  public onClick(): void {}
+  public onClick(): void {
+    const gm = GameManager.getInstance();
+    const firstCard = (this.scene as GameScene).tablePowerPlantCards[0];
+    if (!firstCard) throw new Error("No card on the table");
+    gm.updateBuildMode(true, firstCard.info.id);
+  }
 }
 class GenerateButton extends Button {
   constructor(scene: Phaser.Scene, x: number, y: number) {

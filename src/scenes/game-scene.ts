@@ -62,12 +62,12 @@ export class GameScene extends Scene {
 
     new EmptyPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
     new Overlay(this, centerX, centerY);
-    new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
     new NextRoundScreen(this, centerX, centerY);
     new GameOverScreen(this, centerX, centerY);
     new PolicySelectScreen(this, centerX, centerY);
     new ExistingPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
     new GeneratePowerDialog(this, 2 * centerX + 288, centerY + 340);
+    new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {
@@ -114,7 +114,7 @@ export class GameScene extends Scene {
         const tile = this.board.getTargetTile(
           gm.currentTileIndex
         ) as PowerPlantTile;
-        tile.powerPlantInfo = card.info;
+        tile.powerPlantCard = card;
 
         // remove this card index from tablePowerPlantCards
         this.tablePowerPlantCards.splice(cardIndex, 1);

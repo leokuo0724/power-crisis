@@ -19,7 +19,7 @@ export class EmptyPowerPlantDialog extends Dialog {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_POWER_PLANT_TILE_UPDATED, () => {
       const ppTile = gm.currentTilePowerPlantTile;
-      if (ppTile && !ppTile.powerPlantInfo) {
+      if (ppTile && !ppTile.powerPlantCard) {
         // check if there is a card on the table
         if ((this.scene as GameScene).tablePowerPlantCards.length === 0) {
           this.buildButton.setDisabled(true);

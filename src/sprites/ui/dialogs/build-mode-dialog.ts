@@ -1,5 +1,5 @@
-import { Button } from "./shared/button";
-import { Dialog } from "./shared/dialog";
+import { Button } from "../shared/button";
+import { Dialog } from "../shared/dialog";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { GameScene } from "~/scenes/game-scene";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";

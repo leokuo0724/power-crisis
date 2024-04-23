@@ -4,19 +4,21 @@ import { PowerDisplay } from "~/sprites/power-display";
 import { Marker } from "~/sprites/marker";
 import { DiceSet } from "~/sprites/dice-set";
 import { ResourceTile } from "~/sprites/tiles/resource-tile";
-import { CollectRecourseDialog } from "~/sprites/ui/collect-resource-dialog";
+import { CollectRecourseDialog } from "~/sprites/ui/dialogs/collect-resource-dialog";
 import { GameInfoBoard } from "~/sprites/ui/game-info-board";
 import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Scene } from "phaser";
 import { CardSelectScreen } from "~/sprites/ui/screens/card-select-screen";
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
-import { EmptyPowerPlantDialog } from "~/sprites/ui/empty-power-plant-dialog";
-import { BuildModeDialog } from "~/sprites/ui/build-mode-dialog";
+import { EmptyPowerPlantDialog } from "~/sprites/ui/dialogs/empty-power-plant-dialog";
+import { BuildModeDialog } from "~/sprites/ui/dialogs/build-mode-dialog";
 import { Overlay } from "~/sprites/ui/overlay";
 import { NextRoundScreen } from "~/sprites/ui/screens/next-round-screen";
 import { GameOverScreen } from "~/sprites/ui/screens/game-over-screen";
 import { PolicySelectScreen } from "~/sprites/ui/screens/policy-select-screen";
+import { ExistingPowerPlantDialog } from "~/sprites/ui/dialogs/existing-power-plant-dialog";
+import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -64,6 +66,8 @@ export class GameScene extends Scene {
     new NextRoundScreen(this, centerX, centerY);
     new GameOverScreen(this, centerX, centerY);
     new PolicySelectScreen(this, centerX, centerY);
+    new ExistingPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
+    new GeneratePowerDialog(this, 2 * centerX + 288, centerY + 340);
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {

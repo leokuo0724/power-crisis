@@ -1,6 +1,6 @@
 import { EVENTS, GameManager } from "~/states/game-manager";
-import { Button } from "./shared/button";
-import { Dialog } from "./shared/dialog";
+import { Button } from "../shared/button";
+import { Dialog } from "../shared/dialog";
 import { GameScene } from "~/scenes/game-scene";
 
 export class EmptyPowerPlantDialog extends Dialog {

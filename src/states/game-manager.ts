@@ -27,6 +27,7 @@ export const EVENTS = {
 
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
+  TOGGLE_GENERATE_POWER_DIALOG: "toggle-generate-power-dialog",
 };
 
 export class GameManager {
@@ -93,11 +94,15 @@ export class GameManager {
   }
   updateResourceStorage(
     resourceType: ConsumableResource,
-    amount: number,
+    current?: number,
     max?: number
   ) {
-    this.resourceStorage[resourceType].current = amount;
     if (max !== undefined) this.resourceStorage[resourceType].max = max;
+    if (current !== undefined)
+      this.resourceStorage[resourceType].current = Math.min(
+        Math.max(0, current),
+        this.resourceStorage[resourceType].max
+      );
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
   }
   updatePower(value: number) {
@@ -122,10 +127,12 @@ export class GameManager {
     );
     this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
 
-    metadata.currentAmount =
-      this.collectUnit[metadata.type] >= metadata.currentAmount
-        ? 0
-        : metadata.currentAmount - this.collectUnit[metadata.type];
+    if (metadata.currentAmount !== Infinity) {
+      metadata.currentAmount =
+        this.collectUnit[metadata.type] >= metadata.currentAmount
+          ? 0
+          : metadata.currentAmount - this.collectUnit[metadata.type];
+    }
     // pass the tile index and collected amount to the event
     this.emitter.emit(EVENTS.RESOURCE_COLLECTED, metadata.tileIndex);
 
@@ -157,9 +164,10 @@ export class GameManager {
   setNextRound(enabled: boolean) {
     if (enabled) {
       this.round++;
-      this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
+
       this.targetPower += 5;
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
+      this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
     } else {
       this.emitter.emit(EVENTS.ON_GAME_OVER);
     }
@@ -208,5 +216,33 @@ export class GameManager {
   }
   toggleCardSelectScreen(visible: boolean) {
     this.emitter.emit(EVENTS.TOGGLE_CARD_SELECT_SCREEN, visible);
+  }
+  toggleGeneratePowerDialog(visible: boolean) {
+    this.emitter.emit(EVENTS.TOGGLE_GENERATE_POWER_DIALOG, visible);
+  }
+  onGeneratePower() {
+    const ppTile = this.currentTilePowerPlantTile;
+    if (!ppTile?.powerPlantInfo)
+      throw new Error("No power plant tile to generate power");
+    // cost by resource
+    const resourceType = ppTile.powerPlantInfo.powerGain.resourceType;
+    if (
+      resourceType === "coal" ||
+      resourceType === "natural_gas" ||
+      resourceType === "oil" ||
+      resourceType === "uranium" ||
+      resourceType === "biomass"
+    ) {
+      this.updateResourceStorage(
+        resourceType,
+        this.resourceStorage[resourceType].current -
+          ppTile.powerPlantInfo.powerGain.cost
+      );
+    }
+    // gain power
+    this.updatePower(this.currentPower + ppTile.powerPlantInfo.powerGain.gain);
+    this.toggleGeneratePowerDialog(false);
+    this.setNextRollEnabled(true);
+    this.updateCurrentTilePowerPlantTile(null);
   }
 }

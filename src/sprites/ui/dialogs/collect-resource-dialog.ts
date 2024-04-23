@@ -1,5 +1,5 @@
-import { Button } from "./shared/button";
-import { Dialog } from "./shared/dialog";
+import { Button } from "../shared/button";
+import { Dialog } from "../shared/dialog";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
@@ -56,46 +56,43 @@ export class CollectRecourseDialog extends Dialog {
       this.gainText,
     ]);
 
-    GameManager.getInstance().emitter.on(
-      EVENTS.CURRENT_TILE_RESOURCE_METADATA_UPDATED,
-      () => {
-        const gm = GameManager.getInstance();
-        if (gm.currentTileResourceMetadata) {
-          const isFullStorage =
-            gm.resourceStorage[gm.currentTileResourceMetadata.type].current >=
-            gm.resourceStorage[gm.currentTileResourceMetadata.type].max;
-          if (
-            gm.currentTileResourceMetadata.currentAmount > 0 &&
-            !isFullStorage
-          ) {
-            const resourceType = gm.currentTileResourceMetadata.type;
-            this.costText.setText(`-${gm.costUnit[resourceType]}`);
-            this.resourceIcon.setTexture(
-              IMAGE_KEYS.ICONS,
-              RESOURCE_TEXTURE_MAP[resourceType]
-            );
-            const collectableAmount = Math.min(
-              gm.currentTileResourceMetadata.currentAmount,
-              gm.collectUnit[resourceType]
-            );
-            this.gainText.setText(
-              collectableAmount === Infinity ? "ALL" : `+${collectableAmount}`
-            );
-          } else {
-            this.titleText.setText("Unable to collect. :(");
-            this.collectButton.setDisabled(true);
-            this.lightningIcon.setVisible(false);
-            this.costText.setVisible(false);
-            this.resourceIcon.setVisible(false);
-            this.gainText.setVisible(false);
-          }
-          this.show();
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.CURRENT_TILE_RESOURCE_METADATA_UPDATED, () => {
+      if (gm.currentTileResourceMetadata) {
+        const isFullStorage =
+          gm.resourceStorage[gm.currentTileResourceMetadata.type].current >=
+          gm.resourceStorage[gm.currentTileResourceMetadata.type].max;
+        if (
+          gm.currentTileResourceMetadata.currentAmount > 0 &&
+          !isFullStorage
+        ) {
+          const resourceType = gm.currentTileResourceMetadata.type;
+          this.costText.setText(`-${gm.costUnit[resourceType]}`);
+          this.resourceIcon.setTexture(
+            IMAGE_KEYS.ICONS,
+            RESOURCE_TEXTURE_MAP[resourceType]
+          );
+          const collectableAmount = Math.min(
+            gm.currentTileResourceMetadata.currentAmount,
+            gm.collectUnit[resourceType]
+          );
+          this.gainText.setText(
+            collectableAmount === Infinity ? "ALL" : `+${collectableAmount}`
+          );
         } else {
-          this._resetDialog();
-          this.hide();
+          this.titleText.setText("Unable to collect. :(");
+          this.collectButton.setDisabled(true);
+          this.lightningIcon.setVisible(false);
+          this.costText.setVisible(false);
+          this.resourceIcon.setVisible(false);
+          this.gainText.setVisible(false);
         }
+        this.show();
+      } else {
+        this._resetDialog();
+        this.hide();
       }
-    );
+    });
   }
 
   private _resetDialog() {

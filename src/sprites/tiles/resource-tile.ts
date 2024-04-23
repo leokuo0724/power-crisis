@@ -26,8 +26,10 @@ const RESOURCE_GRID_TEXTURE_MAP: Record<ConsumableResource, string> = {
 };
 
 export class ResourceTile extends TileBasic {
-  resource: ResourceMetadata;
-  amountText: Phaser.GameObjects.Text;
+  public resource: ResourceMetadata;
+  private amountText: Phaser.GameObjects.Text;
+  public isPolluted: boolean = false;
+  private pollutedMask: Phaser.GameObjects.Image;
 
   constructor(
     scene: Scene,
@@ -63,8 +65,16 @@ export class ResourceTile extends TileBasic {
     )
       .setOrigin(0.5)
       .setPosition(36, 36);
+    this.pollutedMask = new Phaser.GameObjects.Image(
+      this.scene,
+      0,
+      0,
+      TEXTURE_KEYS.DARK_5_TILE
+    )
+      .setAlpha(0.8)
+      .setVisible(false);
 
-    this.add([icon, this.amountText]);
+    this.add([icon, this.amountText, this.pollutedMask]);
   }
 
   updateAmountText() {
@@ -73,5 +83,11 @@ export class ResourceTile extends TileBasic {
         ? "∞"
         : this.resource.currentAmount.toString()
     );
+  }
+
+  setPolluted(isPolluted: boolean) {
+    console.log("setPolluted", isPolluted);
+    this.isPolluted = isPolluted;
+    this.pollutedMask.setVisible(isPolluted);
   }
 }

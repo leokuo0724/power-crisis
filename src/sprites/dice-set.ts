@@ -1,8 +1,7 @@
 import { Scene } from "phaser";
-import { DICE_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
-import { RollDiceButton } from "./ui/roll-dice-button";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Dice } from "./dice";
+import { Button } from "./ui/shared/button";
 
 export class DiceSet extends Phaser.GameObjects.Container {
   private dice: Dice;
@@ -15,7 +14,7 @@ export class DiceSet extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     this.dice = new Dice(scene, 0, -84, [1, 2, 3]);
     this.button = new RollDiceButton(scene, 0, 48);
-    this.button.setDisabled(!gm.isNextRollEnabled);
+    this.button.setDisabled(true);
 
     this.button.onClick = async () => {
       gm.setNextRollEnabled(false);
@@ -44,4 +43,11 @@ export class DiceSet extends Phaser.GameObjects.Container {
       }
     });
   }
+}
+class RollDiceButton extends Button {
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    super(scene, x, y, "ROLL", "primary");
+    return this;
+  }
+  public onClick(): void {}
 }

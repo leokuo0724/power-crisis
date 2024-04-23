@@ -1,6 +1,7 @@
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { ResourceMetadata } from "~/sprites/tiles/resource-tile";
 import { BuffNerfType } from "~/types/effects";
+import { PollutionType } from "~/types/pollution";
 import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
@@ -275,7 +276,7 @@ export class GameManager {
     this.setNextRollEnabled(true);
     this.updateCurrentTilePowerPlantTile(null);
   }
-  updatePollution(type: "carbon" | "nuclear", amount: number) {
+  updatePollution(type: PollutionType, amount: number) {
     if (type === "carbon") {
       this.pollution.carbonEmissions = amount;
     } else {

@@ -27,7 +27,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     scene.add.existing(this);
 
     const gm = GameManager.getInstance();
-    const bg = new Phaser.GameObjects.Sprite(
+    const bg = new Phaser.GameObjects.Image(
       scene,
       0,
       0,

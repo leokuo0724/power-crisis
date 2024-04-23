@@ -18,7 +18,7 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
     super(scene, x, y);
     scene.add.existing(this);
 
-    const bg = new Phaser.GameObjects.Sprite(
+    const bg = new Phaser.GameObjects.Image(
       scene,
       0,
       0,

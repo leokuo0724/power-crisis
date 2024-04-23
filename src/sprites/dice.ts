@@ -16,6 +16,7 @@ export class Dice extends Phaser.GameObjects.Sprite {
     super(scene, x, y, IMAGE_KEYS.DICE, DICE_KEYS.DICE_1);
     scene.add.existing(this);
     this.range = range;
+    return this;
   }
 
   public rollDice() {

@@ -19,6 +19,7 @@ import { GameOverScreen } from "~/sprites/ui/screens/game-over-screen";
 import { PolicySelectScreen } from "~/sprites/ui/screens/policy-select-screen";
 import { ExistingPowerPlantDialog } from "~/sprites/ui/dialogs/existing-power-plant-dialog";
 import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog";
+import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-screen";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -68,6 +69,7 @@ export class GameScene extends Scene {
     new ExistingPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
     new GeneratePowerDialog(this, 2 * centerX + 288, centerY + 340);
     new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
+    new PollutionCheckScreen(this, centerX, centerY, "carbon");
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {

@@ -27,6 +27,8 @@ export const EVENTS = {
   ON_GAME_OVER: "on-game-over",
 
   POLLUTION_UPDATED: "pollution-updated",
+  ON_POLLUTED: "on-polluted",
+  OPEN_POLLUTION_CHECK: "open-pollution-check",
 
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
@@ -264,8 +266,10 @@ export class GameManager {
           "carbon",
           this.pollution.carbonEmissions + polluteNum
         );
+        this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, "carbon");
       } else if (resourceType === "uranium") {
         this.updatePollution("nuclear", this.pollution.nuclearWaste + 1);
+        this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, "nuclear");
       }
     }
     // gain power
@@ -283,5 +287,8 @@ export class GameManager {
       this.pollution.nuclearWaste = amount;
     }
     this.emitter.emit(EVENTS.POLLUTION_UPDATED);
+  }
+  onPolluted(amount: number) {
+    this.emitter.emit(EVENTS.ON_POLLUTED, amount);
   }
 }

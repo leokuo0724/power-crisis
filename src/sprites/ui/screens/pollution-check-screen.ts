@@ -3,9 +3,10 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { Dice } from "~/sprites/dice";
-import { GameManager } from "~/states/game-manager";
+import { EVENTS, GameManager } from "~/states/game-manager";
 import { PollutionType } from "~/types/pollution";
 import { Button } from "../shared/button";
+import { DEPTH } from "~/constants/depth";
 
 export class PollutionCheckScreen extends Phaser.GameObjects.Container {
   public type: PollutionType;
@@ -40,10 +41,11 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
         color: COLORS.WHITE_5,
       }
     ).setOrigin(0.5);
-    this.descriptionText = new Phaser.GameObjects.Text(scene, 0, -240, "", {
+    this.descriptionText = new Phaser.GameObjects.Text(scene, 0, -220, "", {
       fontFamily: FONT_KEYS.PASSION_ONE,
       fontSize: 36,
       color: COLORS.WHITE_5,
+      align: "center",
     }).setOrigin(0.5);
     const range = [1, 2, 3, 4, 5, 6];
     this.dice1 = new Dice(scene, -200, 24, range).setScale(1.5);
@@ -69,11 +71,13 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
       this.resultText,
     ]);
     this._updateDescriptionText();
+    this.setDepth(DEPTH.OVERLAY).setVisible(false);
 
-    // FIXME: remove depth
-    this.setDepth(500);
-
-    // TODO: reset
+    gm.emitter.on(EVENTS.OPEN_POLLUTION_CHECK, (type: PollutionType) => {
+      if (type !== this.type) return;
+      this.setVisible(true);
+      this._updateDescriptionText();
+    });
   }
 
   private _updateDescriptionText() {
@@ -83,7 +87,7 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
         ? gm.pollution.carbonEmissions
         : gm.pollution.nuclearWaste;
     this.descriptionText.setText(
-      `Must be greater than or equal to ${value} or it will cause pollution to lock a random tile.`
+      `Must be greater than or equal to ${value}\nor it will cause pollution to lock a random tile.`
     );
   }
 
@@ -112,7 +116,12 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
       duration: 500,
       alpha: 1,
       ease: Phaser.Math.Easing.Cubic.Out,
-      onComplete: () => {},
+      completeDelay: 300,
+      onComplete: () => {
+        this.setVisible(false);
+        this._reset();
+        if (!isPass) gm.onPolluted(this.type === "nuclear" ? 2 : 1);
+      },
     });
   }
 }

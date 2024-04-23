@@ -70,6 +70,7 @@ export class GameScene extends Scene {
     new GeneratePowerDialog(this, 2 * centerX + 288, centerY + 340);
     new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
     new PollutionCheckScreen(this, centerX, centerY, "carbon");
+    new PollutionCheckScreen(this, centerX, centerY, "nuclear");
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {

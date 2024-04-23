@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { EVENTS, GameManager } from "~/states/game-manager";
 
 export class PollutionBoard extends Phaser.GameObjects.Container {
   private carbonEmissionsText: Phaser.GameObjects.Text;
@@ -37,6 +38,19 @@ export class PollutionBoard extends Phaser.GameObjects.Container {
         color: COLORS.WHITE_5,
       }
     ).setOrigin(0, 0.5);
+
     this.add([bg, this.carbonEmissionsText, this.nuclearWasteText]);
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.POLLUTION_UPDATED, this._updateText, this);
+  }
+
+  private _updateText() {
+    const gm = GameManager.getInstance();
+    this.carbonEmissionsText.setText(
+      `Carbon emissions: ${gm.pollution.carbonEmissions}`
+    );
+    this.nuclearWasteText.setText(
+      `Nuclear waste: ${gm.pollution.nuclearWaste}`
+    );
   }
 }

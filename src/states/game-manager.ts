@@ -25,6 +25,8 @@ export const EVENTS = {
   NEXT_ROUND_UPDATED: "next-round-updated",
   ON_GAME_OVER: "on-game-over",
 
+  POLLUTION_UPDATED: "pollution-updated",
+
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
   TOGGLE_GENERATE_POWER_DIALOG: "toggle-generate-power-dialog",
@@ -62,6 +64,13 @@ export class GameManager {
     oil: { current: 0, max: 5 },
     uranium: { current: 0, max: 3 },
     biomass: { current: 0, max: 3 },
+  };
+  pollution: {
+    carbonEmissions: number;
+    nuclearWaste: number;
+  } = {
+    carbonEmissions: 0,
+    nuclearWaste: 0,
   };
   currentPower: number = this.INIT_POWER;
   isNextRollEnabled: boolean = false;
@@ -245,6 +254,18 @@ export class GameManager {
         this.resourceStorage[resourceType].current -
           ppTile.powerPlantCard.info.powerGain.cost
       );
+
+      // update pollution
+      const carbonType = ["natural_gas", "oil", "coal"];
+      if (carbonType.includes(resourceType)) {
+        const polluteNum = carbonType.indexOf(resourceType) + 1;
+        this.updatePollution(
+          "carbon",
+          this.pollution.carbonEmissions + polluteNum
+        );
+      } else if (resourceType === "uranium") {
+        this.updatePollution("nuclear", this.pollution.nuclearWaste + 1);
+      }
     }
     // gain power
     this.updatePower(
@@ -253,5 +274,13 @@ export class GameManager {
     this.toggleGeneratePowerDialog(false);
     this.setNextRollEnabled(true);
     this.updateCurrentTilePowerPlantTile(null);
+  }
+  updatePollution(type: "carbon" | "nuclear", amount: number) {
+    if (type === "carbon") {
+      this.pollution.carbonEmissions = amount;
+    } else {
+      this.pollution.nuclearWaste = amount;
+    }
+    this.emitter.emit(EVENTS.POLLUTION_UPDATED);
   }
 }

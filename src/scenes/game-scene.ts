@@ -5,7 +5,7 @@ import { Marker } from "~/sprites/marker";
 import { DiceSet } from "~/sprites/dice-set";
 import { ResourceTile } from "~/sprites/tiles/resource-tile";
 import { CollectRecourseDialog } from "~/sprites/ui/dialogs/collect-resource-dialog";
-import { GameInfoBoard } from "~/sprites/ui/game-info-board";
+import { GameInfoBoard } from "~/sprites/ui/boards/game-info-board";
 import { PowerPlantCard } from "~/sprites/cards/power-plant-card";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import { Scene } from "phaser";

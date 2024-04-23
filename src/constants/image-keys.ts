@@ -25,6 +25,9 @@ export const DICE_KEYS = {
   DICE_1: "dice-1.png",
   DICE_2: "dice-2.png",
   DICE_3: "dice-3.png",
+  DICE_4: "dice-4.png",
+  DICE_5: "dice-5.png",
+  DICE_6: "dice-6.png",
 };
 
 export const CARD_KEYS = {

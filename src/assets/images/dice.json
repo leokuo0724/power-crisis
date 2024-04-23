@@ -4,7 +4,7 @@
 			"image": "dice.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 390,
+				"w": 780,
 				"h": 130
 			},
 			"scale": 1,
@@ -71,6 +71,69 @@
 						"w": 128,
 						"h": 128
 					}
+				},
+				{
+					"filename": "dice-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 128
+					},
+					"frame": {
+						"x": 391,
+						"y": 1,
+						"w": 128,
+						"h": 128
+					}
+				},
+				{
+					"filename": "dice-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 128
+					},
+					"frame": {
+						"x": 521,
+						"y": 1,
+						"w": 128,
+						"h": 128
+					}
+				},
+				{
+					"filename": "dice-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 128
+					},
+					"frame": {
+						"x": 651,
+						"y": 1,
+						"w": 128,
+						"h": 128
+					}
 				}
 			]
 		}
@@ -78,6 +141,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:244767fd0a28006d09c860eb62a22077:4966c8cf66bf0209a4a7c8f9ed8f1d74:a9eb8dba3547e43a2d5a32d5258f7dc9$"
+		"smartupdate": "$TexturePacker:SmartUpdate:f2680abfdf2dcd4c6b5d04bee7978d4f:e8170e3d7c6853dd11d9671c0c3427d9:a9eb8dba3547e43a2d5a32d5258f7dc9$"
 	}
 }

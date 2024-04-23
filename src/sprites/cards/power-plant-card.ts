@@ -208,6 +208,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     }
     if (this.stage === "build" && this.tableHiddenY) {
       this.y = this.tableHiddenY - 172;
+      this.setDepth(DEPTH.SELECTING_CARD);
     }
     if (this.stage === "built") {
       this.setDepth(DEPTH.NORMAL);

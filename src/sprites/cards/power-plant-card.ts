@@ -4,6 +4,10 @@ import { FONT_KEYS } from "~/constants/font-keys";
 import { CARD_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { EVENTS, GameManager } from "~/states/game-manager";
 import {
+  CARD_EFFECT_TRIGGER_DESC_MAP,
+  CARD_MATCHED_EVENT_DESC_MAP,
+} from "~/types/effects";
+import {
   POWER_PLANT_TEXTURE_MAP,
   POWER_PLANT_TYPES,
   PowerPlantInfo,
@@ -28,6 +32,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
   private gainPowerText: Phaser.GameObjects.Text;
   private costResourceText?: Phaser.GameObjects.Text;
   private buildCostText: Phaser.GameObjects.Text;
+  private effectText: Phaser.GameObjects.Text;
+
   public stage!: PowerPlantCardStage;
   private tableHiddenX?: number;
   private tableHiddenY?: number;
@@ -92,6 +98,21 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
         color: COLORS.WHITE_5,
       }
     ).setOrigin(0.5);
+    this.effectText = new Phaser.GameObjects.Text(
+      scene,
+      0,
+      96,
+      this._getEffectText(),
+      {
+        fontFamily: FONT_KEYS.NOTO_SANS,
+        fontSize: 20,
+        color: COLORS.WHITE_5,
+        align: "center",
+      }
+    )
+      .setWordWrapWidth(170)
+      .setAlpha(0.8)
+      .setOrigin(0.5);
 
     this.add([
       this.bg,
@@ -100,6 +121,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       powerPlantImage,
       badge,
       name,
+      this.effectText,
     ]);
     this.setDepth(DEPTH.SELECTING_CARD)
       .setSize(this.bg.width, this.bg.height)
@@ -213,5 +235,28 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     if (this.stage === "built") {
       this.setDepth(DEPTH.NORMAL);
     }
+  }
+
+  private _getEffectText(): string {
+    let result = "";
+    for (const effect of this.info.effects) {
+      // TODO: \n if effect length > 2
+      result += CARD_MATCHED_EVENT_DESC_MAP[effect.causedBy.event].replace(
+        "{}",
+        effect.causedBy.value
+      );
+      const { event, buff } = effect.trigger;
+      if (event) {
+        result += CARD_EFFECT_TRIGGER_DESC_MAP[event.type].replace(
+          "{}",
+          event.value.toString()
+        );
+      }
+      if (buff) {
+        result += `${buff.desc} ${buff.operator}${buff.value}`;
+      }
+    }
+
+    return result;
   }
 }

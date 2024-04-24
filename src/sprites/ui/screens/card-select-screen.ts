@@ -126,6 +126,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     const centerY = this.scene.cameras.main.height / 2;
     for (let i = 0; i < 5; i++) {
       const info = CardFactory.getInstance().generatePowerPlantInfo();
+      console.log(info);
       const card = new PowerPlantCard(
         this.scene,
         centerX - 520 + i * 260,

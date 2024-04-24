@@ -134,13 +134,13 @@ export class CardFactory {
         trigger: {
           event: {
             type: "purify-pollution",
-            value: 1 * Math.floor(gm.round * 0.1),
+            value: 1 + Math.floor(gm.round * 0.1),
           },
         },
       });
     }
 
-    const targetEffects = gm.round >= 10 ? 2 : 1;
+    const targetEffects = 1; // TODO: extend
     while (result.length < targetEffects) {
       result.push({
         causedBy: {

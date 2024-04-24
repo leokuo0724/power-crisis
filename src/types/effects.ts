@@ -40,9 +40,9 @@ export const CARD_EFFECT_TRIGGER_DESC_MAP: Record<
   CardEffectTriggerEvent["type"],
   string
 > = {
-  "replenish-coal-resource": "each coal tile +{}",
-  "replenish-oil-resource": "each oil tile +{}",
-  "replenish-natural_gas-resource": "each natural gas tile +{}",
-  "replenish-uranium-resource": "each uranium tile +{}",
+  "replenish-coal-resource": "each coal tile +{} coal",
+  "replenish-oil-resource": "each oil tile +{} oil",
+  "replenish-natural_gas-resource": "each natural gas tile +{} natural gas",
+  "replenish-uranium-resource": "each uranium tile +{} uranium",
   "purify-pollution": "purify {} polluted tile",
 };

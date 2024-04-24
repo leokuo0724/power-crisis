@@ -15,6 +15,7 @@ export type ResourceMetadata = {
   type: ConsumableResource;
   maxAmount: number;
   currentAmount: number;
+  isPolluted: boolean;
 };
 
 const RESOURCE_GRID_TEXTURE_MAP: Record<ConsumableResource, string> = {
@@ -28,7 +29,6 @@ const RESOURCE_GRID_TEXTURE_MAP: Record<ConsumableResource, string> = {
 export class ResourceTile extends TileBasic {
   public resource: ResourceMetadata;
   private amountText: Phaser.GameObjects.Text;
-  public isPolluted: boolean = false;
   private pollutedMask: Phaser.GameObjects.Image;
 
   constructor(
@@ -86,8 +86,7 @@ export class ResourceTile extends TileBasic {
   }
 
   setPolluted(isPolluted: boolean) {
-    console.log("setPolluted", isPolluted);
-    this.isPolluted = isPolluted;
+    this.resource.isPolluted = isPolluted;
     this.pollutedMask.setVisible(isPolluted);
   }
 }

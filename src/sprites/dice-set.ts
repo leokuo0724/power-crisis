@@ -21,14 +21,14 @@ export class DiceSet extends Phaser.GameObjects.Container {
       const diceResult = await this.dice.rollDice();
       const prevTileIndex = gm.currentTileIndex;
 
-      // let nextTileIndex = prevTileIndex + diceResult;
-      // if (prevTileIndex < 5) nextTileIndex = Math.min(5, nextTileIndex);
-      // else if (prevTileIndex < 10) nextTileIndex = Math.min(10, nextTileIndex);
-      // else if (prevTileIndex < 15) nextTileIndex = Math.min(15, nextTileIndex);
-      // else nextTileIndex = nextTileIndex > 19 ? 0 : nextTileIndex;
+      let nextTileIndex = prevTileIndex + diceResult;
+      if (prevTileIndex < 5) nextTileIndex = Math.min(5, nextTileIndex);
+      else if (prevTileIndex < 10) nextTileIndex = Math.min(10, nextTileIndex);
+      else if (prevTileIndex < 15) nextTileIndex = Math.min(15, nextTileIndex);
+      else nextTileIndex = nextTileIndex > 19 ? 0 : nextTileIndex;
       // FIXME: for testing
-      let nextTileIndex = prevTileIndex + 5;
-      if (nextTileIndex > 19) nextTileIndex = 0;
+      // let nextTileIndex = prevTileIndex + 1;
+      // if (nextTileIndex > 19) nextTileIndex = 0;
 
       gm.updateTileIndex(nextTileIndex);
     };

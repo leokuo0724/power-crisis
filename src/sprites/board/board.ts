@@ -45,6 +45,7 @@ export class Board extends Phaser.GameObjects.Container {
             type: tile.resourceType!,
             maxAmount: MAX_RESOURCE_AMOUNT[tile.resourceType!],
             currentAmount: MAX_RESOURCE_AMOUNT[tile.resourceType!],
+            isPolluted: false,
           });
           break;
         case "power_plant":

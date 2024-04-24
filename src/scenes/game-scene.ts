@@ -132,7 +132,7 @@ export class GameScene extends Scene {
       for (let i = 0; i < 20; i++) {
         if (counter >= amount) break;
         const tile = this.board.getTargetTile(i);
-        if (tile instanceof ResourceTile && !tile.isPolluted) {
+        if (tile instanceof ResourceTile && !tile.resource.isPolluted) {
           tile.setPolluted(true);
           counter++;
         }

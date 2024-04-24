@@ -64,7 +64,8 @@ export class CollectRecourseDialog extends Dialog {
           gm.resourceStorage[gm.currentTileResourceMetadata.type].max;
         if (
           gm.currentTileResourceMetadata.currentAmount > 0 &&
-          !isFullStorage
+          !isFullStorage &&
+          !gm.currentTileResourceMetadata.isPolluted
         ) {
           const resourceType = gm.currentTileResourceMetadata.type;
           this.costText.setText(`-${gm.costUnit[resourceType]}`);

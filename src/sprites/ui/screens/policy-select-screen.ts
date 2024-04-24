@@ -3,12 +3,9 @@ import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { COLORS } from "~/constants/colors";
 import { DEPTH } from "~/constants/depth";
-import {
-  BuffNerfType,
-  PERMANENT_BUFFS,
-  PERMANENT_NERFS,
-} from "~/types/effects";
+import { BuffNerfType } from "~/types/effects";
 import { EVENTS, GameManager } from "~/states/game-manager";
+import { PERMANENT_BUFFS, PERMANENT_NERFS } from "~/data/buff-nerf-data";
 
 export class PolicySelectScreen extends Phaser.GameObjects.Container {
   private policy1: PolicyContainer;

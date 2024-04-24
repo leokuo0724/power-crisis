@@ -1,7 +1,7 @@
 import { ConsumableResource } from "~/types/resource";
 import { ResourceTile } from "../tiles/resource-tile";
 import { StartTile } from "../tiles/start-tile";
-import { boardData } from "./board-data";
+import { boardData } from "../../data/board-data";
 import { PowerPlantTile } from "../tiles/power-plant-tile";
 import { SurpriseTile } from "../tiles/surprise-tile";
 import { TileBasic } from "../tiles/common";

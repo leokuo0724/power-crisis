@@ -6,6 +6,7 @@ import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
   NEXT_ROLL_ENABLED: "next-roll-enabled",
+  ON_DICE_ROLLED: "on-dice-rolled",
   CURRENT_TILE_INDEX_UPDATED: "current-tile-index-updated",
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
     "current-tile-resource-metadata-updated",
@@ -33,6 +34,12 @@ export const EVENTS = {
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
   TOGGLE_GENERATE_POWER_DIALOG: "toggle-generate-power-dialog",
+
+  REPLENISH_COAL_RESOURCE: "replenish-coal-resource",
+  REPLENISH_OIL_RESOURCE: "replenish-oil-resource",
+  REPLENISH_NATURAL_GAS_RESOURCE: "replenish-natural_gas-resource",
+  REPLENISH_URANIUM_RESOURCE: "replenish-uranium-resource",
+  PURIFY_POLLUTION: "purify-pollution",
 };
 
 export class GameManager {

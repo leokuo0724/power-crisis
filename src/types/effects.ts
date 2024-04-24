@@ -5,146 +5,44 @@ export type BuffNerfType = {
   desc: string;
 };
 
-export const PERMANENT_BUFFS: BuffNerfType[] = [
-  {
-    type: "currentPower",
-    operator: "+",
-    value: 5,
-    desc: "Current power",
-  },
-  {
-    type: "targetPower",
-    operator: "-",
-    value: 3,
-    desc: "Target power",
-  },
-  {
-    type: "collectUnit.coal",
-    operator: "+",
-    value: 1,
-    desc: "Coal collect unit",
-  },
-  {
-    type: "collectUnit.natural_gas",
-    operator: "+",
-    value: 1,
-    desc: "Natural gas collect unit",
-  },
-  {
-    type: "collectUnit.oil",
-    operator: "+",
-    value: 1,
-    desc: "Oil collect unit",
-  },
-  {
-    type: "collectUnit.uranium",
-    operator: "+",
-    value: 1,
-    desc: "Uranium collect unit",
-  },
-  {
-    type: "resourceStorage.coal.max",
-    operator: "+",
-    value: 1,
-    desc: "Coal max storage",
-  },
-  {
-    type: "resourceStorage.natural_gas.max",
-    operator: "+",
-    value: 1,
-    desc: "Natural gas max storage",
-  },
-  {
-    type: "resourceStorage.oil.max",
-    operator: "+",
-    value: 1,
-    desc: "Oil max storage",
-  },
-  {
-    type: "resourceStorage.uranium.max",
-    operator: "+",
-    value: 1,
-    desc: "Uranium max storage",
-  },
-  {
-    type: "resourceStorage.biomass.max",
-    operator: "+",
-    value: 1,
-    desc: "Biomass max storage",
-  },
-];
+type CardEffectTriggerEvent = {
+  type:
+    | "replenish-coal-resource"
+    | "replenish-oil-resource"
+    | "replenish-natural_gas-resource"
+    | "replenish-uranium-resource"
+    | "purify-pollution";
+  value: number;
+};
 
-export const PERMANENT_NERFS: BuffNerfType[] = [
-  {
-    type: "currentPower",
-    operator: "-",
-    value: 3,
-    desc: "Current power",
-  },
-  {
-    type: "targetPower",
-    operator: "+",
-    value: 2,
-    desc: "Target power",
-  },
-  {
-    type: "costUnit.coal",
-    operator: "+",
-    value: 1,
-    desc: "Coal collect cost",
-  },
-  {
-    type: "costUnit.natural_gas",
-    operator: "+",
-    value: 1,
-    desc: "Natural gas collect cost",
-  },
-  {
-    type: "costUnit.oil",
-    operator: "+",
-    value: 1,
-    desc: "Oil collect cost",
-  },
-  {
-    type: "costUnit.uranium",
-    operator: "+",
-    value: 1,
-    desc: "Uranium collect cost",
-  },
-  {
-    type: "costUnit.biomass",
-    operator: "+",
-    value: 1,
-    desc: "Biomass collect cost",
-  },
-  {
-    type: "resourceStorage.coal.max",
-    operator: "-",
-    value: 1,
-    desc: "Coal max storage",
-  },
-  {
-    type: "resourceStorage.natural_gas.max",
-    operator: "-",
-    value: 1,
-    desc: "Natural gas max storage",
-  },
-  {
-    type: "resourceStorage.oil.max",
-    operator: "-",
-    value: 1,
-    desc: "Oil max storage",
-  },
-  {
-    type: "resourceStorage.uranium.max",
-    operator: "-",
-    value: 1,
-    desc: "Uranium max storage",
-  },
-  {
-    type: "resourceStorage.biomass.max",
-    operator: "-",
-    value: 1,
-    desc: "Biomass max storage",
-  },
-];
+export type CardEffect = {
+  causedBy: {
+    event: "on-dice-rolled" | "on-build-power-plant" | "resource-collected";
+    value: any;
+  };
+  trigger: {
+    // 必有一個
+    buff?: BuffNerfType;
+    event?: CardEffectTriggerEvent;
+  };
+};
+
+// @ts-ignore
+export const CARD_MATCHED_EVENT_DESC_MAP: Record<
+  CardEffect["causedBy"]["event"],
+  string
+> = {
+  "on-dice-rolled": "When the dice rolls a {}, ",
+  "on-build-power-plant": "When building a {} power plant, ",
+  "resource-collected": "When collecting {}, ",
+};
+export const CARD_EFFECT_TRIGGER_DESC_MAP: Record<
+  CardEffectTriggerEvent["type"],
+  string
+> = {
+  "replenish-coal-resource": "each coal tile +{}",
+  "replenish-oil-resource": "each oil tile +{}",
+  "replenish-natural_gas-resource": "each natural gas tile +{}",
+  "replenish-uranium-resource": "each uranium tile +{}",
+  "purify-pollution": "purify {} polluted tile",
+};

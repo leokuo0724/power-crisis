@@ -1,14 +1,13 @@
 import { ConsumableResource } from "~/types/resource";
-import { TileType } from "../tiles/common";
+import { TileType } from "../sprites/tiles/common";
 
-type BoardData = TileData[];
 type TileData = {
   index: number;
   tileType: TileType;
   resourceType?: ConsumableResource;
 };
 
-export const boardData: BoardData = [
+export const boardData: TileData[] = [
   { index: 0, tileType: "start" },
   { index: 1, tileType: "resource", resourceType: "coal" },
   { index: 2, tileType: "resource", resourceType: "oil" },

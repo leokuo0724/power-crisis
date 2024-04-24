@@ -1,7 +1,7 @@
 import { PowerPlantTile } from "~/sprites/tiles/power-plant-tile";
 import { ResourceMetadata } from "~/sprites/tiles/resource-tile";
 import { BuffNerfType } from "~/types/effects";
-import { PollutionType } from "~/types/pollution";
+import { PollutionType, TPollutionInfo } from "~/types/pollution";
 import { ConsumableResource } from "~/types/resource";
 
 export const EVENTS = {
@@ -68,12 +68,22 @@ export class GameManager {
     uranium: { current: 0, max: 3 },
     biomass: { current: 0, max: 3 },
   };
+  // current pollution
   pollution: {
     carbonEmissions: number;
     nuclearWaste: number;
   } = {
     carbonEmissions: 0,
     nuclearWaste: 0,
+  };
+  pollutionUnit: Record<
+    Exclude<ConsumableResource, "biomass">,
+    TPollutionInfo
+  > = {
+    coal: { type: "carbon", value: 3 },
+    oil: { type: "carbon", value: 2 },
+    natural_gas: { type: "carbon", value: 1 },
+    uranium: { type: "nuclear", value: 1 },
   };
   currentPower: number = this.INIT_POWER;
   isNextRollEnabled: boolean = false;
@@ -259,17 +269,16 @@ export class GameManager {
       );
 
       // update pollution
-      const carbonType = ["natural_gas", "oil", "coal"];
-      if (carbonType.includes(resourceType)) {
-        const polluteNum = carbonType.indexOf(resourceType) + 1;
+      // @ts-ignore
+      const pollutionInfo = this.pollutionUnit[resourceType] as
+        | TPollutionInfo
+        | undefined;
+      if (pollutionInfo) {
         this.updatePollution(
-          "carbon",
-          this.pollution.carbonEmissions + polluteNum
+          pollutionInfo.type,
+          this.pollution.carbonEmissions + pollutionInfo.value
         );
-        this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, "carbon");
-      } else if (resourceType === "uranium") {
-        this.updatePollution("nuclear", this.pollution.nuclearWaste + 1);
-        this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, "nuclear");
+        this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, pollutionInfo.type);
       }
     }
     // gain power

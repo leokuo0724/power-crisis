@@ -21,15 +21,26 @@ export class ExistingPowerPlantDialog extends Dialog {
     gm.emitter.on(EVENTS.CURRENT_TILE_POWER_PLANT_TILE_UPDATED, () => {
       const ppTile = gm.currentTilePowerPlantTile;
       if (ppTile && ppTile.powerPlantCard) {
-        this.generateButton.setDisabled(
-          ppTile.powerPlantCard.info.buildCost > gm.currentPower
-        );
+        const currentStorage: number | undefined =
+          // @ts-ignore
+          gm.resourceStorage[ppTile.powerPlantCard.info.powerGain.resourceType]
+            ?.current;
+        if (currentStorage === undefined) {
+          this.generateButton.setDisabled(false);
+        } else {
+          this.generateButton.setDisabled(
+            ppTile.powerPlantCard.info.powerGain.cost > currentStorage
+          );
+        }
+
         this.replaceButton.setDisabled(
           (this.scene as GameScene).tablePowerPlantCards.length === 0
         );
         this.show();
       }
-      if (!ppTile) this.hide();
+      if (!ppTile) {
+        this.hide();
+      }
     });
   }
 }

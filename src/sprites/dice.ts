@@ -10,7 +10,7 @@ const DICE_NUM_TEXTURE_MAP: Record<number, string> = {
 };
 
 export class Dice extends Phaser.GameObjects.Sprite {
-  range: number[] = [1, 2, 3];
+  range: number[];
 
   constructor(scene: Phaser.Scene, x: number, y: number, range: number[]) {
     super(scene, x, y, IMAGE_KEYS.DICE, DICE_KEYS.DICE_1);
@@ -29,7 +29,7 @@ export class Dice extends Phaser.GameObjects.Sprite {
         );
         counter++;
         if (counter === 10) {
-          const num = Phaser.Math.RND.pick([1, 2, 3]);
+          const num = Phaser.Math.RND.pick(this.range);
           this.setTexture(IMAGE_KEYS.DICE, DICE_NUM_TEXTURE_MAP[num]);
           clearInterval(timer);
           resolve(num);

@@ -143,7 +143,7 @@ class PolicyContainer extends Phaser.GameObjects.Container {
   updatePolicy(buff: BuffNerfType, nerf: BuffNerfType) {
     this.buff = buff;
     this.nerf = nerf;
-    this.buffText.setText(buff.desc);
-    this.nerfText.setText(nerf.desc);
+    this.buffText.setText(`${buff.desc} ${buff.operator}${buff.value}`);
+    this.nerfText.setText(`${nerf.desc} ${nerf.operator}${nerf.value}`);
   }
 }

@@ -6,6 +6,7 @@ import { EVENTS, GameManager } from "~/states/game-manager";
 import {
   CARD_EFFECT_TRIGGER_DESC_MAP,
   CARD_MATCHED_EVENT_DESC_MAP,
+  CardEffect,
 } from "~/types/effects";
 import {
   POWER_PLANT_TEXTURE_MAP,
@@ -184,6 +185,19 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
         }
       }
     );
+    // Trigger effects
+    gm.emitter.on(EVENTS.ON_DICE_ROLLED, () => {
+      if (this.stage !== "built") return;
+      this._checkEffects("on-dice-rolled");
+    });
+    gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, () => {
+      if (this.stage !== "built") return;
+      this._checkEffects("on-build-power-plant");
+    });
+    gm.emitter.on(EVENTS.RESOURCE_COLLECTED, () => {
+      if (this.stage !== "built") return;
+      this._checkEffects("resource-collected");
+    });
   }
 
   onPointerOver() {
@@ -258,5 +272,17 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     }
 
     return result;
+  }
+
+  private _checkEffects(causedByEvent: CardEffect["causedBy"]["event"]) {
+    const gm = GameManager.getInstance();
+    for (const effect of this.info.effects) {
+      if (effect.causedBy.event !== causedByEvent) continue;
+      const { event, buff } = effect.trigger;
+      if (event) gm.emitter.emit(event.type, event.value);
+      if (buff) {
+        gm.doEffect(buff);
+      }
+    }
   }
 }

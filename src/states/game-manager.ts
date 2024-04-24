@@ -35,6 +35,7 @@ export const EVENTS = {
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
   TOGGLE_GENERATE_POWER_DIALOG: "toggle-generate-power-dialog",
 
+  // TODO:
   REPLENISH_COAL_RESOURCE: "replenish-coal-resource",
   REPLENISH_OIL_RESOURCE: "replenish-oil-resource",
   REPLENISH_NATURAL_GAS_RESOURCE: "replenish-natural_gas-resource",
@@ -213,8 +214,8 @@ export class GameManager {
   }
   selectPolicy(buff: BuffNerfType, nerf: BuffNerfType) {
     // effects
-    this._doEffect(buff);
-    this._doEffect(nerf);
+    this.doEffect(buff);
+    this.doEffect(nerf);
     this.emitter.emit(EVENTS.POWER_UPDATED);
     this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
     this.emitter.emit(EVENTS.COLLECT_UNIT_UPDATED);
@@ -223,7 +224,7 @@ export class GameManager {
     // close the policy screen
     this.togglePolicyScreen(false);
   }
-  private _doEffect(bnt: BuffNerfType) {
+  doEffect(bnt: BuffNerfType) {
     const { type, operator, value } = bnt;
     const props: string[] = type.split(".");
     if (props.length === 1) {

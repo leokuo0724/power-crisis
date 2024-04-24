@@ -5,7 +5,7 @@ export type BuffNerfType = {
   desc: string;
 };
 
-type CardEffectTriggerEvent = {
+export type CardEffectTriggerEvent = {
   type:
     | "replenish-coal-resource"
     | "replenish-oil-resource"

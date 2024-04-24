@@ -8,8 +8,8 @@ import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "../shared/button";
 import { GameScene } from "~/scenes/game-scene";
 import { EVENTS, GameManager } from "~/states/game-manager";
-import { v4 as uuidv4 } from "uuid";
 import { DEPTH } from "~/constants/depth";
+import { CardFactory } from "~/sprites/cards/card-factory";
 
 const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
@@ -125,16 +125,12 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     const centerX = this.scene.cameras.main.width / 2;
     const centerY = this.scene.cameras.main.height / 2;
     for (let i = 0; i < 5; i++) {
+      const info = CardFactory.getInstance().generatePowerPlantInfo();
       const card = new PowerPlantCard(
         this.scene,
         centerX - 520 + i * 260,
         centerY - 24,
-        {
-          id: uuidv4(),
-          type: POWER_PLANT_TYPES.THERMAL,
-          buildCost: 3,
-          powerGain: { gain: 2, cost: 1, resourceType: "coal" },
-        }
+        info
       );
       card.on("pointerdown", () => {
         if (this.picked.has(i)) {

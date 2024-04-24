@@ -1,5 +1,6 @@
 import { POWER_PLANT_KEYS } from "~/constants/image-keys";
 import { ResourceType } from "./resource";
+import { CardEffect } from "./effects";
 
 export const POWER_PLANT_TYPES = {
   THERMAL: "thermal",
@@ -22,7 +23,7 @@ export type PowerPlantInfo = {
     cost: number;
     gain: number;
   };
-  // TODO: effects
+  effects: CardEffect[];
 };
 
 export const POWER_PLANT_TEXTURE_MAP: Record<PowerPlantType, string> = {

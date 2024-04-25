@@ -55,6 +55,14 @@ export class PreloadScene extends Scene {
     this._drawBg(graphics, 1920, 1080, COLORS.WHITE_6, TEXTURE_KEYS.MAIN_BG);
     this._drawBg(
       graphics,
+      1920,
+      1080,
+      COLORS.BLUE_7,
+      TEXTURE_KEYS.START_BG,
+      0.98
+    );
+    this._drawBg(
+      graphics,
       250,
       80,
       COLORS.BLUE_4,

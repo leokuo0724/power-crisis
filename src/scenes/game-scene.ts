@@ -23,6 +23,7 @@ import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-scree
 import { TargetPowerBoard } from "~/sprites/ui/boards/target-power-board";
 import { CardRemoveModeDialog } from "~/sprites/ui/dialogs/card-remove-mode-dialog";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
+import { GameStartScreen } from "~/sprites/ui/screens/game-start-screen";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -49,7 +50,7 @@ export class GameScene extends Scene {
     const centerX = this.cameras.main.width / 2;
     const centerY = this.cameras.main.height / 2;
 
-    const bg = this.add.image(centerX, centerY, TEXTURE_KEYS.MAIN_BG);
+    this.add.image(centerX, centerY, TEXTURE_KEYS.MAIN_BG);
     this.board = new Board(this, centerX, centerY - 48);
     this.powerDisplay = new PowerDisplay(this, centerX, centerY - 48);
     const startTileBounds = this.board.getTileBoundsByIndex(0);
@@ -77,6 +78,8 @@ export class GameScene extends Scene {
 
     new PollutionCheckScreen(this, centerX, centerY, "carbon");
     new PollutionCheckScreen(this, centerX, centerY, "nuclear");
+
+    new GameStartScreen(this, centerX, centerY);
 
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.CURRENT_TILE_INDEX_UPDATED, async () => {

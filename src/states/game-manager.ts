@@ -47,9 +47,10 @@ export const EVENTS = {
 export class GameManager {
   readonly INIT_POWER: number = 30;
   readonly MAX_POWER_PLANT_CARD: number = 4;
+  readonly TARGET_POWER_GROWTH: number = 10;
 
   round: number = 1;
-  targetPower: number = 5; // power to reach to the next round
+  targetPower: number = 10; // power to reach to the next round
   currentTileIndex: number = 0;
   currentTileResourceMetadata: ResourceMetadata | null = null;
   currentTilePowerPlantTile: PowerPlantTile | null = null;
@@ -207,7 +208,7 @@ export class GameManager {
     if (enabled) {
       this.round++;
 
-      this.targetPower += 5;
+      this.targetPower += this.TARGET_POWER_GROWTH;
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
       this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
     } else {

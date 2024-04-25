@@ -16,10 +16,13 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
   private rollDiceButton: RollDiceButton;
   private resultText: Phaser.GameObjects.Text;
 
+  private lockedAmount: number;
+
   constructor(scene: Scene, x: number, y: number, type: PollutionType) {
     super(scene, x, y);
     scene.add.existing(this);
     this.type = type;
+    this.lockedAmount = type === "nuclear" ? 4 : 1;
 
     const gm = GameManager.getInstance();
     const bg = new Phaser.GameObjects.Image(
@@ -87,7 +90,7 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
         ? gm.pollution.carbonEmissions
         : gm.pollution.nuclearWaste;
     this.descriptionText.setText(
-      `Must be greater than or equal to ${value}\nor it will cause pollution to lock a random tile.`
+      `Must be greater than or equal to ${value}\nor it will cause pollution to lock ${this.lockedAmount} random tile.`
     );
   }
 
@@ -120,7 +123,7 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
       onComplete: () => {
         this.setVisible(false);
         this._reset();
-        if (!isPass) gm.onPolluted(this.type === "nuclear" ? 2 : 1);
+        if (!isPass) gm.onPolluted(this.lockedAmount);
       },
     });
   }

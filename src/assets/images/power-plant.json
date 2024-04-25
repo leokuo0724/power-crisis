@@ -4,8 +4,8 @@
 			"image": "power-plant.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 130,
-				"h": 124
+				"w": 232,
+				"h": 344
 			},
 			"scale": 1,
 			"frames": [
@@ -29,6 +29,111 @@
 						"w": 128,
 						"h": 122
 					}
+				},
+				{
+					"filename": "power-plant-wind.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 15,
+						"w": 105,
+						"h": 123
+					},
+					"frame": {
+						"x": 1,
+						"y": 125,
+						"w": 105,
+						"h": 123
+					}
+				},
+				{
+					"filename": "power-plant-nuclear.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 32,
+						"y": 11,
+						"w": 92,
+						"h": 125
+					},
+					"frame": {
+						"x": 131,
+						"y": 1,
+						"w": 92,
+						"h": 125
+					}
+				},
+				{
+					"filename": "power-plant-hydro.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 41,
+						"w": 123,
+						"h": 95
+					},
+					"frame": {
+						"x": 108,
+						"y": 128,
+						"w": 123,
+						"h": 95
+					}
+				},
+				{
+					"filename": "power-plant-solar.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 44,
+						"w": 118,
+						"h": 92
+					},
+					"frame": {
+						"x": 1,
+						"y": 250,
+						"w": 118,
+						"h": 92
+					}
+				},
+				{
+					"filename": "power-plant-biomass.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 18,
+						"w": 108,
+						"h": 118
+					},
+					"frame": {
+						"x": 121,
+						"y": 225,
+						"w": 108,
+						"h": 118
+					}
 				}
 			]
 		}
@@ -36,6 +141,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:ba6cc44025694c699dd98ea0109ca203:2311a52276562fc74f5c1b503b6dfe57:f1d33477c17b404e1034dff0fd3cf254$"
+		"smartupdate": "$TexturePacker:SmartUpdate:b3158a9840e8146be190e447b075a670:bdacca09e601d183aabf7c62ba521bc8:f1d33477c17b404e1034dff0fd3cf254$"
 	}
 }

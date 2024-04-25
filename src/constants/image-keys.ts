@@ -42,14 +42,9 @@ export const CARD_KEYS = {
 
 export const POWER_PLANT_KEYS = {
   THERMAL: "power-plant-thermal.png",
-  WIND: "power-plant-thermal.png",
-  SOLAR: "power-plant-thermal.png",
-  HYDRO: "power-plant-thermal.png",
-  NUCLEAR: "power-plant-thermal.png",
-  BIOMASS: "power-plant-thermal.png",
-  // WIND: "power-plant-wind.png",
-  // SOLAR: "power-plant-solar.png",
-  // HYDRO: "power-plant-hydro.png",
-  // NUCLEAR: "power-plant-nuclear.png",
-  // BIOMASS: "power-plant-biomass.png",
+  WIND: "power-plant-wind.png",
+  SOLAR: "power-plant-solar.png",
+  HYDRO: "power-plant-hydro.png",
+  NUCLEAR: "power-plant-nuclear.png",
+  BIOMASS: "power-plant-biomass.png",
 };

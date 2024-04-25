@@ -1,7 +1,7 @@
 {
-  "name": "solidjs-phaser",
+  "name": "power-crisis",
   "version": "0.0.0",
-  "description": "Simple example of using Phaser with SolidJS",
+  "description": "Power Crisis Game",
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -10,23 +10,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/uuid": "^9.0.8",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "solid-devtools": "^0.29.2",
-    "tailwindcss": "^3.4.3",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11",
-    "vite-plugin-solid": "^2.8.2"
+    "vite": "^5.0.11"
   },
   "dependencies": {
-    "@kobalte/core": "^0.12.6",
     "@types/node": "^20.12.7",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "phaser": "^3.70.0",
-    "solid-js": "^1.8.11",
-    "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "phaser": "^3.70.0"
   }
 }

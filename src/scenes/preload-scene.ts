@@ -52,6 +52,7 @@ export class PreloadScene extends Scene {
     this._drawTile(graphics, COLORS.DARK_5, TEXTURE_KEYS.DARK_5_TILE);
     this._drawTile(graphics, COLORS.ORANGE_6, TEXTURE_KEYS.ORANGE_6_TILE);
     this._drawTile(graphics, COLORS.GREEN_5, TEXTURE_KEYS.GREEN_5_TILE);
+    this._drawBg(graphics, 1920, 1080, COLORS.WHITE_6, TEXTURE_KEYS.MAIN_BG);
     this._drawBg(
       graphics,
       250,

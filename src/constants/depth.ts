@@ -5,4 +5,5 @@ export const DEPTH = {
   OVERLAY: 100,
   TABLE_CARD: 50,
   NORMAL: 0,
+  BG: -100,
 };

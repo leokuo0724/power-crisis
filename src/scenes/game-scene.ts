@@ -22,6 +22,7 @@ import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog"
 import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-screen";
 import { TargetPowerBoard } from "~/sprites/ui/boards/target-power-board";
 import { CardRemoveModeDialog } from "~/sprites/ui/dialogs/card-remove-mode-dialog";
+import { TEXTURE_KEYS } from "~/constants/texture-keys";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -48,6 +49,7 @@ export class GameScene extends Scene {
     const centerX = this.cameras.main.width / 2;
     const centerY = this.cameras.main.height / 2;
 
+    const bg = this.add.image(centerX, centerY, TEXTURE_KEYS.MAIN_BG);
     this.board = new Board(this, centerX, centerY - 48);
     this.powerDisplay = new PowerDisplay(this, centerX, centerY - 48);
     const startTileBounds = this.board.getTileBoundsByIndex(0);

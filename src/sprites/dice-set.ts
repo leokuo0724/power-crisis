@@ -27,7 +27,7 @@ export class DiceSet extends Phaser.GameObjects.Container {
       else if (prevTileIndex < 15) nextTileIndex = Math.min(15, nextTileIndex);
       else nextTileIndex = nextTileIndex > 19 ? 0 : nextTileIndex;
       // FIXME: for testing
-      // let nextTileIndex = prevTileIndex + 1;
+      // let nextTileIndex = prevTileIndex + 5;
       // if (nextTileIndex > 19) nextTileIndex = 0;
 
       gm.updateTileIndex(nextTileIndex);

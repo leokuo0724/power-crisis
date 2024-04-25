@@ -29,7 +29,7 @@ const POWER_PLANT_BG_TEXTURE_MAP: Record<PowerPlantType, string> = {
   [POWER_PLANT_TYPES.BIOMASS]: CARD_KEYS.BIOMASS,
 };
 
-type PowerPlantCardStage = "select" | "table" | "build" | "built" | "discard";
+type PowerPlantCardStage = "select" | "table" | "build" | "built" | "remove";
 
 export class PowerPlantCard extends Phaser.GameObjects.Container {
   info: PowerPlantInfo;
@@ -171,8 +171,18 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, this._onBuildModeUpdated, this);
     gm.emitter.on(
+      EVENTS.CARD_REMOVE_MODE_UPDATED,
+      this._onCardRemoveModeUpdated,
+      this
+    );
+    gm.emitter.on(
       EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
       this._onSelectedPowerPlantToBuildIdUpdated,
+      this
+    );
+    gm.emitter.on(
+      EVENTS.SELECTED_POWER_PLANT_TO_REMOVE_IDS_UPDATED,
+      this._onSelectedPowerPlantToRemoveIdsUpdate,
       this
     );
     // Trigger effects
@@ -191,9 +201,27 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       this.setAlpha(1);
     }
   }
+  private _onCardRemoveModeUpdated(enabled: boolean) {
+    if (this.stage === "built") return;
+    if (enabled) {
+      this.switchMode("remove");
+    } else {
+      this.switchMode("table");
+      this.setAlpha(1);
+    }
+  }
   private _onSelectedPowerPlantToBuildIdUpdated(id: string) {
     if (this.stage === "built") return;
     if (id === this.info.id && this.stage === "build") {
+      this.setAlpha(1);
+    } else {
+      this.setAlpha(0.5);
+    }
+  }
+  private _onSelectedPowerPlantToRemoveIdsUpdate() {
+    if (this.stage === "built") return;
+    const gm = GameManager.getInstance();
+    if (gm.selectedPowerPlantToRemoveIds.has(this.info.id)) {
       this.setAlpha(1);
     } else {
       this.setAlpha(0.5);
@@ -216,8 +244,18 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     const gm = GameManager.getInstance();
     gm.emitter.off(EVENTS.BUILD_MODE_UPDATED, this._onBuildModeUpdated, this);
     gm.emitter.off(
+      EVENTS.CARD_REMOVE_MODE_UPDATED,
+      this._onCardRemoveModeUpdated,
+      this
+    );
+    gm.emitter.off(
       EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
       this._onSelectedPowerPlantToBuildIdUpdated,
+      this
+    );
+    gm.emitter.off(
+      EVENTS.SELECTED_POWER_PLANT_TO_REMOVE_IDS_UPDATED,
+      this._onSelectedPowerPlantToRemoveIdsUpdate,
       this
     );
     gm.emitter.off(EVENTS.ON_DICE_ROLLED, this._onDiceRolled, this);
@@ -253,6 +291,9 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     if (this.stage === "build") {
       gm.updateSelectedPowerPlantToBuildId(this.info.id);
     }
+    if (this.stage === "remove") {
+      gm.updateSelectedPowerPlantToRemoveIds(this.info.id);
+    }
   }
 
   switchMode(
@@ -268,7 +309,10 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       this.y = this.tableHiddenY;
       this.setDepth(DEPTH.TABLE_CARD);
     }
-    if (this.stage === "build" && this.tableHiddenY) {
+    if (
+      (this.stage === "build" || this.stage === "remove") &&
+      this.tableHiddenY
+    ) {
       this.y = this.tableHiddenY - 172;
       this.setDepth(DEPTH.SELECTING_CARD);
     }

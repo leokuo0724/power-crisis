@@ -3,7 +3,6 @@ import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { PowerPlantCard } from "../../cards/power-plant-card";
-import { POWER_PLANT_TYPES } from "~/types/power-plant";
 import { ICON_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
 import { Button } from "../shared/button";
 import { GameScene } from "~/scenes/game-scene";

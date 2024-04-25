@@ -20,8 +20,8 @@ import { PolicySelectScreen } from "~/sprites/ui/screens/policy-select-screen";
 import { ExistingPowerPlantDialog } from "~/sprites/ui/dialogs/existing-power-plant-dialog";
 import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog";
 import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-screen";
-import { ConsumableResource } from "~/types/resource";
 import { TargetPowerBoard } from "~/sprites/ui/boards/target-power-board";
+import { CardRemoveModeDialog } from "~/sprites/ui/dialogs/card-remove-mode-dialog";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -71,6 +71,8 @@ export class GameScene extends Scene {
     new ExistingPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);
     new GeneratePowerDialog(this, 2 * centerX + 288, centerY + 340);
     new BuildModeDialog(this, 2 * centerX + 288, centerY + 340);
+    new CardRemoveModeDialog(this, 2 * centerX + 288, centerY + 340);
+
     new PollutionCheckScreen(this, centerX, centerY, "carbon");
     new PollutionCheckScreen(this, centerX, centerY, "nuclear");
 
@@ -146,6 +148,20 @@ export class GameScene extends Scene {
         card.switchMode("table", { hiddenX: x, hiddenY: y });
       },
     });
+  }
+
+  removeSelectedCards() {
+    const gm = GameManager.getInstance();
+    const selectedIds = Array.from(gm.selectedPowerPlantToRemoveIds);
+    for (const id of selectedIds) {
+      const cardIndex = this.tablePowerPlantCards.findIndex(
+        (card) => card.info.id === id
+      );
+      const card = this.tablePowerPlantCards[cardIndex];
+      this.tablePowerPlantCards.splice(cardIndex, 1);
+      card.destroy();
+      this._animateTablePowerPlantCards();
+    }
   }
 
   private _animateTablePowerPlantCards() {

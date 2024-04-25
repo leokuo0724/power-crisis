@@ -22,10 +22,14 @@ export const EVENTS = {
   POWER_UPDATED: "power-updated",
   TARGET_POWER_UPDATED: "target-power-updated",
 
-  RESOURCE_COLLECTED: "resource-collected",
   BUILD_MODE_UPDATED: "build-mode-updated",
+  CARD_REMOVE_MODE_UPDATED: "remove-mode-updated",
+
+  RESOURCE_COLLECTED: "resource-collected",
   SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
     "selected-power-plant-to-build-id-updated",
+  SELECTED_POWER_PLANT_TO_REMOVE_IDS_UPDATED:
+    "selected-power-plant-to-remove-ids-updated",
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
 
   POLLUTION_UPDATED: "pollution-updated",
@@ -100,6 +104,7 @@ export class GameManager {
 
   isBuildMode: boolean = false;
   selectedPowerPlantToBuildId: string | null = null;
+  selectedPowerPlantToRemoveIds = new Set<string>();
 
   emitter: Phaser.Events.EventEmitter = new Phaser.Events.EventEmitter();
 
@@ -188,6 +193,16 @@ export class GameManager {
     this.selectedPowerPlantToBuildId = id;
     this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED, id);
   }
+  updateSelectedPowerPlantToRemoveIds(id?: string) {
+    if (id) {
+      if (this.selectedPowerPlantToRemoveIds.has(id)) {
+        this.selectedPowerPlantToRemoveIds.delete(id);
+      } else {
+        this.selectedPowerPlantToRemoveIds.add(id);
+      }
+    }
+    this.emitter.emit(EVENTS.SELECTED_POWER_PLANT_TO_REMOVE_IDS_UPDATED);
+  }
   onBuildPowerPlant() {
     // Remove card instance and effects
     const currentCard = this.currentTilePowerPlantTile?.powerPlantCard;
@@ -263,6 +278,13 @@ export class GameManager {
     }
     if (typeLowerCase.includes("storage")) {
       this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
+    }
+  }
+  toggleCardRemoveMode(enabled: boolean) {
+    this.emitter.emit(EVENTS.CARD_REMOVE_MODE_UPDATED, enabled);
+    if (enabled) {
+      this.selectedPowerPlantToRemoveIds.clear();
+      this.updateSelectedPowerPlantToRemoveIds();
     }
   }
   toggleCardSelectScreen(visible: boolean) {

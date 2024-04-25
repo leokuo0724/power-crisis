@@ -13,5 +13,8 @@ export class Overlay extends Phaser.GameObjects.Image {
     gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
       gm.isBuildMode ? this.setVisible(true) : this.setVisible(false);
     });
+    gm.emitter.on(EVENTS.CARD_REMOVE_MODE_UPDATED, (enabled: boolean) => {
+      enabled ? this.setVisible(true) : this.setVisible(false);
+    });
   }
 }

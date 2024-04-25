@@ -58,7 +58,7 @@ export class PolicySelectScreen extends Phaser.GameObjects.Container {
         this._updatePolicies();
       } else {
         this.setVisible(false);
-        gm.toggleCardSelectScreen(true);
+        gm.toggleCardRemoveMode(true);
       }
     });
   }

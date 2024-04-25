@@ -20,6 +20,7 @@ import { PolicySelectScreen } from "~/sprites/ui/screens/policy-select-screen";
 import { ExistingPowerPlantDialog } from "~/sprites/ui/dialogs/existing-power-plant-dialog";
 import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog";
 import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-screen";
+import { ConsumableResource } from "~/types/resource";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -127,17 +128,6 @@ export class GameScene extends Scene {
         gm.updatePower(gm.currentPower - card.info.buildCost);
       }
     );
-    gm.emitter.on(EVENTS.ON_POLLUTED, (amount: number) => {
-      let counter = 0;
-      for (let i = 0; i < 20; i++) {
-        if (counter >= amount) break;
-        const tile = this.board.getTargetTile(i);
-        if (tile instanceof ResourceTile && !tile.resource.isPolluted) {
-          tile.setPolluted(true);
-          counter++;
-        }
-      }
-    });
   }
 
   appendTablePowerPlantCards(card: PowerPlantCard) {

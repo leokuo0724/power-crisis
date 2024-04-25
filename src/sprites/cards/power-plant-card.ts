@@ -293,9 +293,7 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       console.log("trigger effect", effect);
       const { event, buff } = effect.trigger;
       if (event) gm.emitter.emit(event.type, event.value);
-      if (buff) {
-        gm.doEffect(buff);
-      }
+      if (buff) gm.doEffect(buff);
     }
   }
 }

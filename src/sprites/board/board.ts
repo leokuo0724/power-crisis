@@ -23,13 +23,36 @@ export class Board extends Phaser.GameObjects.Container {
     scene.add.existing(this);
 
     this._initTiles();
-    GameManager.getInstance().emitter.on(
-      EVENTS.RESOURCE_COLLECTED,
-      (index: number) => {
-        const tile = this.getTargetTile(index);
-        if (tile instanceof ResourceTile) tile.updateAmountText();
+    const gm = GameManager.getInstance();
+    gm.emitter.on(EVENTS.RESOURCE_COLLECTED, (index: number) => {
+      const tile = this.getTargetTile(index);
+      if (tile instanceof ResourceTile) tile.updateAmountText();
+    });
+    gm.emitter.on(EVENTS.ON_POLLUTED, (amount: number) => {
+      let counter = 0;
+      for (const tile of this.list) {
+        if (counter >= amount) break;
+        if (tile instanceof ResourceTile && !tile.resource.isPolluted) {
+          tile.setPolluted(true);
+          counter++;
+        }
       }
-    );
+    });
+    gm.emitter.on(EVENTS.PURIFY_POLLUTION, (amount: number) => {
+      let counter = 0;
+      for (const tile of this.list) {
+        if (counter >= amount) break;
+        if (tile instanceof ResourceTile && tile.resource.isPolluted) {
+          tile.setPolluted(false);
+          counter++;
+        }
+      }
+    });
+
+    this._subscribeReplenishResource("coal");
+    this._subscribeReplenishResource("natural_gas");
+    this._subscribeReplenishResource("oil");
+    this._subscribeReplenishResource("uranium");
   }
 
   private _initTiles() {
@@ -97,5 +120,20 @@ export class Board extends Phaser.GameObjects.Container {
     return this.list.find(
       (obj) => obj instanceof TileBasic && obj.index === index
     ) as TileBasic;
+  }
+
+  private _subscribeReplenishResource(type: ConsumableResource) {
+    const gm = GameManager.getInstance();
+    gm.emitter.on(`replenish-${type}-resource`, () => {
+      this.list.forEach((obj) => {
+        if (obj instanceof ResourceTile && obj.resource.type === type) {
+          obj.resource.currentAmount = Math.min(
+            obj.resource.maxAmount,
+            obj.resource.currentAmount + 1
+          );
+          obj.updateAmountText();
+        }
+      });
+    });
   }
 }

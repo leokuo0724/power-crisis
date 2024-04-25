@@ -76,7 +76,12 @@ export class CardFactory {
 
   generatePowerPlantInfo(): PowerPlantInfo {
     const gm = GameManager.getInstance();
-    const type = Phaser.Math.RND.pick(Object.values(POWER_PLANT_TYPES));
+    const type = Phaser.Math.RND.pick([
+      ...Object.values(POWER_PLANT_TYPES),
+      // Add more thermal power plants
+      POWER_PLANT_TYPES.THERMAL,
+      POWER_PLANT_TYPES.THERMAL,
+    ]);
     const buildCost =
       this.buildCostBase[type] +
       Math.floor(this.buildCostRoundFactor[type] * (gm.round - 1));

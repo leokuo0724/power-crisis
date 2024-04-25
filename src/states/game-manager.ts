@@ -221,10 +221,6 @@ export class GameManager {
     // effects
     this.doEffect(buff);
     this.doEffect(nerf);
-    this.emitter.emit(EVENTS.POWER_UPDATED);
-    this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
-    this.emitter.emit(EVENTS.COLLECT_UNIT_UPDATED);
-    this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
 
     // close the policy screen
     this.togglePolicyScreen(false);
@@ -234,26 +230,39 @@ export class GameManager {
     const props: string[] = type.split(".");
     if (props.length === 1) {
       operator === "+" // @ts-ignore
-        ? (this[props[0]] += bnt.value) // @ts-ignore
-        : (this[props[0]] = Math.max(this[props[0]] - bnt.value, 0));
+        ? (this[props[0]] += value) // @ts-ignore
+        : (this[props[0]] = Math.max(this[props[0]] - value, 0));
     } else if (props.length === 2) {
       // @ts-ignore
       operator === "+" // @ts-ignore
-        ? (this[props[0]][props[1]] += bnt.value) // @ts-ignore
+        ? (this[props[0]][props[1]] += value) // @ts-ignore
         : (this[props[0]][props[1]] = Math.max(
             // @ts-ignore
-            this[props[0]][props[1]] - bnt.value,
+            this[props[0]][props[1]] - value,
             0
           ));
     } else if (props.length === 3) {
       // @ts-ignore
       operator === "+" // @ts-ignore
-        ? (this[props[0]][props[1]][props[2]] += bnt.value) // @ts-ignore
+        ? (this[props[0]][props[1]][props[2]] += value) // @ts-ignore
         : (this[props[0]][props[1]][props[2]] = Math.max(
             // @ts-ignore
-            this[props[0]][props[1]][props[2]] - bnt.value,
+            this[props[0]][props[1]][props[2]] - value,
             0
           ));
+    }
+
+    const typeLowerCase = type.toLowerCase();
+    if (typeLowerCase.includes("power")) {
+      this.emitter.emit(EVENTS.POWER_UPDATED);
+      this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
+      console.log("power updated");
+    }
+    if (typeLowerCase.includes("collect")) {
+      this.emitter.emit(EVENTS.COLLECT_UNIT_UPDATED);
+    }
+    if (typeLowerCase.includes("storage")) {
+      this.emitter.emit(EVENTS.RESOURCE_STORAGE_UPDATED);
     }
   }
   toggleCardSelectScreen(visible: boolean) {

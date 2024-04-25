@@ -4,6 +4,7 @@ import { DEPTH } from "~/constants/depth";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { Button } from "../shared/button";
+import { Dialog } from "../shared/dialog";
 
 export class GameStartScreen extends Phaser.GameObjects.Container {
   constructor(scene: Scene, x: number, y: number) {
@@ -53,10 +54,15 @@ export class GameStartScreen extends Phaser.GameObjects.Container {
         },
       });
     };
+    const enableAudioScreen = new EnableAudioScreen(scene, 0, 0);
 
-    this.add([bg, titleText, descriptionText, startButton]).setDepth(
-      DEPTH.GAME_START_SCREEN
-    );
+    this.add([
+      bg,
+      titleText,
+      descriptionText,
+      startButton,
+      enableAudioScreen,
+    ]).setDepth(DEPTH.GAME_START_SCREEN);
     this.setSize(bg.width, bg.height).setInteractive();
   }
 }
@@ -64,6 +70,56 @@ export class GameStartScreen extends Phaser.GameObjects.Container {
 class StartButton extends Button {
   constructor(scene: Scene, x: number, y: number) {
     super(scene, x, y, "START", "white");
+  }
+  public onClick(): void {}
+}
+
+class EnableAudioScreen extends Phaser.GameObjects.Container {
+  constructor(scene: Scene, x: number, y: number) {
+    super(scene, x, y);
+    const bg = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      TEXTURE_KEYS.START_BG
+    ).setOrigin(0.5);
+    const enableAudioDialog = new EnableAudioDialog(scene, 0, 0);
+    enableAudioDialog.noButton.onClick = () => {
+      this.setVisible(false);
+    };
+    enableAudioDialog.yesButton.onClick = () => {
+      this.scene.sound.play("bgm", { loop: true });
+      this.setVisible(false);
+    };
+
+    this.add([bg, enableAudioDialog]);
+  }
+}
+
+class EnableAudioDialog extends Dialog {
+  public yesButton: YesButton;
+  public noButton: NoButton;
+
+  constructor(scene: Scene, x: number, y: number) {
+    super(scene, x, y, "Do you want to enable audio?");
+
+    this.titleText.setFontSize(40).setPosition(0, -60);
+    this.yesButton = new YesButton(scene, 100, 56);
+    this.noButton = new NoButton(scene, -100, 56);
+    this.add([this.yesButton, this.noButton]);
+  }
+}
+class NoButton extends Button {
+  constructor(scene: Scene, x: number, y: number) {
+    super(scene, x, y, "NO", "secondary");
+    this.setScale(0.7);
+  }
+  public onClick(): void {}
+}
+class YesButton extends Button {
+  constructor(scene: Scene, x: number, y: number) {
+    super(scene, x, y, "YES", "primary");
+    this.setScale(0.7);
   }
   public onClick(): void {}
 }

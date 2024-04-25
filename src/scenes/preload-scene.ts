@@ -16,6 +16,8 @@ import CardPng from "~/assets/images/card.png";
 import CardJson from "~/assets/images/card.json";
 import PowerPlantPng from "~/assets/images/power-plant.png";
 import PowerPlantJson from "~/assets/images/power-plant.json";
+import BgmMp3 from "~/assets/audios/bgm.mp3";
+import BgmOgg from "~/assets/audios/bgm.ogg";
 import { Scene } from "phaser";
 
 export class PreloadScene extends Scene {
@@ -166,6 +168,8 @@ export class PreloadScene extends Scene {
     this.load.atlas(IMAGE_KEYS.CARD, CardPng, CardJson);
     this.load.atlas(IMAGE_KEYS.POWER_PLANT, PowerPlantPng, PowerPlantJson);
     this.load.image(IMAGE_KEYS.MARKER, MarkerPng);
+
+    this.load.audio("bgm", [BgmOgg, BgmMp3]);
 
     this.load.on("complete", () => {
       this.isAssetsLoaded = true;

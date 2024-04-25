@@ -14,7 +14,11 @@ import {
   PowerPlantInfo,
   PowerPlantType,
 } from "~/types/power-plant";
-import { CONSUMABLE_RESOURCES, RESOURCE_TEXTURE_MAP } from "~/types/resource";
+import {
+  CONSUMABLE_RESOURCES,
+  ConsumableResource,
+  RESOURCE_TEXTURE_MAP,
+} from "~/types/resource";
 
 const POWER_PLANT_BG_TEXTURE_MAP: Record<PowerPlantType, string> = {
   [POWER_PLANT_TYPES.THERMAL]: CARD_KEYS.THERMAL,
@@ -186,18 +190,22 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       }
     );
     // Trigger effects
-    gm.emitter.on(EVENTS.ON_DICE_ROLLED, () => {
+    gm.emitter.on(EVENTS.ON_DICE_ROLLED, (diceNum: number) => {
       if (this.stage !== "built") return;
-      this._checkEffects("on-dice-rolled");
+      this._checkEffects("on-dice-rolled", diceNum);
     });
-    gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, () => {
+    gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, (id: string) => {
       if (this.stage !== "built") return;
-      this._checkEffects("on-build-power-plant");
+      const type = id.split("-")[0];
+      this._checkEffects("on-build-power-plant", type);
     });
-    gm.emitter.on(EVENTS.RESOURCE_COLLECTED, () => {
-      if (this.stage !== "built") return;
-      this._checkEffects("resource-collected");
-    });
+    gm.emitter.on(
+      EVENTS.RESOURCE_COLLECTED,
+      (_: number, type: ConsumableResource) => {
+        if (this.stage !== "built") return;
+        this._checkEffects("resource-collected", type);
+      }
+    );
   }
 
   onPointerOver() {
@@ -274,10 +282,15 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     return result;
   }
 
-  private _checkEffects(causedByEvent: CardEffect["causedBy"]["event"]) {
+  private _checkEffects(
+    causedByEvent: CardEffect["causedBy"]["event"],
+    causedByValue: any
+  ) {
     const gm = GameManager.getInstance();
     for (const effect of this.info.effects) {
       if (effect.causedBy.event !== causedByEvent) continue;
+      if (effect.causedBy.value !== causedByValue) continue;
+      console.log("trigger effect", effect);
       const { event, buff } = effect.trigger;
       if (event) gm.emitter.emit(event.type, event.value);
       if (buff) {

@@ -1,4 +1,5 @@
 import { DICE_KEYS, IMAGE_KEYS } from "~/constants/image-keys";
+import { GameManager } from "~/states/game-manager";
 
 const DICE_NUM_TEXTURE_MAP: Record<number, string> = {
   1: DICE_KEYS.DICE_1,
@@ -20,6 +21,7 @@ export class Dice extends Phaser.GameObjects.Sprite {
   }
 
   public rollDice() {
+    const gm = GameManager.getInstance();
     return new Promise<number>((resolve) => {
       let counter = 0;
       const timer = setInterval(() => {
@@ -32,6 +34,7 @@ export class Dice extends Phaser.GameObjects.Sprite {
           const num = Phaser.Math.RND.pick(this.range);
           this.setTexture(IMAGE_KEYS.DICE, DICE_NUM_TEXTURE_MAP[num]);
           clearInterval(timer);
+          gm.onDiceRolled(num);
           resolve(num);
         }
       }, 80);

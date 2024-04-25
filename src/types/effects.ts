@@ -32,7 +32,7 @@ export const CARD_MATCHED_EVENT_DESC_MAP: Record<
   CardEffect["causedBy"]["event"],
   string
 > = {
-  "on-dice-rolled": "When the dice rolls a {}, ",
+  "on-dice-rolled": "When dice rolls a {}, ",
   "on-build-power-plant": "When building a {} power plant, ",
   "resource-collected": "When collecting {}, ",
 };

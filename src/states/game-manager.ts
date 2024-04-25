@@ -7,6 +7,7 @@ import { ConsumableResource } from "~/types/resource";
 export const EVENTS = {
   NEXT_ROLL_ENABLED: "next-roll-enabled",
   ON_DICE_ROLLED: "on-dice-rolled",
+
   CURRENT_TILE_INDEX_UPDATED: "current-tile-index-updated",
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
     "current-tile-resource-metadata-updated",
@@ -35,7 +36,7 @@ export const EVENTS = {
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
   TOGGLE_GENERATE_POWER_DIALOG: "toggle-generate-power-dialog",
 
-  // TODO:
+  // Direct emit from the card effects
   REPLENISH_COAL_RESOURCE: "replenish-coal-resource",
   REPLENISH_OIL_RESOURCE: "replenish-oil-resource",
   REPLENISH_NATURAL_GAS_RESOURCE: "replenish-natural_gas-resource",
@@ -164,7 +165,11 @@ export class GameManager {
           : metadata.currentAmount - this.collectUnit[metadata.type];
     }
     // pass the tile index and collected amount to the event
-    this.emitter.emit(EVENTS.RESOURCE_COLLECTED, metadata.tileIndex);
+    this.emitter.emit(
+      EVENTS.RESOURCE_COLLECTED,
+      metadata.tileIndex,
+      metadata.type
+    );
 
     this.updateCurrentTileResourceMetadata(null);
     this.setNextRollEnabled(true);
@@ -307,5 +312,8 @@ export class GameManager {
   }
   onPolluted(amount: number) {
     this.emitter.emit(EVENTS.ON_POLLUTED, amount);
+  }
+  onDiceRolled(diceNum: number) {
+    this.emitter.emit(EVENTS.ON_DICE_ROLLED, diceNum);
   }
 }

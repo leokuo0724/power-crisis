@@ -88,7 +88,7 @@ export class CardFactory {
       Math.floor(this.resourceCostRoundFactor[type] * (gm.round - 1));
 
     return {
-      id: Phaser.Math.RND.uuid(),
+      id: `${type}-${Phaser.Math.RND.uuid()}`,
       type,
       buildCost,
       powerGain: {
@@ -147,12 +147,14 @@ export class CardFactory {
           event: casedByEvent,
           value: this._getCasedByEventValue(casedByEvent),
         },
-        trigger: this._getTriggerEffect(),
+        trigger: this._getTriggerEffect(
+          casedByEvent === "on-build-power-plant"
+        ),
       });
     }
     return result;
   }
-  private _getTriggerEffect(): CardEffect["trigger"] {
+  private _getTriggerEffect(isDifficultEvent: boolean): CardEffect["trigger"] {
     const gm = GameManager.getInstance();
 
     let event, buff;
@@ -168,10 +170,12 @@ export class CardFactory {
         value: 1,
       } as CardEffectTriggerEvent;
     } else {
+      const baseValue = isDifficultEvent ? 3 : 1;
+      const roundFactor = isDifficultEvent ? 0.5 : 0.2;
       buff = {
         type: "currentPower",
         operator: "+",
-        value: 1 + Math.floor(gm.round * 0.2),
+        value: baseValue + Math.floor(gm.round * roundFactor),
         desc: "current power",
       } as BuffNerfType;
     }

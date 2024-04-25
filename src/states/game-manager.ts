@@ -7,6 +7,8 @@ import { ConsumableResource } from "~/types/resource";
 export const EVENTS = {
   NEXT_ROLL_ENABLED: "next-roll-enabled",
   ON_DICE_ROLLED: "on-dice-rolled",
+  NEXT_ROUND_UPDATED: "next-round-updated",
+  ON_GAME_OVER: "on-game-over",
 
   CURRENT_TILE_INDEX_UPDATED: "current-tile-index-updated",
   CURRENT_TILE_RESOURCE_METADATA_UPDATED:
@@ -25,8 +27,6 @@ export const EVENTS = {
   SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED:
     "selected-power-plant-to-build-id-updated",
   ON_BUILD_POWER_PLANT: "on-build-power-plant",
-  NEXT_ROUND_UPDATED: "next-round-updated",
-  ON_GAME_OVER: "on-game-over",
 
   POLLUTION_UPDATED: "pollution-updated",
   ON_POLLUTED: "on-polluted",

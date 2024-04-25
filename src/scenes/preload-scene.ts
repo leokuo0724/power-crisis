@@ -27,6 +27,23 @@ export class PreloadScene extends Scene {
   }
 
   preload() {
+    const centerX = this.sys.canvas.width / 2;
+    const centerY = this.sys.canvas.height / 2;
+    const progressBar = this.add.graphics().setDepth(1);
+    const progressBox = this.add.graphics();
+    progressBox.fillStyle(hexToDecimal(COLORS.BLUE_6), 1);
+    progressBox.fillRect(centerX - 160, centerY - 25, 320, 40);
+    this.load.on("progress", function (value: number) {
+      progressBar.clear();
+      progressBar.fillStyle(hexToDecimal(COLORS.BLUE_4), 1);
+      progressBar.fillRect(
+        centerX - 160 + 5,
+        centerY - 25 + 5,
+        310 * value,
+        30
+      );
+    });
+
     const graphics = new Phaser.GameObjects.Graphics(this);
     this._drawTile(graphics, COLORS.BLUE_5, TEXTURE_KEYS.BLUE_5_TILE);
     this._drawTile(graphics, COLORS.BROWN_4, TEXTURE_KEYS.BROWN_4_TILE);

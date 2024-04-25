@@ -127,6 +127,13 @@ export class PreloadScene extends Scene {
       COLORS.BLUE_5,
       TEXTURE_KEYS.BLUE_5_CONTAINER
     );
+    this._drawBg(
+      graphics,
+      300,
+      128,
+      COLORS.BLUE_6,
+      TEXTURE_KEYS.BLUE_6_HINT_BG
+    );
 
     this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);

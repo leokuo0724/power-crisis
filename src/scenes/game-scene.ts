@@ -21,6 +21,7 @@ import { ExistingPowerPlantDialog } from "~/sprites/ui/dialogs/existing-power-pl
 import { GeneratePowerDialog } from "~/sprites/ui/dialogs/generate-power-dialog";
 import { PollutionCheckScreen } from "~/sprites/ui/screens/pollution-check-screen";
 import { ConsumableResource } from "~/types/resource";
+import { TargetPowerBoard } from "~/sprites/ui/boards/target-power-board";
 
 const POWER_PLANT_TILE_POS_MAP: Record<number, { x: number; y: number }> = {
   5: { x: 480, y: 200 },
@@ -59,7 +60,7 @@ export class GameScene extends Scene {
     new DiceSet(this, centerX + 750, centerY + 360);
     new CollectRecourseDialog(this, 2 * centerX + 288, centerY + 340);
     new GameInfoBoard(this, 146, 100);
-
+    new TargetPowerBoard(this, centerX - 520, centerY + 180);
     new CardSelectScreen(this, centerX, centerY);
 
     new EmptyPowerPlantDialog(this, 2 * centerX + 288, centerY + 340);

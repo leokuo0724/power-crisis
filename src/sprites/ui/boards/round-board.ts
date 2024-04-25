@@ -1,5 +1,4 @@
 import { Scene } from "phaser";
-import { createEffect } from "solid-js";
 import { COLORS } from "~/constants/colors";
 import { FONT_KEYS } from "~/constants/font-keys";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";

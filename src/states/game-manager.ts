@@ -47,7 +47,7 @@ export const EVENTS = {
 export class GameManager {
   readonly INIT_POWER: number = 30;
   readonly MAX_POWER_PLANT_CARD: number = 4;
-  readonly TARGET_POWER_GROWTH: number = 10;
+  readonly TARGET_POWER_GROWTH: number = 5;
 
   round: number = 1;
   targetPower: number = 10; // power to reach to the next round

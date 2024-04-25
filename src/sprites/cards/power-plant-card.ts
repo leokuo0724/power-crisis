@@ -169,43 +169,61 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     this.on("pointerdown", this.onPointerDown, this);
 
     const gm = GameManager.getInstance();
-    gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, () => {
-      if (this.stage === "built") return;
-      if (gm.isBuildMode) {
-        this.switchMode("build");
-      } else {
-        this.switchMode("table");
-        this.setAlpha(1);
-      }
-    });
+    gm.emitter.on(EVENTS.BUILD_MODE_UPDATED, this._onBuildModeUpdated, this);
     gm.emitter.on(
       EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
-      (id: string) => {
-        if (this.stage === "built") return;
-        if (id === this.info.id && this.stage === "build") {
-          this.setAlpha(1);
-        } else {
-          this.setAlpha(0.5);
-        }
-      }
+      this._onSelectedPowerPlantToBuildIdUpdated,
+      this
     );
     // Trigger effects
-    gm.emitter.on(EVENTS.ON_DICE_ROLLED, (diceNum: number) => {
-      if (this.stage !== "built") return;
-      this._checkEffects("on-dice-rolled", diceNum);
-    });
-    gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, (id: string) => {
-      if (this.stage !== "built") return;
-      const type = id.split("-")[0];
-      this._checkEffects("on-build-power-plant", type);
-    });
-    gm.emitter.on(
-      EVENTS.RESOURCE_COLLECTED,
-      (_: number, type: ConsumableResource) => {
-        if (this.stage !== "built") return;
-        this._checkEffects("resource-collected", type);
-      }
+    gm.emitter.on(EVENTS.ON_DICE_ROLLED, this._onDiceRolled, this);
+    gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, this._onBuildPowerPlant, this);
+    gm.emitter.on(EVENTS.RESOURCE_COLLECTED, this._onResourceCollected, this);
+  }
+
+  private _onBuildModeUpdated() {
+    const gm = GameManager.getInstance();
+    if (this.stage === "built") return;
+    if (gm.isBuildMode) {
+      this.switchMode("build");
+    } else {
+      this.switchMode("table");
+      this.setAlpha(1);
+    }
+  }
+  private _onSelectedPowerPlantToBuildIdUpdated(id: string) {
+    if (this.stage === "built") return;
+    if (id === this.info.id && this.stage === "build") {
+      this.setAlpha(1);
+    } else {
+      this.setAlpha(0.5);
+    }
+  }
+  private _onDiceRolled(diceNum: number) {
+    if (this.stage !== "built") return;
+    this._checkEffects("on-dice-rolled", diceNum);
+  }
+  private _onBuildPowerPlant(id: string) {
+    if (this.stage !== "built") return;
+    const type = id.split("-")[0];
+    this._checkEffects("on-build-power-plant", type);
+  }
+  private _onResourceCollected(_: number, type: ConsumableResource) {
+    if (this.stage !== "built") return;
+    this._checkEffects("resource-collected", type);
+  }
+  public destroy() {
+    const gm = GameManager.getInstance();
+    gm.emitter.off(EVENTS.BUILD_MODE_UPDATED, this._onBuildModeUpdated, this);
+    gm.emitter.off(
+      EVENTS.SELECTED_POWER_PLANT_TO_BUILD_ID_UPDATED,
+      this._onSelectedPowerPlantToBuildIdUpdated,
+      this
     );
+    gm.emitter.off(EVENTS.ON_DICE_ROLLED, this._onDiceRolled, this);
+    gm.emitter.off(EVENTS.ON_BUILD_POWER_PLANT, this._onBuildPowerPlant, this);
+    gm.emitter.off(EVENTS.RESOURCE_COLLECTED, this._onResourceCollected, this);
+    super.destroy();
   }
 
   onPointerOver() {
@@ -290,7 +308,6 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     for (const effect of this.info.effects) {
       if (effect.causedBy.event !== causedByEvent) continue;
       if (effect.causedBy.value !== causedByValue) continue;
-      console.log("trigger effect", effect);
       const { event, buff } = effect.trigger;
       if (event) gm.emitter.emit(event.type, event.value);
       if (buff) gm.doEffect(buff);

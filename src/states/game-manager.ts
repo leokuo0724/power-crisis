@@ -256,7 +256,6 @@ export class GameManager {
     if (typeLowerCase.includes("power")) {
       this.emitter.emit(EVENTS.POWER_UPDATED);
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
-      console.log("power updated");
     }
     if (typeLowerCase.includes("collect")) {
       this.emitter.emit(EVENTS.COLLECT_UNIT_UPDATED);

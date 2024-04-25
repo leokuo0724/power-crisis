@@ -24,8 +24,8 @@ export class CardFactory {
   private powerGenerateBase: Record<PowerPlantType, number> = {
     nuclear: 4,
     thermal: 3,
-    hydro: 3,
-    wind: 2,
+    hydro: 2,
+    wind: 1,
     biomass: 2,
     solar: 1,
   };
@@ -175,7 +175,7 @@ export class CardFactory {
         value: 1,
       } as CardEffectTriggerEvent;
     } else {
-      const baseValue = isDifficultEvent ? 3 : 1;
+      const baseValue = isDifficultEvent ? 4 : 1;
       const roundFactor = isDifficultEvent ? 0.5 : 0.2;
       buff = {
         type: "currentPower",

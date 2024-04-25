@@ -115,8 +115,8 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         this._checkButtonValid();
         this._generateCards();
       } else {
-        this.setVisible(false);
         this._reset();
+        this.setVisible(false);
       }
     });
   }
@@ -126,7 +126,6 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     const centerY = this.scene.cameras.main.height / 2;
     for (let i = 0; i < 5; i++) {
       const info = CardFactory.getInstance().generatePowerPlantInfo();
-      console.log(info);
       const card = new PowerPlantCard(
         this.scene,
         centerX - 520 + i * 260,
@@ -134,6 +133,7 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         info
       );
       card.on("pointerdown", () => {
+        if (card.stage !== "select") return;
         if (this.picked.has(i)) {
           this.picked.delete(i);
           this.checkedMarkers[i].setVisible(false);

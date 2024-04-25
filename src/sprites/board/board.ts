@@ -8,10 +8,10 @@ import { TileBasic } from "../tiles/common";
 import { EVENTS, GameManager } from "~/states/game-manager";
 
 const MAX_RESOURCE_AMOUNT: Record<ConsumableResource, number> = {
-  coal: 13,
-  natural_gas: 8,
-  oil: 5,
-  uranium: 3,
+  coal: 8,
+  natural_gas: 5,
+  oil: 3,
+  uranium: 2,
   biomass: Infinity,
 };
 

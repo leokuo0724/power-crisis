@@ -22,12 +22,12 @@ export class CardFactory {
   }
 
   private powerGenerateBase: Record<PowerPlantType, number> = {
-    nuclear: 4,
-    thermal: 3,
-    hydro: 2,
-    wind: 1,
-    biomass: 2,
-    solar: 1,
+    nuclear: 6,
+    thermal: 5,
+    hydro: 4,
+    wind: 2,
+    biomass: 4,
+    solar: 2,
   };
   // Math.floor(factor * round)
   private powerGenerateRoundFactor: Record<PowerPlantType, number> = {
@@ -40,15 +40,15 @@ export class CardFactory {
   };
 
   private buildCostBase: Record<PowerPlantType, number> = {
-    nuclear: 2,
-    thermal: 1,
-    hydro: 3,
-    wind: 2,
-    biomass: 2,
+    nuclear: 3,
+    thermal: 2,
+    hydro: 4,
+    wind: 3,
+    biomass: 3,
     solar: 1,
   };
   private buildCostRoundFactor: Record<PowerPlantType, number> = {
-    nuclear: 0.6,
+    nuclear: 0.7,
     thermal: 0.5,
     hydro: 0.6,
     wind: 0.5,
@@ -127,6 +127,9 @@ export class CardFactory {
     const casedByEvent: CardEffect["causedBy"]["event"] = Phaser.Math.RND.pick([
       "on-dice-rolled",
       "on-build-power-plant",
+      "on-build-power-plant",
+      "resource-collected",
+      "resource-collected",
       "resource-collected",
     ]);
 

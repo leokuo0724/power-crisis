@@ -45,7 +45,7 @@ export const EVENTS = {
 };
 
 export class GameManager {
-  readonly INIT_POWER: number = 20;
+  readonly INIT_POWER: number = 30;
   readonly MAX_POWER_PLANT_CARD: number = 4;
 
   round: number = 1;

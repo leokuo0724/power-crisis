@@ -12,7 +12,7 @@ export class BuildModeDialog extends Dialog {
   private costText: Phaser.GameObjects.Text;
 
   constructor(scene: GameScene, x: number, y: number) {
-    super(scene, x, y, "Do you want to build this?");
+    super(scene, x, y, "Select a power plant to build.");
     this.scene.add.existing(this);
 
     this.cancelButton = new CancelButton(scene, -100, 84);

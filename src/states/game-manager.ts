@@ -208,7 +208,6 @@ export class GameManager {
     const currentCard = this.currentTilePowerPlantTile?.powerPlantCard;
     if (currentCard) {
       currentCard.destroy();
-      // TODO: remove effects if needed
     }
 
     this.emitter.emit(

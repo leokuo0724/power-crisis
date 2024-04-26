@@ -8,7 +8,7 @@ export class CardRemoveModeDialog extends Dialog {
   private confirmButton: ConfirmButton;
 
   constructor(scene: GameScene, x: number, y: number) {
-    super(scene, x, y, "Do you want to remove these cards?");
+    super(scene, x, y, "Select cards to remove?");
     this.scene.add.existing(this);
 
     this.skipButton = new SkipButton(scene, -100, 84);

@@ -46,6 +46,17 @@ export class CollectRecourseDialog extends Dialog {
       fontSize: 36,
       color: COLORS.WHITE_5,
     }).setOrigin(0.5);
+    const hintText = new Phaser.GameObjects.Text(
+      scene,
+      0,
+      -56,
+      "(Haven't calculated with active effects yet.)",
+      {
+        fontFamily: FONT_KEYS.NOTO_SANS,
+        fontSize: 18,
+        color: COLORS.WHITE_5,
+      }
+    ).setOrigin(0.5);
 
     this.add([
       this.skipButton,
@@ -54,6 +65,7 @@ export class CollectRecourseDialog extends Dialog {
       this.costText,
       this.resourceIcon,
       this.gainText,
+      hintText,
     ]);
 
     const gm = GameManager.getInstance();

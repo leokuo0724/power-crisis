@@ -223,7 +223,7 @@ export class GameManager {
     if (enabled) {
       this.round++;
 
-      this.targetPower += this.TARGET_POWER_GROWTH;
+      this.targetPower += this.round % 2 === 0 ? 0 : this.TARGET_POWER_GROWTH;
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
       this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
     } else {
@@ -318,10 +318,11 @@ export class GameManager {
         | TPollutionInfo
         | undefined;
       if (pollutionInfo) {
-        this.updatePollution(
-          pollutionInfo.type,
-          this.pollution.carbonEmissions + pollutionInfo.value
-        );
+        const newValue =
+          pollutionInfo.type === "carbon"
+            ? this.pollution.carbonEmissions + pollutionInfo.value
+            : this.pollution.nuclearWaste + pollutionInfo.value;
+        this.updatePollution(pollutionInfo.type, newValue);
         this.emitter.emit(EVENTS.OPEN_POLLUTION_CHECK, pollutionInfo.type);
       }
     }

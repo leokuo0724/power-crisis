@@ -33,7 +33,7 @@ export class TargetPowerBoard extends Phaser.GameObjects.Container {
       scene,
       -130,
       -16,
-      "You need to generate this amount of power to survive this round.",
+      "You must maintain this level of power to advance to the next round.",
       {
         fontFamily: FONT_KEYS.NOTO_SANS,
         fontSize: 18,

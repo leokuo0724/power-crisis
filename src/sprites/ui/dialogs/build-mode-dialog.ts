@@ -46,7 +46,6 @@ export class BuildModeDialog extends Dialog {
         (card) => card.info.id === gm.selectedPowerPlantToBuildId
       );
       if (card) {
-        this.confirmButton.setDisabled(gm.currentPower < card.info.buildCost);
         this.costText.setText(`-${card.info.buildCost}`);
       }
     });

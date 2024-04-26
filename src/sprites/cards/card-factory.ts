@@ -31,29 +31,29 @@ export class CardFactory {
   };
   // Math.floor(factor * round)
   private powerGenerateRoundFactor: Record<PowerPlantType, number> = {
-    nuclear: 1,
-    thermal: 0.8,
-    hydro: 0.8,
-    wind: 0.6,
-    biomass: 0.6,
-    solar: 0.4,
+    nuclear: 1.5,
+    thermal: 1.2,
+    hydro: 1,
+    wind: 0.8,
+    biomass: 0.8,
+    solar: 0.5,
   };
 
   private buildCostBase: Record<PowerPlantType, number> = {
-    nuclear: 3,
-    thermal: 2,
-    hydro: 4,
-    wind: 3,
-    biomass: 3,
-    solar: 1,
+    nuclear: 1,
+    thermal: 1,
+    hydro: 1,
+    wind: 1,
+    biomass: 1,
+    solar: 0,
   };
   private buildCostRoundFactor: Record<PowerPlantType, number> = {
     nuclear: 0.7,
     thermal: 0.5,
-    hydro: 0.6,
+    hydro: 0.5,
     wind: 0.5,
-    biomass: 0.5,
-    solar: 0.3,
+    biomass: 0.4,
+    solar: 0.2,
   };
 
   // resource cost for generating power
@@ -72,6 +72,19 @@ export class CardFactory {
     wind: 0,
     biomass: 0.3,
     solar: 0,
+  };
+  private causedByEventBase: Record<CardEffect["causedBy"]["event"], number> = {
+    "on-dice-rolled": 1,
+    "on-build-power-plant": 4,
+    "resource-collected": 2,
+  };
+  private causedByEventRoundFactor: Record<
+    CardEffect["causedBy"]["event"],
+    number
+  > = {
+    "on-dice-rolled": 0.2,
+    "on-build-power-plant": 2,
+    "resource-collected": 1,
   };
 
   generatePowerPlantInfo(): PowerPlantInfo {
@@ -124,20 +137,22 @@ export class CardFactory {
   private _getEffects(type: PowerPlantType): CardEffect[] {
     const gm = GameManager.getInstance();
     const result: CardEffect[] = [];
-    const casedByEvent: CardEffect["causedBy"]["event"] = Phaser.Math.RND.pick([
-      "on-dice-rolled",
-      "on-build-power-plant",
-      "on-build-power-plant",
-      "resource-collected",
-      "resource-collected",
-      "resource-collected",
-    ]);
+    const causedByEvent: CardEffect["causedBy"]["event"] = Phaser.Math.RND.pick(
+      [
+        "on-dice-rolled",
+        "on-build-power-plant",
+        "on-build-power-plant",
+        "resource-collected",
+        "resource-collected",
+        "resource-collected",
+      ]
+    );
 
     if (type === "biomass") {
       result.push({
         causedBy: {
-          event: casedByEvent,
-          value: this._getCasedByEventValue(casedByEvent),
+          event: causedByEvent,
+          value: this._getCasedByEventValue(causedByEvent),
         },
         trigger: {
           event: {
@@ -152,17 +167,17 @@ export class CardFactory {
     while (result.length < targetEffects) {
       result.push({
         causedBy: {
-          event: casedByEvent,
-          value: this._getCasedByEventValue(casedByEvent),
+          event: causedByEvent,
+          value: this._getCasedByEventValue(causedByEvent),
         },
-        trigger: this._getTriggerEffect(
-          casedByEvent === "on-build-power-plant"
-        ),
+        trigger: this._getTriggerEffect(causedByEvent),
       });
     }
     return result;
   }
-  private _getTriggerEffect(isDifficultEvent: boolean): CardEffect["trigger"] {
+  private _getTriggerEffect(
+    causedBy: CardEffect["causedBy"]["event"]
+  ): CardEffect["trigger"] {
     const gm = GameManager.getInstance();
 
     let event, buff;
@@ -178,8 +193,8 @@ export class CardFactory {
         value: 1,
       } as CardEffectTriggerEvent;
     } else {
-      const baseValue = isDifficultEvent ? 4 : 1;
-      const roundFactor = isDifficultEvent ? 0.5 : 0.2;
+      const baseValue = this.causedByEventBase[causedBy];
+      const roundFactor = this.causedByEventRoundFactor[causedBy];
       buff = {
         type: "currentPower",
         operator: "+",

@@ -22,7 +22,7 @@ export class PollutionCheckScreen extends Phaser.GameObjects.Container {
     super(scene, x, y);
     scene.add.existing(this);
     this.type = type;
-    this.lockedAmount = type === "nuclear" ? 4 : 1;
+    this.lockedAmount = type === "nuclear" ? 4 : 2;
 
     const gm = GameManager.getInstance();
     const bg = new Phaser.GameObjects.Image(

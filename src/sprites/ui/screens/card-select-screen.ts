@@ -14,6 +14,8 @@ const TOP_LEFT_EXPLAIN_TEXT =
   "How many power will be generated with how many resources.";
 const BOTTOM_RIGHT_EXPLAIN_TEXT =
   "How many power will take when building the power plant.";
+const BOTTOM_LEFT_EXPLAIN_TEXT =
+  "The additional effects triggered after built. (if the condition is met)";
 
 export class CardSelectScreen extends Phaser.GameObjects.Container {
   private picked = new Set<number>();
@@ -31,11 +33,11 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
       0,
       0,
       TEXTURE_KEYS.BLUE_7_SCREEN_BG
-    );
+    ).setInteractive();
     const titleText = new Phaser.GameObjects.Text(
       scene,
       0,
-      -320,
+      -332,
       `PICK ${gm.MAX_POWER_PLANT_CARD} POWER PLANT CARDS`,
       {
         fontFamily: FONT_KEYS.PASSION_ONE,
@@ -43,32 +45,56 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
         color: COLORS.WHITE_5,
       }
     ).setOrigin(0.5);
+    const descriptionText = new Phaser.GameObjects.Text(
+      scene,
+      0,
+      -276,
+      "You can build power plants on 3 tiles on the board.",
+      {
+        fontFamily: FONT_KEYS.NOTO_SANS,
+        fontSize: 24,
+        color: COLORS.WHITE_5,
+      }
+    ).setOrigin(0.5);
     const topLeftText = new Phaser.GameObjects.Text(
       scene,
-      -810,
-      -180,
+      -822,
+      -192,
       TOP_LEFT_EXPLAIN_TEXT,
       {
         fontFamily: FONT_KEYS.NOTO_SANS,
-        fontSize: 18,
+        fontSize: 20,
         color: COLORS.WHITE_5,
       }
     )
       .setOrigin(0)
-      .setWordWrapWidth(168);
+      .setWordWrapWidth(180);
     const bottomRightText = new Phaser.GameObjects.Text(
       scene,
-      664,
-      72,
+      656,
+      64,
       BOTTOM_RIGHT_EXPLAIN_TEXT,
       {
         fontFamily: FONT_KEYS.NOTO_SANS,
-        fontSize: 18,
+        fontSize: 20,
         color: COLORS.WHITE_5,
       }
     )
       .setOrigin(0)
-      .setWordWrapWidth(168);
+      .setWordWrapWidth(180);
+    const bottomLeftText = new Phaser.GameObjects.Text(
+      scene,
+      -822,
+      24,
+      BOTTOM_LEFT_EXPLAIN_TEXT,
+      {
+        fontFamily: FONT_KEYS.NOTO_SANS,
+        fontSize: 20,
+        color: COLORS.WHITE_5,
+      }
+    )
+      .setOrigin(0)
+      .setWordWrapWidth(180);
     const line = new Phaser.GameObjects.Image(
       scene,
       0,
@@ -95,8 +121,10 @@ export class CardSelectScreen extends Phaser.GameObjects.Container {
     this.add([
       bg,
       titleText,
+      descriptionText,
       topLeftText,
       bottomRightText,
+      bottomLeftText,
       line,
       ...this.checkedMarkers,
       this.startButton,

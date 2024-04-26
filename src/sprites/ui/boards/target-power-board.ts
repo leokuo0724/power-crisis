@@ -39,7 +39,7 @@ export class TargetPowerBoard extends Phaser.GameObjects.Container {
         fontSize: 18,
         color: COLORS.WHITE_5,
       }
-    ).setWordWrapWidth(280);
+    ).setWordWrapWidth(272);
 
     this.add([bg, this.titleText, description]);
     gm.emitter.on(EVENTS.TARGET_POWER_UPDATED, () => {

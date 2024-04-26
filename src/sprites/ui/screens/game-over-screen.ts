@@ -23,24 +23,21 @@ export class GameOverScreen extends Phaser.GameObjects.Container {
       fontSize: 60,
       color: COLORS.WHITE_5,
     }).setOrigin(0.5);
-    const descriptionText = new Phaser.GameObjects.Text(
-      scene,
-      0,
-      0,
-      `You have successfully navigated the world of\n energy resources and survived for ${gm.round} rounds.`,
-      {
-        fontFamily: FONT_KEYS.PASSION_ONE,
-        fontSize: 60,
-        color: COLORS.WHITE_5,
-        align: "center",
-      }
-    ).setOrigin(0.5);
+    const descriptionText = new Phaser.GameObjects.Text(scene, 0, 0, "", {
+      fontFamily: FONT_KEYS.PASSION_ONE,
+      fontSize: 60,
+      color: COLORS.WHITE_5,
+      align: "center",
+    }).setOrigin(0.5);
     const restartButton = new RestartButton(scene, 0, 320);
     this.add([bg, titleText, descriptionText, restartButton])
       .setDepth(DEPTH.RESULT_SCREEN)
       .setVisible(false);
 
     gm.emitter.on(EVENTS.ON_GAME_OVER, () => {
+      descriptionText.setText(
+        `You have successfully navigated the world of\n energy resources and survived for ${gm.round} rounds.`
+      );
       this.setVisible(true);
     });
   }

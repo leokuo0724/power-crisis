@@ -52,7 +52,7 @@ export const EVENTS = {
 export class GameManager {
   readonly INIT_POWER: number = 30;
   readonly MAX_POWER_PLANT_CARD: number = 4;
-  readonly TARGET_POWER_GROWTH: number = 5;
+  readonly TARGET_POWER_GROWTH: number = 3;
 
   round: number = 1;
   targetPower: number = 10; // power to reach to the next round
@@ -222,7 +222,7 @@ export class GameManager {
     if (enabled) {
       this.round++;
 
-      this.targetPower += this.round % 2 === 0 ? 0 : this.TARGET_POWER_GROWTH;
+      this.targetPower += this.TARGET_POWER_GROWTH;
       this.emitter.emit(EVENTS.TARGET_POWER_UPDATED);
       this.emitter.emit(EVENTS.NEXT_ROUND_UPDATED);
     } else {

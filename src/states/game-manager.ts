@@ -217,7 +217,6 @@ export class GameManager {
       this.currentTileIndex
     );
     this.updateBuildMode(false);
-    this.updateCurrentTilePowerPlantTile(null);
   }
   setNextRound(enabled: boolean) {
     if (enabled) {

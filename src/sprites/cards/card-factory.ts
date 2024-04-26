@@ -208,7 +208,7 @@ export class CardFactory {
   private _getCasedByEventValue(event: CardEffect["causedBy"]["event"]): any {
     switch (event) {
       case "on-dice-rolled":
-        return Phaser.Math.RND.pick([1, 2, 3]);
+        return Phaser.Math.RND.pick([2, 3]);
       case "on-build-power-plant":
         return Phaser.Math.RND.pick(Object.values(POWER_PLANT_TYPES));
       case "resource-collected":

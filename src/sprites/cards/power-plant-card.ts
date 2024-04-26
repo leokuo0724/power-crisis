@@ -273,6 +273,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
         y: this.tableHiddenY - 172,
         duration: 100,
       });
+    } else if (this.stage === "built") {
+      this.setDepth(DEPTH.HOVERED_CARD);
     }
   }
   onPointerOut() {
@@ -284,6 +286,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
         y: this.tableHiddenY,
         duration: 100,
       });
+    } else if (this.stage === "built") {
+      this.setDepth(DEPTH.NORMAL);
     }
   }
   onPointerDown() {

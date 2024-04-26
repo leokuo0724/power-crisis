@@ -118,15 +118,14 @@ export class GameScene extends Scene {
           y: pos.y,
           duration: 500,
           ease: Phaser.Math.Easing.Quadratic.Out,
-          onComplete: () => {
-            gm.setNextRollEnabled(true);
-          },
         });
+
         // update tile
         const tile = this.board.getTargetTile(
           gm.currentTileIndex
         ) as PowerPlantTile;
         tile.powerPlantCard = card;
+        gm.updateCurrentTilePowerPlantTile(tile);
 
         // remove this card index from tablePowerPlantCards
         this.tablePowerPlantCards.splice(cardIndex, 1);

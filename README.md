@@ -1,6 +1,6 @@
 # Power Crisis
 
-![Cover](/public/cover.png)
+![Cover](/public/cover-github.png)
 
 ![Phaser](https://img.shields.io/badge/phaser-3.70.0-blue?style=for-the-badge)
 

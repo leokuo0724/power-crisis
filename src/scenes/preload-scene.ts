@@ -8,16 +8,16 @@ import { hexToDecimal } from "~/lib/utils";
 import { COLORS, ColorCode } from "~/constants/colors";
 import { TEXTURE_KEYS } from "~/constants/texture-keys";
 import { IMAGE_KEYS } from "~/constants/image-keys";
-import IconsPng from "~/assets/images/icons.png";
+// import IconsPng from "~/assets/images/icons.png";
 import IconsJson from "~/assets/images/icons.json";
-import MarkerPng from "~/assets/images/marker.png";
-import DicePng from "~/assets/images/dice.png";
+// import MarkerPng from "~/assets/images/marker.png";
+// import DicePng from "~/assets/images/dice.png";
 import DiceJson from "~/assets/images/dice.json";
 import CardPng from "~/assets/images/card.png";
 import CardJson from "~/assets/images/card.json";
 import PowerPlantPng from "~/assets/images/power-plant.png";
 import PowerPlantJson from "~/assets/images/power-plant.json";
-import SparklingPng from "~/assets/images/sparkling.png";
+// import SparklingPng from "~/assets/images/sparkling.png";
 import SparklingJson from "~/assets/images/sparkling.json";
 import PowerGenPng from "~/assets/images/power-gen.png";
 import PowerGenJson from "~/assets/images/power-gen.json";
@@ -168,13 +168,17 @@ export class PreloadScene extends Scene {
       TEXTURE_KEYS.BLUE_6_HINT_BG
     );
 
-    this.load.atlas(IMAGE_KEYS.ICONS, IconsPng, IconsJson);
-    this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);
+    this.load.atlas(IMAGE_KEYS.ICONS, "images/icons.png", IconsJson);
+    this.load.atlas(IMAGE_KEYS.DICE, "images/dice.png", DiceJson);
     this.load.atlas(IMAGE_KEYS.CARD, CardPng, CardJson);
     this.load.atlas(IMAGE_KEYS.POWER_PLANT, PowerPlantPng, PowerPlantJson);
-    this.load.atlas(IMAGE_KEYS.SPARKLING, SparklingPng, SparklingJson);
+    this.load.atlas(
+      IMAGE_KEYS.SPARKLING,
+      "images/sparkling.png",
+      SparklingJson
+    );
     this.load.atlas(IMAGE_KEYS.POWER_GEN, PowerGenPng, PowerGenJson);
-    this.load.image(IMAGE_KEYS.MARKER, MarkerPng);
+    this.load.image(IMAGE_KEYS.MARKER, "images/marker.png");
 
     this.load.audio("bgm", [BgmOgg, BgmMp3]);
 

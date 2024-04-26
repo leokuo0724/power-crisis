@@ -1,0 +1,440 @@
+{
+	"textures": [
+		{
+			"image": "power-gen.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 511,
+				"h": 505
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "power-gen_00017.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 0,
+						"w": 153,
+						"h": 130
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 153,
+						"h": 130
+					}
+				},
+				{
+					"filename": "power-gen_00016.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 29,
+						"w": 153,
+						"h": 115
+					},
+					"frame": {
+						"x": 1,
+						"y": 133,
+						"w": 153,
+						"h": 115
+					}
+				},
+				{
+					"filename": "power-gen_00015.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 52,
+						"w": 153,
+						"h": 104
+					},
+					"frame": {
+						"x": 156,
+						"y": 1,
+						"w": 153,
+						"h": 104
+					}
+				},
+				{
+					"filename": "power-gen_00014.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 68,
+						"w": 153,
+						"h": 97
+					},
+					"frame": {
+						"x": 1,
+						"y": 250,
+						"w": 153,
+						"h": 97
+					}
+				},
+				{
+					"filename": "power-gen_00013.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 82,
+						"w": 153,
+						"h": 91
+					},
+					"frame": {
+						"x": 156,
+						"y": 107,
+						"w": 153,
+						"h": 91
+					}
+				},
+				{
+					"filename": "power-gen_00012.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 92,
+						"w": 153,
+						"h": 87
+					},
+					"frame": {
+						"x": 311,
+						"y": 1,
+						"w": 153,
+						"h": 87
+					}
+				},
+				{
+					"filename": "power-gen_00011.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 101,
+						"w": 153,
+						"h": 83
+					},
+					"frame": {
+						"x": 1,
+						"y": 349,
+						"w": 153,
+						"h": 83
+					}
+				},
+				{
+					"filename": "power-gen_00005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 129,
+						"w": 153,
+						"h": 70
+					},
+					"frame": {
+						"x": 1,
+						"y": 434,
+						"w": 153,
+						"h": 70
+					}
+				},
+				{
+					"filename": "power-gen_00010.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 108,
+						"w": 153,
+						"h": 80
+					},
+					"frame": {
+						"x": 156,
+						"y": 200,
+						"w": 153,
+						"h": 80
+					}
+				},
+				{
+					"filename": "power-gen_00009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 114,
+						"w": 153,
+						"h": 78
+					},
+					"frame": {
+						"x": 311,
+						"y": 90,
+						"w": 153,
+						"h": 78
+					}
+				},
+				{
+					"filename": "power-gen_00008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 119,
+						"w": 153,
+						"h": 76
+					},
+					"frame": {
+						"x": 156,
+						"y": 282,
+						"w": 153,
+						"h": 76
+					}
+				},
+				{
+					"filename": "power-gen_00007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 123,
+						"w": 153,
+						"h": 74
+					},
+					"frame": {
+						"x": 311,
+						"y": 170,
+						"w": 153,
+						"h": 74
+					}
+				},
+				{
+					"filename": "power-gen_00006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 126,
+						"w": 153,
+						"h": 73
+					},
+					"frame": {
+						"x": 156,
+						"y": 360,
+						"w": 153,
+						"h": 73
+					}
+				},
+				{
+					"filename": "power-gen_00018.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 39,
+						"w": 153,
+						"h": 73
+					},
+					"frame": {
+						"x": 311,
+						"y": 246,
+						"w": 153,
+						"h": 73
+					}
+				},
+				{
+					"filename": "power-gen_00004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 130,
+						"w": 150,
+						"h": 71
+					},
+					"frame": {
+						"x": 311,
+						"y": 321,
+						"w": 150,
+						"h": 71
+					}
+				},
+				{
+					"filename": "power-gen_00003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 35,
+						"y": 130,
+						"w": 140,
+						"h": 68
+					},
+					"frame": {
+						"x": 156,
+						"y": 435,
+						"w": 140,
+						"h": 68
+					}
+				},
+				{
+					"filename": "power-gen_00002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 139,
+						"w": 100,
+						"h": 62
+					},
+					"frame": {
+						"x": 311,
+						"y": 394,
+						"w": 100,
+						"h": 62
+					}
+				},
+				{
+					"filename": "power-gen_00019.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 85,
+						"y": 3,
+						"w": 97,
+						"h": 83
+					},
+					"frame": {
+						"x": 413,
+						"y": 394,
+						"w": 97,
+						"h": 83
+					}
+				},
+				{
+					"filename": "power-gen_00001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 65,
+						"y": 151,
+						"w": 82,
+						"h": 38
+					},
+					"frame": {
+						"x": 298,
+						"y": 458,
+						"w": 82,
+						"h": 38
+					}
+				},
+				{
+					"filename": "power-gen_00000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 210,
+						"h": 210
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 3,
+						"h": 3
+					},
+					"frame": {
+						"x": 466,
+						"y": 1,
+						"w": 3,
+						"h": 3
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:926039f3a759cd4aa3fce260042aed27:c0f31e91292513fdcaf7db9dd43327bd:c99bd2661499c1162b807bcf00503cc3$"
+	}
+}

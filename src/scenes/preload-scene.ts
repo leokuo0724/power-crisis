@@ -1,3 +1,4 @@
+import { Scene } from "phaser";
 import { SCENE_KEYS } from "~/constants/scene-keys";
 import { FONT_KEYS } from "~/constants/font-keys";
 
@@ -16,9 +17,13 @@ import CardPng from "~/assets/images/card.png";
 import CardJson from "~/assets/images/card.json";
 import PowerPlantPng from "~/assets/images/power-plant.png";
 import PowerPlantJson from "~/assets/images/power-plant.json";
+import SparklingPng from "~/assets/images/sparkling.png";
+import SparklingJson from "~/assets/images/sparkling.json";
+import PowerGenPng from "~/assets/images/power-gen.png";
+import PowerGenJson from "~/assets/images/power-gen.json";
+
 import BgmMp3 from "~/assets/audios/bgm.mp3";
 import BgmOgg from "~/assets/audios/bgm.ogg";
-import { Scene } from "phaser";
 
 export class PreloadScene extends Scene {
   private isFontsLoaded = false;
@@ -167,6 +172,8 @@ export class PreloadScene extends Scene {
     this.load.atlas(IMAGE_KEYS.DICE, DicePng, DiceJson);
     this.load.atlas(IMAGE_KEYS.CARD, CardPng, CardJson);
     this.load.atlas(IMAGE_KEYS.POWER_PLANT, PowerPlantPng, PowerPlantJson);
+    this.load.atlas(IMAGE_KEYS.SPARKLING, SparklingPng, SparklingJson);
+    this.load.atlas(IMAGE_KEYS.POWER_GEN, PowerGenPng, PowerGenJson);
     this.load.image(IMAGE_KEYS.MARKER, MarkerPng);
 
     this.load.audio("bgm", [BgmOgg, BgmMp3]);

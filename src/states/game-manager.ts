@@ -35,6 +35,7 @@ export const EVENTS = {
   POLLUTION_UPDATED: "pollution-updated",
   ON_POLLUTED: "on-polluted",
   OPEN_POLLUTION_CHECK: "open-pollution-check",
+  POWER_PLANT_POWER_GENERATED: "power-plant-power-generated",
 
   TOGGLE_POLICY_SCREEN: "toggle-policy-screen",
   TOGGLE_CARD_SELECT_SCREEN: "toggle-card-select-screen",
@@ -327,6 +328,10 @@ export class GameManager {
     // gain power
     this.updatePower(
       this.currentPower + ppTile.powerPlantCard.info.powerGain.gain
+    );
+    this.emitter.emit(
+      EVENTS.POWER_PLANT_POWER_GENERATED,
+      ppTile.powerPlantCard.info.id
     );
     this.toggleGeneratePowerDialog(false);
     this.setNextRollEnabled(true);

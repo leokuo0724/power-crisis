@@ -4,6 +4,9 @@ export const IMAGE_KEYS = {
   DICE: "dice",
   CARD: "card",
   POWER_PLANT: "power-plant",
+  // animation
+  SPARKLING: "sparkling",
+  POWER_GEN: "power-gen",
   // single
   MARKER: "marker",
 };

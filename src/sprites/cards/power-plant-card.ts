@@ -19,6 +19,8 @@ import {
   ConsumableResource,
   RESOURCE_TEXTURE_MAP,
 } from "~/types/resource";
+import { Sparkling } from "../sparkling";
+import { PowerGen } from "../power-gen";
 
 const POWER_PLANT_BG_TEXTURE_MAP: Record<PowerPlantType, string> = {
   [POWER_PLANT_TYPES.THERMAL]: CARD_KEYS.THERMAL,
@@ -38,6 +40,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
   private costResourceText?: Phaser.GameObjects.Text;
   private buildCostText: Phaser.GameObjects.Text;
   private effectText: Phaser.GameObjects.Text;
+  private sparkling: Sparkling;
+  private powerGen: PowerGen;
 
   public stage!: PowerPlantCardStage;
   private tableHiddenX?: number;
@@ -118,6 +122,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       .setWordWrapWidth(170)
       .setAlpha(0.8)
       .setOrigin(0.5);
+    this.sparkling = new Sparkling(scene, 0, 96).setScale(1.5);
+    this.powerGen = new PowerGen(scene, 0, -120);
 
     this.add([
       this.bg,
@@ -127,6 +133,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       badge,
       name,
       this.effectText,
+      this.sparkling,
+      this.powerGen,
     ]);
     this.setDepth(DEPTH.SELECTING_CARD)
       .setSize(this.bg.width, this.bg.height)
@@ -185,10 +193,21 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       this._onSelectedPowerPlantToRemoveIdsUpdate,
       this
     );
+    gm.emitter.on(
+      EVENTS.POWER_PLANT_POWER_GENERATED,
+      this._onPowerPlantPowerGenerated,
+      this
+    );
     // Trigger effects
     gm.emitter.on(EVENTS.ON_DICE_ROLLED, this._onDiceRolled, this);
     gm.emitter.on(EVENTS.ON_BUILD_POWER_PLANT, this._onBuildPowerPlant, this);
     gm.emitter.on(EVENTS.RESOURCE_COLLECTED, this._onResourceCollected, this);
+  }
+
+  private _onPowerPlantPowerGenerated(id: string) {
+    if (this.stage !== "built") return;
+    if (id !== this.info.id) return;
+    this.powerGen.playGen();
   }
 
   private _onBuildModeUpdated() {
@@ -256,6 +275,11 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
     gm.emitter.off(
       EVENTS.SELECTED_POWER_PLANT_TO_REMOVE_IDS_UPDATED,
       this._onSelectedPowerPlantToRemoveIdsUpdate,
+      this
+    );
+    gm.emitter.off(
+      EVENTS.POWER_PLANT_POWER_GENERATED,
+      this._onPowerPlantPowerGenerated,
       this
     );
     gm.emitter.off(EVENTS.ON_DICE_ROLLED, this._onDiceRolled, this);
@@ -359,6 +383,8 @@ export class PowerPlantCard extends Phaser.GameObjects.Container {
       const { event, buff } = effect.trigger;
       if (event) gm.emitter.emit(event.type, event.value);
       if (buff) gm.doEffect(buff);
+
+      this.sparkling.playSparkling();
     }
   }
 }

@@ -8,6 +8,7 @@ export const COLORS = {
   BLUE_7: "#14233A",
   BROWN_4: "#7A5859",
   BROWN_6: "#593E47",
+  YELLOW_6: "#DE9F47",
   YELLOW_7: "#A57855",
   DARK_5: "#303843",
   ORANGE_6: "#B55945",

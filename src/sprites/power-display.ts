@@ -43,6 +43,7 @@ export class PowerDisplay extends Phaser.GameObjects.Container {
   }
 
   powerNumTween(from: number, to: number) {
+    const updatedColor = to > from ? COLORS.YELLOW_6 : COLORS.BLUE_4;
     this.scene.tweens.addCounter({
       from,
       to,
@@ -50,9 +51,11 @@ export class PowerDisplay extends Phaser.GameObjects.Container {
       onUpdate: (tween) => {
         const value = Math.round(tween.getValue());
         this.powerNumText.setText(value.toString());
+        this.powerNumText.setColor(updatedColor);
       },
       onComplete: () => {
         this.cachedPower = to;
+        this.powerNumText.setColor(COLORS.BLUE_6);
       },
     });
   }

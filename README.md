@@ -6,6 +6,10 @@
 
 This is a monopoly-like card game. Use cards to build power plants strategically and manage resources wisely. Powered by Power, this game blends Monopoly-style gameplay with deck-building mechanics. Can you keep the city's lights on lead it to survival?
 
+## Play the game here
+
+https://itch.io/jam/gamedevjs-2024/rate/2670773
+
 ## Getting Started for developers
 
 To get start with this project, follow these steps:
